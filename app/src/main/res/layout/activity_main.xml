@@ -87,19 +87,31 @@
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView2"
+                <Button
+                    android:id="@+id/button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textColor="#ffffff" />
+                    android:text="Button" />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="parsingText"
+                        android:textColor="#ffffff" />
+                </ScrollView>
+
             </LinearLayout>
         </LinearLayout>
-        
+
         <RelativeLayout
+            android:id="@+id/fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/fragment"/>
+            android:layout_height="match_parent" />
         
     </FrameLayout>
 </LinearLayout>
