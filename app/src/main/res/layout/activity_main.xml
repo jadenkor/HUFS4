@@ -62,38 +62,44 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:id="@+id/index">
-            
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:orientation="vertical"
+                android:layout_height="400dp"
+                android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="8dp">
+                android:orientation="vertical">
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
-                    android:src="@drawable/logo"/>
+                    android:src="@drawable/logo" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="첫 화면 입니다."
+                    android:layout_marginTop="10dp"
+                    android:text="eclass 파싱 테스트 중"
                     android:textColor="#ffffff"
                     android:textSize="25dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"/>
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="#ffffff" />
             </LinearLayout>
         </LinearLayout>
         
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment">
-        </RelativeLayout>
+            android:id="@+id/fragment"/>
         
     </FrameLayout>
 </LinearLayout>
