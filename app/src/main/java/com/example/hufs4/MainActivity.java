@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.v("재준", "ok");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -82,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.commit();
             }
         });
-
-        new BackgroundTask().execute();
+// 공지사항 DB 생성후에 주석 해제
+//        new BackgroundTask().execute();
     }
 
     class BackgroundTask extends AsyncTask<Void, Void, String>{
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            target = "hostUTL/NoticeList.php";
+            target = "hostURL/NoticeList.php";
         }
 
         @Override
@@ -133,8 +136,8 @@ public class MainActivity extends AppCompatActivity {
                     noticeCourse = object.getString("noticeCourse");
                     noticeContent = object.getString("noticeContent");
                     noticeDate = object.getString("noticeDate");
-//                    Notice notice = new Notice(noticeCourse, noticeContent, noticeDate);
-//                    noticeList.add(notice);
+                    Notice notice = new Notice(noticeCourse, noticeContent, noticeDate);
+                    noticeList.add(notice);
                     count++;
                 }
             } catch (JSONException e) {
