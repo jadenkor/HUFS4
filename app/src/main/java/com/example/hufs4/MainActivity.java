@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -32,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.v("재준", "ok");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         noticeListView = (ListView) findViewById(R.id.noticeListView);
         noticeList = new ArrayList<Notice>();
+
 
         final Button recommendButton = (Button) findViewById(R.id.recommendButton);
         final Button searchButton = (Button) findViewById(R.id.searchButton);
