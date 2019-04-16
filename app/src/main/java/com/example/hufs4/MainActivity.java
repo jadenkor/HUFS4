@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 index.setVisibility(View.GONE); // 더이상 보여지지 않음
-                recommendButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                searchButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                settingButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                recommendButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                searchButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                settingButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new RecommendFragment());
@@ -61,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 index.setVisibility(View.GONE); // 더이상 보여지지 않음
-                recommendButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                searchButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                settingButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                recommendButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                searchButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                settingButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new SearchFragment());
@@ -75,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 index.setVisibility(View.GONE); // 더이상 보여지지 않음
-                recommendButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                searchButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                settingButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                recommendButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                searchButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                settingButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new SettingFragment());

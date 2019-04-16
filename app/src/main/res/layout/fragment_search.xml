@@ -6,25 +6,27 @@
     android:orientation="vertical"
     tools:context=".SearchFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="캠퍼스(Campus)" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
         android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="캠퍼스(Campus)"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/campusGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
@@ -33,16 +35,26 @@
             <RadioButton
                 android:id="@+id/Seoul"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="서울" />
+                android:text="서울"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:buttonTint="#ffffff"/>
 
             <RadioButton
                 android:id="@+id/Global"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="글로벌" />
+                android:text="글로벌"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:buttonTint="#ffffff"/>
 
         </RadioGroup>
 
@@ -52,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
         android:paddingRight="10dp">
 
@@ -61,7 +73,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:text="년도/학기(Year/Semester)" />
+            android:text="년도/학기(Year/Semester)"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/yearSpinner"
@@ -83,25 +97,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="40dp"
-        android:background="@color/colorLightGray"
-        android:orientation="vertical">
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/major"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="60dp"
             android:layout_weight="1"
-            android:text="전공/부전공" />
+            android:buttonTint="#ffffff"
+            android:text="전공/부전공"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <RadioButton
             android:id="@+id/liberal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="60dp"
             android:layout_weight="1"
-            android:text="실용외국어/교양과목" />
+            android:buttonTint="#ffffff"
+            android:text="실용외국어/교양과목"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
     </RadioGroup>
 
@@ -109,8 +130,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:orientation="horizontal"
         android:paddingRight="10dp">
