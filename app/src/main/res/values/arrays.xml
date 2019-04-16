@@ -213,4 +213,13 @@
         <item>인성교육</item>
         <item>군사학</item>
     </string-array>
+
+    <string-array name="days">
+        <item>월요일</item>
+        <item>화요일</item>
+        <item>수요일</item>
+        <item>목요일</item>
+        <item>금요일</item>
+    </string-array>
+
 </resources>

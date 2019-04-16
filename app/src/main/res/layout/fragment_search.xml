@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,11 +16,11 @@
         android:paddingRight="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:text="캠퍼스(Campus)"
+            android:text="캠퍼스"
             android:textColor="#ffffff"
             android:textStyle="bold" />
 
@@ -27,9 +28,8 @@
             android:id="@+id/campusGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
             android:orientation="horizontal">
 
             <RadioButton
@@ -38,11 +38,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:buttonTint="#ffffff"
                 android:text="서울"
                 android:textColor="#ffffff"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:buttonTint="#ffffff"/>
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/Global"
@@ -50,11 +50,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:buttonTint="#ffffff"
                 android:text="글로벌"
                 android:textColor="#ffffff"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:buttonTint="#ffffff"/>
+                android:textStyle="bold" />
 
         </RadioGroup>
 
@@ -69,24 +69,24 @@
         android:paddingRight="10dp">
 
         <TextView
-            android:layout_width="170dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:text="년도/학기(Year/Semester)"
+            android:text="년도/학기"
             android:textColor="#ffffff"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/yearSpinner"
-            android:layout_width="100dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"></Spinner>
 
         <Spinner
             android:id="@+id/termSpinner"
-            android:layout_width="100dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"></Spinner>
@@ -130,9 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
         android:orientation="horizontal"
         android:paddingRight="10dp">
 
@@ -140,7 +138,55 @@
             android:id="@+id/selectSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"></Spinner>
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"></Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="스마트 필터링"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/professorText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="교수명 검색"
+            android:inputType="textPersonName"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/fileringButext"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="요일/교시"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
