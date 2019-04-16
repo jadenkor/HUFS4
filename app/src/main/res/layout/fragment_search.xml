@@ -35,14 +35,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="서울(Seoul)" />
+                android:text="서울" />
 
             <RadioButton
                 android:id="@+id/Global"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="글로벌(Global)" />
+                android:text="글로벌" />
 
         </RadioGroup>
 
@@ -71,7 +71,7 @@
             android:layout_marginLeft="10dp"></Spinner>
 
         <Spinner
-            android:id="@+id/semesterSpinner"
+            android:id="@+id/termSpinner"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -94,14 +94,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="전공/부전공(Major/Minor)" />
+            android:text="전공/부전공" />
 
         <RadioButton
             android:id="@+id/liberal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="실용외국어/교양과목\n(Practical foreign language/Liberal arts)" />
+            android:text="실용외국어/교양과목" />
 
     </RadioGroup>
 
@@ -117,21 +117,9 @@
 
         <Spinner
             android:id="@+id/selectSpinner"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"></Spinner>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:textSize="13dp"
-            android:textStyle="bold"
-            android:textColor="#ffffff"
-            android:background="@color/colorPrimaryDark"
-            android:text="강의 검색"
-            android:layout_gravity="center"
-            android:id="@+id/searchButton"
-            android:layout_marginLeft="10dp"/>
 
     </LinearLayout>
 

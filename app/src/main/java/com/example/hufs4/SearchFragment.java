@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 
 /**
@@ -58,8 +62,102 @@ public class SearchFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
+
+    private ArrayAdapter yearAdapter;
+    private Spinner yearSpinner;
+    private ArrayAdapter termAdapter;
+    private Spinner termSpinner;
+    private ArrayAdapter affiliationAdapter;
+    private Spinner affiliationSpinner;
+    private ArrayAdapter selectAdapter;
+    private Spinner selectSpinner;
+
+    private String courseCampus =""; //button 서울 or 글로벌
+    private String courseType = ""; //button 전공/부전공 or 실용외국어/교양과목
+    private String courseYear = "";
+    private String courseTerm = "";
+    private String courseAffiliation = "";
+    private String courseSelect = "";
+
+    @Override
+    public void onActivityCreated(Bundle b){
+        super.onActivityCreated(b);
+
+        final RadioGroup campusGroup = (RadioGroup) getView().findViewById(R.id.campusGroup);
+        final RadioGroup courseGroup = (RadioGroup) getView().findViewById(R.id.courseGroup);
+
+        yearSpinner = (Spinner) getView().findViewById(R.id.yearSpinner);
+        termSpinner = (Spinner) getView().findViewById(R.id.termSpinner);
+        selectSpinner = (Spinner) getView().findViewById(R.id.selectSpinner);
+
+        campusGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                RadioButton campusButton = (RadioButton) getView().findViewById(i);
+                courseCampus = campusButton.getText().toString();
+
+                yearAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.year, android.R.layout.simple_spinner_dropdown_item);
+                yearSpinner.setAdapter(yearAdapter);
+
+                termAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.term, android.R.layout.simple_spinner_dropdown_item);
+                termSpinner.setAdapter(termAdapter);
+
+                if(courseCampus.equals("서울")){
+                    if(courseType.equals("전공/부전공")) {
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorSeoul, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                    else if(courseType.equals("실용외국어/교양과목")) {
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalSeoul, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                }
+                else if(courseCampus.equals("글로벌")){
+                    if(courseType.equals("전공/부전공")) {
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                    else if(courseType.equals("실용외국어/교양과목")) {
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                }
+
+
+            }
+        });
+        courseGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                RadioButton typeButton = (RadioButton) getView().findViewById(i);
+                courseType = typeButton.getText().toString();
+
+                if(courseCampus.equals("서울")){
+                    if(courseType.equals("전공/부전공")) {
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorSeoul, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                    else {
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalSeoul, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                }
+                else if(courseCampus.equals("글로벌")){
+                    if(courseType.equals("전공/부전공")) {
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                    else {
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                }
+
+            }
+        });
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
