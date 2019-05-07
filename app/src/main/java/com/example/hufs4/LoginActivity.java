@@ -15,6 +15,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class LoginActivity extends AppCompatActivity {
 
     private AlertDialog dialog;
@@ -38,12 +41,28 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordText = (EditText) findViewById(R.id.passwordText);
         final Button loginButton = (Button) findViewById(R.id.loginButton);
 
+
+
         // 로그인 버튼을 눌렀을 때
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userID = idText.getText().toString();
+                final String userID = idText.getText().toString();
                 String userPassword = passwordText.getText().toString();
+
+                // 로그인 비밀번호 암호화
+                try {
+                    MessageDigest md = MessageDigest.getInstance("SHA-512");
+                    byte[] digest = md.digest(userPassword.getBytes());
+                    StringBuilder sb = new StringBuilder();
+                    for (int i=0; i<digest.length; i++){
+                        sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
+                    }
+                    userPassword = String.valueOf(sb);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override

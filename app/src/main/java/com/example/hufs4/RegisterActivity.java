@@ -36,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validate = false;
 
     String name="";
+    String sha512PW = null;
 
 
     static String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Whale/1.4.64.6 Safari/537.36";
@@ -197,7 +198,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 };
-                RegisterRequest registerRequest = new RegisterRequest(userID, userPassword, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(userID, sha512PW, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
             }
@@ -220,7 +221,6 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d("SSS백그라운드", "실행");
-            String sha512PW = null;
 
             try {
                 Log.d("SSS트라이", "실행");
