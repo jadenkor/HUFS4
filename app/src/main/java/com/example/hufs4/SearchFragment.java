@@ -1,5 +1,6 @@
 package com.example.hufs4;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,9 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -80,6 +84,9 @@ public class SearchFragment extends Fragment {
     private String courseAffiliation = "";
     private String courseSelect = "";
 
+    private Button filteringButton;
+
+
     @Override
     public void onActivityCreated(Bundle b){
         super.onActivityCreated(b);
@@ -90,6 +97,22 @@ public class SearchFragment extends Fragment {
         yearSpinner = (Spinner) getView().findViewById(R.id.yearSpinner);
         termSpinner = (Spinner) getView().findViewById(R.id.termSpinner);
         selectSpinner = (Spinner) getView().findViewById(R.id.selectSpinner);
+
+        filteringButton = (Button) getView().findViewById(R.id.filteringButton);
+//
+//        registerButton.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+//                LoginActivity.this.startActivity(registerIntent);
+//
+//            }
+//        });
+
+
+
 
         campusGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -157,7 +180,23 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+    public void mOnPopupClick(View v){
+        Intent intent = new Intent(getActivity(), DayPeriodSettingActivity.class);
+        intent.putExtra("result", "");
+        startActivityForResult(intent, 1);
+    }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode==1){
+            if(resultCode==RESULT_OK){
+                //데이터 받기
+                String result = data.getStringExtra("result");
+                filteringButton.setText(result);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -174,8 +174,8 @@
             android:textColorHint="#ffffff"
             android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/fileringButext"
+        <Button
+            android:id="@+id/filteringButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -186,7 +186,8 @@
             android:gravity="center"
             android:text="요일/교시"
             android:textColor="#ffffff"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="mOnPopupClick"/>
 
     </LinearLayout>
 

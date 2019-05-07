@@ -1,5 +1,7 @@
 package com.example.hufs4;
 
+import android.util.Log;
+
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
@@ -8,7 +10,7 @@ import java.util.Map;
 
 public class RegisterRequest extends StringRequest {
 
-    final static private String URL = "hostURL/UserRegister.php";
+    final static private String URL = "http://106.10.42.35/UserRegister.php";
     private Map<String, String> parameters;
 
     public RegisterRequest(String userID, String userPassword, Response.Listener<String> listener){
@@ -16,6 +18,7 @@ public class RegisterRequest extends StringRequest {
         parameters = new HashMap<>();
         parameters.put("userID", userID);
         parameters.put("userPassword", userPassword);
+        Log.d("xx", String.valueOf(parameters.entrySet()));
     }
 
     @Override

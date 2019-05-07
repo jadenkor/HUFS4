@@ -35,11 +35,25 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <EditText
+                android:id="@+id/nameText"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:background="@color/colorAccent"
+                android:hint="이름"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff" />
+
             <LinearLayout
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center">
 
                 <EditText
@@ -120,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="학번과 비밀번호는 본인의 e-class 아이디(학번)\n비밀번호와 동일하게 입력하여야 합니다."
+                android:text="이름, 학번, 비밀번호는 본인의 e-class 정보와 동일하게 입력하여야 합니다."
                 android:textColor="@color/colorAccent"
                 android:textSize="15sp" />
 
