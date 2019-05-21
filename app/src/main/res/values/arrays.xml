@@ -77,14 +77,14 @@
     <string-array name="majorGlobal">
         <item>CORE글로벌지역학</item>
         <item>EU전공</item>
-        <item>GBT전공</item>
+        <item>Global Business &amp; Technology 전공</item>
         <item>TESOL영어학전공</item>
         <item>경영정보학과</item>
         <item>경제학과</item>
-        <item>공과대</item>
+        <item>공과대학(공통)</item>
         <item>광고·PR·브랜딩전공</item>
         <item>교육학</item>
-        <item>국가리더전</item>
+        <item>국가리더전공</item>
         <item>국제금융학과</item>
         <item>국제스포츠레저전공</item>
         <item>그리스.불가리아학과</item>
@@ -143,33 +143,11 @@
 
     </string-array>
     <string-array name="year">
-        <item>2018년도</item>
-        <item>2017년도</item>
-        <item>2016년도</item>
-        <item>2015년도</item>
-        <item>2014년도</item>
-        <item>2013년도</item>
-        <item>2012년도</item>
-        <item>2011년도</item>
-        <item>2010년도</item>
-        <item>2009년도</item>
-        <item>2008년도</item>
-        <item>2007년도</item>
-        <item>2006년도</item>
-        <item>2005년도</item>
-        <item>2004년도</item>
-        <item>2003년도</item>
-        <item>2002년도</item>
-        <item>2001년도</item>
-        <item>2000년도</item>
-        <item>1999년도</item>
+        <item>2019년도</item>
     </string-array>
 
     <string-array name="term">
         <item>1학기</item>
-        <item>여름학기</item>
-        <item>2학기</item>
-        <item>겨울학기</item>
     </string-array>
 
     <string-array name="liberalSeoul">

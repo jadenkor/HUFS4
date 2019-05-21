@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SearchFragment">
+    tools:context=".SearchFragment"
+    android:id="@+id/contents">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -151,19 +152,19 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="50dp"
+            android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:text="스마트 필터링"
+            android:text="세부 필터링"
             android:textAllCaps="false"
             android:textColor="#ffffff"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/professorText"
-            android:layout_width="100dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
@@ -174,22 +175,30 @@
             android:textColorHint="#ffffff"
             android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/filteringButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+        <EditText
+            android:id="@+id/dnpText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
-            android:gravity="center"
-            android:text="요일/교시"
+            android:ems="10"
+            android:hint="요일/교시 (ex.월123, 목35)"
+            android:inputType="textPersonName"
             android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:onClick="mOnPopupClick"/>
+            android:textColorHint="#ffffff"
+            android:textSize="12sp" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorAccent"
+        android:text="검색" />
 
     <LinearLayout
         android:layout_width="match_parent"

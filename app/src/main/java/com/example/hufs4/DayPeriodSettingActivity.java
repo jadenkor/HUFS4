@@ -1,11 +1,12 @@
 package com.example.hufs4;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 
@@ -18,10 +19,10 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //타이틀바 없애기
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_day_period_setting);
 
-        final CheckBox[][] period = new CheckBox[10][5];
+        CheckBox[][] period = new CheckBox[10][5];
         //선택한 요일/교시를 저장하기 위한 변수
 
         Button confirmButton = (Button) findViewById(R.id.filterButton);
@@ -92,20 +93,24 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
             else if(j==4)   DnP += "금";
             for (int i=0; i<10; i++) {
                 if(period[i][j].isChecked()){
-                    DnP += String.valueOf(i);
+                    String n = Integer.toString(i);
+                    DnP += n;
                 }
             }
             DnP += ","; // 구분자 ','
         }
+
 
     }
 
     //확인 버튼 클릭
     public void mOnClose(View v){
         //데이터 전달하기
-        Intent intent = new Intent();
-        intent.putExtra("result", DnP);
-        setResult(RESULT_OK, intent);
+        Log.d("SSSDnP",DnP);
+        Fragment fragment = new SearchFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("key", DnP);
+        fragment.setArguments(bundle);
 
         //팝업 닫기
         finish();
@@ -120,9 +125,9 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
         return true;
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        //안드로이드 백 버튼 막기
-//        return;
-//    }
+    @Override
+    public void onBackPressed() {
+        //안드로이드 백 버튼 막기
+        return;
+    }
 }

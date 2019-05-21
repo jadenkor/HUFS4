@@ -1,9 +1,11 @@
 package com.example.hufs4;
 
-import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import static android.app.Activity.RESULT_OK;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
 
 /**
@@ -98,22 +105,6 @@ public class SearchFragment extends Fragment {
         termSpinner = (Spinner) getView().findViewById(R.id.termSpinner);
         selectSpinner = (Spinner) getView().findViewById(R.id.selectSpinner);
 
-        filteringButton = (Button) getView().findViewById(R.id.filteringButton);
-//
-//        registerButton.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-//                LoginActivity.this.startActivity(registerIntent);
-//
-//            }
-//        });
-
-
-
-
         campusGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -126,15 +117,40 @@ public class SearchFragment extends Fragment {
                 termAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.term, android.R.layout.simple_spinner_dropdown_item);
                 termSpinner.setAdapter(termAdapter);
 
+                /*
+                 * 글로벌 캠퍼스의 정보만 제공하기 위한 처리.
+                 *          + 아래   if(courseCampus.equals("서울")){ 주석 처리 해두었음
+                 */
                 if(courseCampus.equals("서울")){
-                    if(courseType.equals("전공/부전공")) {
-                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorSeoul, android.R.layout.simple_spinner_dropdown_item);
-                        selectSpinner.setAdapter(selectAdapter);
-                    }
-                    else if(courseType.equals("실용외국어/교양과목")) {
-                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalSeoul, android.R.layout.simple_spinner_dropdown_item);
-                        selectSpinner.setAdapter(selectAdapter);
-                    }
+                    AlertDialog dialog;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    dialog = builder.setMessage("서울 캠퍼스는 아직 제공하지 않는 서비스입니다.")
+                            .setNegativeButton("확인", null)
+                            .create();
+                    dialog.show();
+                    campusButton.setChecked(false);
+                    courseCampus = "";
+                    selectSpinner.setEnabled(false);
+                    selectSpinner.setClickable(false);
+                }
+                else{
+                    selectSpinner.setEnabled(true);
+                    selectSpinner.setClickable(true);
+                }
+                /* --------------------------------------------------------------------------- */
+
+
+                if(courseCampus.equals("서울")){
+
+//                    if(courseType.equals("전공/부전공")) {
+//                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorSeoul, android.R.layout.simple_spinner_dropdown_item);
+//                        selectSpinner.setAdapter(selectAdapter);
+//                    }
+//                    else if(courseType.equals("실용외국어/교양과목")) {
+//                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalSeoul, android.R.layout.simple_spinner_dropdown_item);
+//                        selectSpinner.setAdapter(selectAdapter);
+//                    }
+
                 }
                 else if(courseCampus.equals("글로벌")){
                     if(courseType.equals("전공/부전공")) {
@@ -150,6 +166,7 @@ public class SearchFragment extends Fragment {
 
             }
         });
+
         courseGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -178,29 +195,27 @@ public class SearchFragment extends Fragment {
                 }
 
             }
+
         });
-    }
-    public void mOnPopupClick(View v){
-        Intent intent = new Intent(getActivity(), DayPeriodSettingActivity.class);
-        intent.putExtra("result", "");
-        startActivityForResult(intent, 1);
-    }
 
+        Button searchButton = (Button) getView().findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener(){
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode==1){
-            if(resultCode==RESULT_OK){
-                //데이터 받기
-                String result = data.getStringExtra("result");
-                filteringButton.setText(result);
+            @Override
+            public void onClick(View v) {
+                new BackgroundTask().execute();
             }
-        }
+        });
+
     }
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
@@ -231,5 +246,63 @@ public class SearchFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    class BackgroundTask extends AsyncTask<Void, Void, String> {
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            try {
+                Log.d("SSScourseType", courseType.substring(0,2));
+                Log.d("SSSselectSpinner", selectSpinner.getSelectedItem().toString());
+                target = "http://106.10.42.35/CourseList.php?"
+                        + "&Gubun=" + URLEncoder.encode(selectSpinner.getSelectedItem().toString(), "UTF-8");
+                Log.d("SSStarget", target.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(target);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                ;
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values) { super.onProgressUpdate(); }
+
+        @Override
+        public void onPostExecute(String result){
+            try{
+                AlertDialog dialog;
+                AlertDialog.Builder builder = new AlertDialog.Builder(SearchFragment.this.getContext());
+                dialog = builder.setMessage(result)
+                        .setPositiveButton("확인", null)
+                        .create();
+                dialog.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
