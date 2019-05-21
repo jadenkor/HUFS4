@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="추가"
+        android:background="@color/colorAccent"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:id="@+id/addButton"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1학년"
+                android:id="@+id/grade"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#ffffff"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="교과목명"
+                android:id="@+id/title"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3학점"
+                android:id="@+id/credit"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2시간"
+                android:id="@+id/time"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="강의시간/강의실"
+                android:id="@+id/schedule"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="담당교수"
+                android:id="@+id/instructor"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수강인원/수강제한인원"
+                android:id="@+id/sugang_limit"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비고"
+                android:id="@+id/note"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전필"
+                android:id="@+id/junpil"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사이버강의"
+                android:id="@+id/cyber"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="무크"
+                android:id="@+id/muke"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원어"
+                android:id="@+id/foreign"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="팀티칭"
+                android:id="@+id/team"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
