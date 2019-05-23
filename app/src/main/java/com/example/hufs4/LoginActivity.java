@@ -41,8 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordText = (EditText) findViewById(R.id.passwordText);
         final Button loginButton = (Button) findViewById(R.id.loginButton);
 
-
-
         // 로그인 버튼을 눌렀을 때
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 final String userID = idText.getText().toString();
                 String userPassword = passwordText.getText().toString();
 
-                // 로그인 비밀번호 암호화
+                // DB로 넘겨주기 전에 로그인 비밀번호 암호화
                 try {
                     MessageDigest md = MessageDigest.getInstance("SHA-512");
                     byte[] digest = md.digest(userPassword.getBytes());

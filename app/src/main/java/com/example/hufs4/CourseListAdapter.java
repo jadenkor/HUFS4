@@ -1,7 +1,6 @@
 package com.example.hufs4;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,8 +17,6 @@ public class CourseListAdapter extends BaseAdapter {
     public CourseListAdapter(Context context, List<Course> courseList) {
         this.context = context;
         this.courseList = courseList;
-
-        Log.d("XXK", String.valueOf(this.courseList.size()));
     }
 
     @Override

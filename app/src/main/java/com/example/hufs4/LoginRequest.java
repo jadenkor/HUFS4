@@ -1,7 +1,5 @@
 package com.example.hufs4;
 
-import android.util.Log;
-
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
@@ -17,7 +15,6 @@ public class LoginRequest extends StringRequest {
         parameters = new HashMap<>();
         parameters.put("userID", userID);
         parameters.put("userPassword", userPassword);
-        Log.d("xx", String.valueOf(parameters.entrySet()));
     }
 
     @Override

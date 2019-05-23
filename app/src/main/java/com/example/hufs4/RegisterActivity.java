@@ -39,15 +39,12 @@ public class RegisterActivity extends AppCompatActivity {
     String name="";
     String sha512PW = null;
 
-
-
     static String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Whale/1.4.64.6 Safari/537.36";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
 
         final EditText nameText = (EditText) findViewById(R.id.nameText);
         final EditText idText = (EditText) findViewById(R.id.idText);
@@ -80,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-                            Log.d("check", String.valueOf(success));
+
                             if (success) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                 dialog = builder.setMessage("사용 가능한 아이디입니다.")
@@ -115,15 +112,13 @@ public class RegisterActivity extends AppCompatActivity {
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 userName = nameText.getText().toString();
                 userID = idText.getText().toString();
                 userPassword = passwordText.getText().toString();
                 userPassword2 = passwordText2.getText().toString();
+                verified = false;
 
-                verified=false;
-
-                new doit().execute();
+                new doit().execute(); // 가입 요청자의 이름, 비밀번호를 통해 eclass 로그인 후에 이름 정보 파싱.
 
                 if(!validate){
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
@@ -184,7 +179,6 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.d("이름",userName + ", " + name);
                 if(!userName.equals(name)){
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
@@ -249,14 +243,12 @@ public class RegisterActivity extends AppCompatActivity {
 
             try {
                 MessageDigest md = MessageDigest.getInstance("SHA-512");
-                Log.d("SSS비밀번호", userPassword);
                 byte[] digest = md.digest(userPassword.getBytes());
                 StringBuilder sb = new StringBuilder();
                 for (int i=0; i<digest.length; i++){
                     sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
                 }
                 sha512PW = String.valueOf(sb);
-                Log.d("SSS해시", sha512PW);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -266,7 +258,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             // 로그인(POST) - HTTPS
             Connection.Response response1 = null;
-
             try {
                 response1 = Jsoup.connect(loginURL)
                         .userAgent(userAgent)
@@ -277,9 +268,6 @@ public class RegisterActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            //System.out.println(response1.statusMessage());
-            // 로그인 성공 후 얻은 쿠키.
-            // 쿠키 중 TSESSION이라는 값을 확인할 수 있다.
             Map<String, String> loginCookie = response1.cookies();
             Log.d("SSS쿠키", String.valueOf(loginCookie));
             try {
@@ -292,14 +280,11 @@ public class RegisterActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             name = words.text();
-            Log.d("NAME",name);
             return null;
         }
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-
 
         }
     }

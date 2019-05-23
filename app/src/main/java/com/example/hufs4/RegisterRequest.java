@@ -18,7 +18,6 @@ public class RegisterRequest extends StringRequest {
         parameters = new HashMap<>();
         parameters.put("userID", userID);
         parameters.put("userPassword", userPassword);
-        Log.d("xx", String.valueOf(parameters.entrySet()));
     }
 
     @Override
