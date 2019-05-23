@@ -15,11 +15,11 @@ public class CourseListAdapter extends BaseAdapter {
     private List<Course> courseList;
 
 
-    public CourseListAdapter(Context context, List<Course> noticeList) {
+    public CourseListAdapter(Context context, List<Course> courseList) {
         this.context = context;
         this.courseList = courseList;
 
-        Log.d("XXK", String.valueOf(courseList.size()));
+        Log.d("XXK", String.valueOf(this.courseList.size()));
     }
 
     @Override
@@ -67,9 +67,9 @@ public class CourseListAdapter extends BaseAdapter {
         instructor.setText(courseList.get(i).getInstructor() + "교수님");
         String sn = courseList.get(i).getSugang_num();
         String ln = courseList.get(i).getLimit_num();
-        String sn_ln ="신청/제한 : " + sn + "/" + ln;
+        String sn_ln ="수강인원 : " + sn + " /" + ln;
         sugang_limit.setText(sn_ln);
-        note.setText(courseList.get(i).getNote());
+        note.setText("비고 : "+courseList.get(i).getNote());
         if(courseList.get(i).getJunpil().equals("1")){
             junpil.setText("전필");
         }

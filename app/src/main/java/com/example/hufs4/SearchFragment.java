@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -85,25 +86,24 @@ public class SearchFragment extends Fragment {
     private Spinner yearSpinner;
     private ArrayAdapter termAdapter;
     private Spinner termSpinner;
-    private ArrayAdapter affiliationAdapter;
-    private Spinner affiliationSpinner;
+    private ArrayAdapter gradeAdapter;
+    private Spinner gradeSpinner;
     private ArrayAdapter selectAdapter;
     private Spinner selectSpinner;
+    private ArrayAdapter filterAdapter;
+    private Spinner filterSpinner;
 
     private String courseCampus =""; //button 서울 or 글로벌
     private String courseType = ""; //button 전공/부전공 or 실용외국어/교양과목
-//    private String courseYear = "";
-//    private String courseTerm = "";
-//    private String courseAffiliation = "";
-//    private String courseSelect = "";
-//    private Button filteringButton;
 
     private ListView courseListView;
     private CourseListAdapter adapter;
     private List<Course> courseList;
 //    private CourseListAdapter adapter;
 //    private List<Course> courseList;
+    private EditText searchText;
 
+    private String isMajor; // 전공:1 , 교양:0
 
 
 
@@ -114,9 +114,14 @@ public class SearchFragment extends Fragment {
         final RadioGroup campusGroup = (RadioGroup) getView().findViewById(R.id.campusGroup);
         final RadioGroup courseGroup = (RadioGroup) getView().findViewById(R.id.courseGroup);
 
+
         yearSpinner = (Spinner) getView().findViewById(R.id.yearSpinner);
         termSpinner = (Spinner) getView().findViewById(R.id.termSpinner);
+        gradeSpinner = (Spinner) getView().findViewById(R.id.gradeSpinner);
         selectSpinner = (Spinner) getView().findViewById(R.id.selectSpinner);
+        filterSpinner = (Spinner) getView().findViewById(R.id.filterSpinner);
+        searchText = (EditText) getView().findViewById(R.id.searchText);
+
 
         campusGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -129,6 +134,20 @@ public class SearchFragment extends Fragment {
 
                 termAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.term, android.R.layout.simple_spinner_dropdown_item);
                 termSpinner.setAdapter(termAdapter);
+
+                gradeAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.grade, android.R.layout.simple_spinner_dropdown_item);
+                gradeSpinner.setAdapter(gradeAdapter);
+
+                filterAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.filter, android.R.layout.simple_spinner_dropdown_item);
+                filterSpinner.setAdapter(filterAdapter);
+
+                Log.d("없음", filterSpinner.getSelectedItem().toString());
+
+//                if(filterSpinner.getSelectedItem().toString().equals("없음")){
+//                    searchText.setClickable(false);
+//                    searchText.setFocusable(false);
+//                }
+
 
                 /*
                  * 글로벌 캠퍼스의 정보만 제공하기 위한 처리.
@@ -156,10 +175,12 @@ public class SearchFragment extends Fragment {
                 if(courseCampus.equals("서울")){
 
 //                    if(courseType.equals("전공/부전공")) {
+//                        isMajor="1";
 //                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorSeoul, android.R.layout.simple_spinner_dropdown_item);
 //                        selectSpinner.setAdapter(selectAdapter);
 //                    }
 //                    else if(courseType.equals("실용외국어/교양과목")) {
+//                        isMajor="0";
 //                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalSeoul, android.R.layout.simple_spinner_dropdown_item);
 //                        selectSpinner.setAdapter(selectAdapter);
 //                    }
@@ -167,10 +188,12 @@ public class SearchFragment extends Fragment {
                 }
                 else if(courseCampus.equals("글로벌")){
                     if(courseType.equals("전공/부전공")) {
+                        isMajor="1";
                         selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, android.R.layout.simple_spinner_dropdown_item);
                         selectSpinner.setAdapter(selectAdapter);
                     }
                     else if(courseType.equals("실용외국어/교양과목")) {
+                        isMajor="0";
                         selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, android.R.layout.simple_spinner_dropdown_item);
                         selectSpinner.setAdapter(selectAdapter);
                     }
@@ -180,36 +203,44 @@ public class SearchFragment extends Fragment {
 
         });
 
-//        courseGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-//                RadioButton typeButton = (RadioButton) getView().findViewById(i);
-//                courseType = typeButton.getText().toString();
-//
-//                if(courseCampus.equals("서울")){
-//                    if(courseType.equals("전공/부전공")) {
-//                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorSeoul, android.R.layout.simple_spinner_dropdown_item);
-//                        selectSpinner.setAdapter(selectAdapter);
-//                    }
-//                    else {
-//                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalSeoul, android.R.layout.simple_spinner_dropdown_item);
-//                        selectSpinner.setAdapter(selectAdapter);
-//                    }
-//                }
-//                else if(courseCampus.equals("글로벌")){
-//                    if(courseType.equals("전공/부전공")) {
-//                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, android.R.layout.simple_spinner_dropdown_item);
-//                        selectSpinner.setAdapter(selectAdapter);
-//                    }
-//                    else {
-//                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, android.R.layout.simple_spinner_dropdown_item);
-//                        selectSpinner.setAdapter(selectAdapter);
-//                    }
-//                }
-//
-//            }
-//
-//        });
+        courseGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                RadioButton typeButton = (RadioButton) getView().findViewById(i);
+                courseType = typeButton.getText().toString();
+
+                if(courseCampus.equals("서울")){
+                    if(courseType.equals("전공/부전공")) {
+                        isMajor="1";
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorSeoul, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                    else {
+                        isMajor="0";
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalSeoul, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                }
+                else if(courseCampus.equals("글로벌")){
+                    if(courseType.equals("전공/부전공")) {
+                        isMajor="1";
+                        Log.d("전공","전공");
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                    else {
+                        isMajor="0";
+                        Log.d("교양","교양");
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, android.R.layout.simple_spinner_dropdown_item);
+                        selectSpinner.setAdapter(selectAdapter);
+                    }
+                }
+
+
+
+            }
+
+        });
 
         courseListView = (ListView) getView().findViewById(R.id.courseListView);
         courseList = new ArrayList<Course>();
@@ -218,7 +249,6 @@ public class SearchFragment extends Fragment {
 
         Button searchButton = (Button) getView().findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
                 new BackgroundTask().execute();
@@ -268,14 +298,42 @@ public class SearchFragment extends Fragment {
 
     class BackgroundTask extends AsyncTask<Void, Void, String> {
         String target;
+        String grade;
+        String filterOption;
+        String detailFilter;
 
         @Override
         protected void onPreExecute() {
             try {
+                if(gradeSpinner.getSelectedItem().toString().equals("1학년")) grade="1";
+                else if(gradeSpinner.getSelectedItem().toString().equals("2학년")) grade="2";
+                else if(gradeSpinner.getSelectedItem().toString().equals("3학년")) grade="3";
+                else if(gradeSpinner.getSelectedItem().toString().equals("4학년")) grade="4";
+                else grade="전체";
+
+                filterOption = filterSpinner.getSelectedItem().toString();
+
+                if(filterOption.equals("없음")){
+
+                    detailFilter="";
+                }
+                else detailFilter = filterOption;
+
+
+
+                target = "http://106.10.42.35/CourseList.php?Gubun=" + URLEncoder.encode(selectSpinner.getSelectedItem().toString(),"UTF-8")
+                        + "&FilterOption=" + URLEncoder.encode(filterOption, "UTF-8")
+                        + "&DetailFilter=" + URLEncoder.encode(detailFilter, "UTF-8")
+                        + "&Grade=" + URLEncoder.encode(grade, "UTF-8")
+                        + "&isMajor=" + URLEncoder.encode(isMajor, "UTF-8");
+                String target2 = "http://106.10.42.35/CourseList.php?Gubun=" + selectSpinner.getSelectedItem().toString()
+                        + "&FilterOption=" + filterOption
+                        + "&DetailFilter=" + detailFilter
+                        + "&Grade=" + grade
+                        + "&isMajor=" + isMajor;
                 Log.d("" +
                         "courseType", courseType.substring(0,2));
-                Log.d("SSSselectSpinner", selectSpinner.getSelectedItem().toString());
-                target = "http://106.10.42.35/CourseList.php?Gubun=" + URLEncoder.encode(selectSpinner.getSelectedItem().toString(), "UTF-8");
+                Log.d("target2", target2);
                 Log.d("SSStarget", target.toString());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -312,11 +370,8 @@ public class SearchFragment extends Fragment {
         @Override
         public void onPostExecute(String result){
             try{
-                Log.d("XXX", "ㅎㅋㅎㅋㅎㅋ");
                 courseList.clear();
-                Log.d("XXX", "여기부터");
                 JSONObject jsonObject = new JSONObject(result);
-                Log.d("XXX", "여기까지");
                 JSONArray jsonArray = jsonObject.getJSONArray("response" );
                 int count = 0;
                 String Code; //학수번호

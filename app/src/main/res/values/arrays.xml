@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="majorSeoul">
+        <item>전체</item>
         <item>CORE글로벌지역학</item>
         <item>EICC학과</item>
         <item>ELLT학과</item>
@@ -75,6 +76,7 @@
     </string-array>
 
     <string-array name="majorGlobal">
+        <item>전체</item>
         <item>CORE글로벌지역학</item>
         <item>EU전공</item>
         <item>Global Business &amp; Technology전공</item>
@@ -150,7 +152,23 @@
         <item>1학기</item>
     </string-array>
 
+    <string-array name="grade">
+        <item>전체</item>
+        <item>1학년</item>
+        <item>2학년</item>
+        <item>3학년</item>
+        <item>4학년</item>
+    </string-array>
+
+    <string-array name="filter">
+        <item>없음</item>
+        <item>교수명</item>
+        <item>강의명</item>
+        <item>요일,교시</item>
+    </string-array>
+
     <string-array name="liberalSeoul">
+        <item>전체</item>
         <item>인문강좌</item>
         <item>교양외국어</item>
         <item>공동교양</item>
@@ -173,23 +191,24 @@
     </string-array>
 
     <string-array name="liberalGlobal">
-        <item>신입생세미나</item>
-        <item>HUFS CAREER</item>
-        <item>대학외국어</item>
-        <item>미네르바인문</item>
-        <item>실용외국어</item>
-        <item>외국인을 위한 한국학</item>
-        <item>생활과스포츠</item>
-        <item>특별실용강좌</item>
-        <item>디지털교육</item>
-        <item>언어와문학</item>
-        <item>문화와예술</item>
-        <item>역사와철학</item>
-        <item>국가와사회</item>
-        <item>과학과기술</item>
-        <item>핵심인문기초</item>
-        <item>인성교육</item>
-        <item>군사학</item>
+        <item>전체</item>
+        <item>신입생세미나(글로벌)</item>
+        <item>HUFS CAREER(글로벌)</item>
+        <item>대학외국어(글로벌)</item>
+        <item>미네르바인문(글로벌)</item>
+        <item>실용외국어(선택)(글로벌)</item>
+        <item>외국인을 위한 한국학(글로벌)</item>
+        <item>생활과스포츠(글로벌)</item>
+        <item>특별실용강좌(글로벌)</item>
+        <item>디지털교육(글로벌)</item>
+        <item>언어와문학(글로벌)</item>
+        <item>문화와예술(글로벌)</item>
+        <item>역사와철학(글로벌)</item>
+        <item>국가와사회(글로벌)</item>
+        <item>과학과기술(글로벌)</item>
+        <item>핵심인문기초(글로벌)</item>
+        <item>인성교육(글로벌)</item>
+        <item>군사학(글로벌)</item>
     </string-array>
 
     <string-array name="days">

@@ -74,20 +74,26 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:text="년도/학기"
+            android:text="년도/학기/학년"
             android:textColor="#ffffff"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/yearSpinner"
-            android:layout_width="130dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"></Spinner>
 
         <Spinner
             android:id="@+id/termSpinner"
-            android:layout_width="130dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"></Spinner>
+        <Spinner
+            android:id="@+id/gradeSpinner"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"></Spinner>
@@ -152,7 +158,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="25dp"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
@@ -162,27 +168,21 @@
             android:textColor="#ffffff"
             android:textStyle="bold" />
 
+        <Spinner
+            android:id="@+id/filterSpinner"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"></Spinner>
+
         <EditText
-            android:id="@+id/professorText"
+            android:id="@+id/searchText"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="교수명 검색"
-            android:inputType="textPersonName"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/dnpText"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="요일/교시 (ex.월123, 목35)"
+            android:hint="검색"
             android:inputType="textPersonName"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"

@@ -34,9 +34,11 @@ public class RegisterActivity extends AppCompatActivity {
     private String userPassword2;
     private AlertDialog dialog;
     private boolean validate = false;
+    private boolean verified = false;
 
     String name="";
     String sha512PW = null;
+
 
 
     static String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Whale/1.4.64.6 Safari/537.36";
@@ -54,10 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         final CheckBox confirmCheckBox = (CheckBox) findViewById(R.id.confirmCheckBox);
 
-        userName = nameText.getText().toString();
-
 
         final Button validateButton = (Button) findViewById(R.id.validateButton);
+
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,15 +111,17 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        Button registerButton = (Button) findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(new View.OnClickListener(){
-
+        Button verifyButton = (Button) findViewById(R.id.verifyButton);
+        verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                userName = nameText.getText().toString();
                 userID = idText.getText().toString();
                 userPassword = passwordText.getText().toString();
                 userPassword2 = passwordText2.getText().toString();
+
+                verified=false;
 
                 new doit().execute();
 
@@ -156,9 +159,34 @@ public class RegisterActivity extends AppCompatActivity {
                     dialog.show();
                     return;
                 }
-                Log.d("파싱", "직전");
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                dialog = builder.setMessage("입력하신 이름과 e-class 의 이름이 일치한다면 회원가입 버튼을 클릭해서 진행해주시기 바랍니다.")
+                        .setPositiveButton("확인", null)
+                        .create();
+                dialog.show();
+                verified = true;
+
+            }
+        });
+
+        Button registerButton = (Button) findViewById(R.id.registerButton);
+        registerButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(verified==false){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    dialog = builder.setMessage("외대생 인증 버튼을 먼저 클릭해주세요.")
+                            .setNegativeButton("확인", null)
+                            .create();
+                    dialog.show();
+                    return;
+                }
+
+                Log.d("이름",userName + ", " + name);
                 if(!userName.equals(name)){
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("이름, 학번 또는 비밀번호가 e-class 정보와 일치하지 않습니다.")
                             .setNegativeButton("확인", null)
@@ -171,12 +199,13 @@ public class RegisterActivity extends AppCompatActivity {
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("회원등록에 성공했습니다.")
+                                dialog = builder.setMessage("회원 등록에 성공했습니다.")
                                         .setPositiveButton("확인", null)
                                         .create();
                                 dialog.show();
@@ -217,11 +246,8 @@ public class RegisterActivity extends AppCompatActivity {
         Elements words;
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d("SSS백그라운드", "실행");
 
             try {
-                Log.d("SSS트라이", "실행");
-                Log.d("SSS비밀번호", userPassword);
                 MessageDigest md = MessageDigest.getInstance("SHA-512");
                 Log.d("SSS비밀번호", userPassword);
                 byte[] digest = md.digest(userPassword.getBytes());
@@ -265,13 +291,15 @@ public class RegisterActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            name = words.text();
+            Log.d("NAME",name);
             return null;
         }
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            name = words.text();
+
+
 
         }
     }

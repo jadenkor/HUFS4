@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="회원가입"
                 android:textColor="@color/colorPrimary"
@@ -144,6 +144,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="네 확인했습니다." />
+
+            <Button
+                android:id="@+id/verifyButton"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:text="외대생 인증"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/registerButton"
