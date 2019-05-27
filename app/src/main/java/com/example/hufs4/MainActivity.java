@@ -1,14 +1,17 @@
 package com.example.hufs4;
 
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -21,6 +24,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,11 +33,40 @@ public class MainActivity extends AppCompatActivity {
     private NoticeListAdapter Adapter;
     private List<Notice> noticeList;
 
+    private TextView userName;
+    private Button btnLogout;
+    UserSessionManager userSessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // 화면을 세로로 고정
+
+
+
+        userSessionManager = new UserSessionManager(this);
+        userSessionManager.checkLogin();
+
+        userName = findViewById(R.id.userName);
+        btnLogout = findViewById(R.id.btnLogout);
+
+        HashMap<String, String> user = user = userSessionManager.getUserDetail();
+        Log.d("SSSsessionUser", String.valueOf(user));
+        String mName = user.get(userSessionManager.NAME);
+
+
+        userName.setText(mName);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userSessionManager.logout();
+            }
+        });
+
+
 
         noticeListView = (ListView) findViewById(R.id.noticeListView);
         noticeList = new ArrayList<Notice>();

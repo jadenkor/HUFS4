@@ -1,9 +1,12 @@
 package com.example.hufs4;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -50,6 +53,7 @@ public class CourseListAdapter extends BaseAdapter {
         TextView muke = (TextView) v.findViewById(R.id.muke);
         TextView foreign = (TextView) v.findViewById(R.id.foreign);
         TextView team = (TextView) v.findViewById(R.id.team);
+
 
         if(courseList.get(i).getGrade().equals("")){
             grade.setText("전학년");
@@ -98,6 +102,19 @@ public class CourseListAdapter extends BaseAdapter {
             team.setText("");
         }
         v.setTag(courseList.get(i).getCode());
+
+        final String code = courseList.get(i).getCode();
+        ImageButton syllabus = (ImageButton) v.findViewById(R.id.syllabus);
+        syllabus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+
+                Uri uri = Uri.parse("https://wis.hufs.ac.kr/src08/jsp/lecture/syllabus.jsp?mode=print&ledg_year=2019&ledg_sessn=1&org_sect=A&lssn_cd="+code);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                context.startActivity(intent);
+            }
+        });
 
         return v;
     }

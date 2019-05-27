@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecommendFragment">
+    android:orientation="vertical"
+    tools:context=".SearchFragment"
+    android:id="@+id/contents"
+    android:background="@color/colorPrimary">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="사용자의 종합정보시스템의 수강 이력을 기반으로 강의를 추천합니다."
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="맞춤 강의 추천" />
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:background="#ffffff">
 
-</FrameLayout>
+        <ListView
+            android:id="@+id/courseListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#ffffff"
+            android:dividerHeight="10dp"></ListView>
+    </LinearLayout>
+
+
+</LinearLayout>

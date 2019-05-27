@@ -145,7 +145,7 @@
 
     </string-array>
     <string-array name="year">
-        <item>2019년도</item>
+        <item>2019</item>
     </string-array>
 
     <string-array name="term">
@@ -153,7 +153,7 @@
     </string-array>
 
     <string-array name="grade">
-        <item>전체</item>
+        <item>전학년</item>
         <item>1학년</item>
         <item>2학년</item>
         <item>3학년</item>
@@ -217,6 +217,32 @@
         <item>수요일</item>
         <item>목요일</item>
         <item>금요일</item>
+    </string-array>
+    
+    <string-array name="parsing_cycle">
+        <item>10분</item>
+        <item>30분</item>
+        <item>1시간</item>
+        <item>2시간</item>
+        <item>3시간</item>
+        <item>4시간</item>
+        <item>5시간</item>
+    </string-array>
+
+    <string-array name="area">
+        <item>선택안함</item>
+        <item>전공</item>
+        <item>이중전공</item>
+    </string-array>
+
+    <string-array name="place">
+        <item>선택안함</item>
+        <item>백년관(0)</item>
+        <item>어문학관(1)</item>
+        <item>교양관(2)</item>
+        <item>자연과학관(3)</item>
+        <item>인문경상관(4)</item>
+        <item>공학관(5)</item>
     </string-array>
 
 </resources>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,10 +23,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private AlertDialog dialog;
 
+    UserSessionManager userSessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        userSessionManager = new UserSessionManager(this);
 
         TextView registerButton = (TextView) findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +74,10 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if(success) {
+
+                                userSessionManager.createSession(userID);
+                                Log.d("SSSsession", String.valueOf(userSessionManager.getUserDetail()));
+
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 dialog = builder.setMessage("로그인에 성공했습니다.")
                                         .setPositiveButton("확인", null)
