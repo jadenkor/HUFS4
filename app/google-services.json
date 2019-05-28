@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "533284899451",
+    "firebase_url": "https://capston-e4f4a.firebaseio.com",
+    "project_id": "capston-e4f4a",
+    "storage_bucket": "capston-e4f4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533284899451:android:096b03a5d67f281c",
+        "android_client_info": {
+          "package_name": "com.example.hufs4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533284899451-7ajse233k761v6aj98otjvkf9h29tvbl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_jDIgVeEJIfXMstG73cAfQM5A--hHuCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533284899451-7ajse233k761v6aj98otjvkf9h29tvbl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

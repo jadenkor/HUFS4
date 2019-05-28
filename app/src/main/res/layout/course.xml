@@ -41,6 +41,16 @@
                 android:padding="3dp"
                 android:src="@drawable/ico_file"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3학점"
+                android:id="@+id/credit"
+                android:layout_gravity="center"
+                android:gravity="right"
+                android:padding="3dp"
+                android:textColor="#ffffff"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -49,23 +59,6 @@
             android:orientation="horizontal"
             android:background="#ffffff">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3학점"
-                android:id="@+id/credit"
-                android:layout_gravity="center"
-                android:padding="3dp"
-                android:textColor="#000000"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2시간"
-                android:id="@+id/time"
-                android:layout_gravity="center"
-                android:padding="3dp"
-                android:textColor="#000000"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,6 +66,15 @@
                 android:text="강의시간/강의실"
                 android:id="@+id/schedule"
                 android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColor="#000000"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="수강인원/수강제한인원"
+                android:id="@+id/sugang_limit"
+                android:layout_gravity="center"
+                android:gravity="right"
                 android:padding="3dp"
                 android:textColor="#000000"/>
 
@@ -94,14 +96,7 @@
                 android:textColor="#000000"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="수강인원/수강제한인원"
-                android:id="@+id/sugang_limit"
-                android:layout_gravity="center"
-                android:padding="3dp"
-                android:textColor="#000000"/>
+
 
 
 

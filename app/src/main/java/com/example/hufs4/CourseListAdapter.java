@@ -2,7 +2,9 @@ package com.example.hufs4;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -44,7 +46,6 @@ public class CourseListAdapter extends BaseAdapter {
         TextView title = (TextView) v.findViewById(R.id.title);
         TextView instructor = (TextView) v.findViewById(R.id.instructor);
         TextView credit = (TextView) v.findViewById(R.id.credit);
-        TextView time = (TextView) v.findViewById(R.id.time);
         TextView schedule = (TextView) v.findViewById(R.id.schedule);
         TextView sugang_limit = (TextView) v.findViewById(R.id.sugang_limit);
         TextView note = (TextView) v.findViewById(R.id.note);
@@ -63,9 +64,17 @@ public class CourseListAdapter extends BaseAdapter {
         }
         title.setText(courseList.get(i).getTitle());
         credit.setText(courseList.get(i).getCredit() + "학점");
-        time.setText(courseList.get(i).getTime() + "시간");
-        schedule.setText(courseList.get(i).getSchedule());
-        instructor.setText(courseList.get(i).getInstructor() + "교수님");
+        String scheduleStr = courseList.get(i).getSchedule();
+        Log.d("SSS스케쥴1", scheduleStr);
+        int idx = scheduleStr.indexOf(") (");
+        scheduleStr = scheduleStr.substring(0, idx+1);
+        Log.d("SSS스케쥴2", scheduleStr);
+        schedule.setText(scheduleStr);
+        String instructorName = courseList.get(i).getInstructor();
+        if(instructorName.length() > 20){
+            instructorName = instructorName.substring(0,20)+"...";
+        }
+        instructor.setText("담당교수 : "+instructorName);
         String sn = courseList.get(i).getSugang_num();
         String ln = courseList.get(i).getLimit_num();
         String sn_ln ="수강인원 : " + sn + " /" + ln;
@@ -73,30 +82,35 @@ public class CourseListAdapter extends BaseAdapter {
         note.setText("비고 : "+courseList.get(i).getNote());
         if(courseList.get(i).getJunpil().equals("1")){
             junpil.setText("전필");
+            junpil.setTextColor(Color.rgb(255, 0, 0));
         }
         else{
             junpil.setText("");
         }
         if(courseList.get(i).getCyber().equals("1")){
-            cyber.setText("사이버");
+            cyber.setText("온라인");
+            cyber.setTextColor(Color.rgb(0, 0, 255));
         }
         else{
             cyber.setText("");
         }
         if(courseList.get(i).getMuke().equals("1")){
             muke.setText("무크");
+            muke.setTextColor(Color.rgb(255, 212, 0));
         }
         else{
             muke.setText("");
         }
         if(courseList.get(i).getForeign().equals("1")){
             foreign.setText("원어");
+            foreign.setTextColor(Color.rgb(128, 0, 128));
         }
         else{
             foreign.setText("");
         }
         if(courseList.get(i).getTeam().equals("1")){
             team.setText("팀티칭");
+            team.setTextColor(Color.rgb(0, 153, 0));
         }
         else{
             team.setText("");
