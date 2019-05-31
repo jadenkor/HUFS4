@@ -15,7 +15,17 @@ public class UserSessionManager {
 
     private static final String PREF_NAME = "LOGIN";
     private static final String LOGIN = "IS_LOGIN";
-    public  static final String NAME = "NAME";
+    public  static final String ID = "ID";
+    public  static final String HUFS_NOTICE = "HUFS_NOTICE";
+    public  static final String BACHELOR_NOTICE = "BACHELOR_NOTICE";
+    public  static final String SCHOLARSHIP_NOTICE = "SCHOLARSHIP_NOTICE";
+    public  static final String E_NOTICE = "E_NOTICE";
+    public  static final String E_ASSIGNMENT = "E_ASSIGNMENT";
+    public  static final String E_LECTURENOTE = "E_LECTURENOTE";
+    public  static final String E_ASSIGNMENT2 = "E_ASSIGNMENT2";
+    public  static final String E_CYBERCLASS = "E_CYBERCLASS";
+    public  static final String CYCLE = "CYCLE";
+
 
     public UserSessionManager(Context context) {
         this.context = context;
@@ -23,9 +33,9 @@ public class UserSessionManager {
         editor = sharedPreferences.edit();
     }
 
-    public  void createSession(String name){
+    public  void createSession(String id){
         editor.putBoolean(LOGIN, true);
-        editor.putString(NAME, name);
+        editor.putString(ID, id);
         editor.apply();
     }
 
@@ -44,7 +54,7 @@ public class UserSessionManager {
     public HashMap<String, String> getUserDetail(){
 
         HashMap<String, String> user = new HashMap<>();
-        user.put(NAME, sharedPreferences.getString(NAME, null));
+        user.put(ID, sharedPreferences.getString(ID, null));
 
         return user;
     }

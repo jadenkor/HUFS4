@@ -111,7 +111,6 @@ public class RegisterActivity extends AppCompatActivity {
                 ValidateRequest validateRequest = new ValidateRequest(userID, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(validateRequest);
-                Log.d("아이디쳌", String.valueOf(queue));
             }
         });
 

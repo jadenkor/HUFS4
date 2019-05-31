@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private NoticeListAdapter Adapter;
     private List<Notice> noticeList;
 
-    private TextView userName;
+    private TextView userID;
     private Button btnLogout;
     UserSessionManager userSessionManager;
 
@@ -44,20 +43,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // 화면을 세로로 고정
 
-
-
         userSessionManager = new UserSessionManager(this);
         userSessionManager.checkLogin();
 
-        userName = findViewById(R.id.userName);
+        userID = findViewById(R.id.userID);
         btnLogout = findViewById(R.id.btnLogout);
 
-        HashMap<String, String> user = user = userSessionManager.getUserDetail();
-        Log.d("SSSsessionUser", String.valueOf(user));
-        String mName = user.get(userSessionManager.NAME);
+        HashMap<String, String> user = userSessionManager.getUserDetail();
+        String uId = user.get(userSessionManager.ID);
 
 
-        userName.setText(mName);
+        userID.setText(uId);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 userSessionManager.logout();
             }
         });
-
-
 
         noticeListView = (ListView) findViewById(R.id.noticeListView);
         noticeList = new ArrayList<Notice>();
