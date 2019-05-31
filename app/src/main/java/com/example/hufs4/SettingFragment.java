@@ -1,10 +1,12 @@
 package com.example.hufs4;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,14 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -106,6 +116,7 @@ public class SettingFragment extends Fragment {
         super.onActivityCreated(b);
 
         onoffSwitch = (Switch) getView().findViewById(R.id.onoffSwitch);
+        onoffSwitch.setChecked(false);
 
         cycleSpinner = (Spinner) getView().findViewById(R.id.cycleSpinner);
 
@@ -150,6 +161,26 @@ public class SettingFragment extends Fragment {
                     entireLayout.setVisibility(View.VISIBLE);
                     entireLayout.setAnimation(animation);
                     falseMessage.setText("알림을 원하는 항목을 체크해주세요");
+
+                    // Request를 보낼 queue를 생성한다.
+                    RequestQueue queue = Volley.newRequestQueue(SettingFragment.this.getActivity());
+                    // 대표적인 예로 androidhive의 테스트 url을 삽입했다. 이부분을 자신이 원하는 부분으로 바꾸면 될 터
+                    String url = "http://106.10.42.35:3000/initCheck?id=" + userID;
+                    // StringRequest를 보낸다.
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    // Display the first 500 characters of the response string.
+                                }
+                            }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+                    // RequestQueue에 현재 Task를 추가해준다.
+                    queue.add(stringRequest);
 
                 }
                 else{
@@ -215,6 +246,8 @@ public class SettingFragment extends Fragment {
     }
 
     class GetSettingTask extends AsyncTask<Void, Void, String> {
+        ProgressDialog progressDialog;
+
         String target;
         String status_hufsNotice;
         String status_bachelorNotice;
@@ -228,8 +261,9 @@ public class SettingFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             try{
-                target = "http://106.10.42.35/CourseList.php?"
+                target = "http://106.10.42.35/GetSetting.php?"
                         +"userID=" + URLEncoder.encode(userID,"UTF-8");
+                Log.d("PPP",target);
 
             } catch (Exception e){
                 e.printStackTrace();
@@ -266,8 +300,11 @@ public class SettingFragment extends Fragment {
 
         @Override
         public  void onPostExecute(String result){
+
             try {
-                JSONObject jsonObject = new JSONObject(result);
+                JSONObject object = new JSONObject(result);
+                JSONArray jsonArray = object.getJSONArray("getSetting");
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
                 status_hufsNotice = jsonObject.getString("hufsNotice");
                 status_bachelorNotice = jsonObject.getString("bachelorNotice");
                 status_scholarshipNotice = jsonObject.getString("scholarshipNotice");
@@ -276,6 +313,7 @@ public class SettingFragment extends Fragment {
                 status_eLecturenote = jsonObject.getString("eLecturenote");
                 status_eAssignment2 = jsonObject.getString("eAssignment2");
                 status_eCyberclass = jsonObject.getString("eCyberclass");
+
 
                 if(status_hufsNotice.equals("1")) hufsNotice.setChecked(true);
                 if(status_bachelorNotice.equals("1")) bachelorNotice.setChecked(true);

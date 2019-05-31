@@ -201,6 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
+                            Log.d("PPP","ok");
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
@@ -217,6 +218,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                 // Display the first 500 characters of the response string.
                                             }
                                         }, new Response.ErrorListener() {
+
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
                                     }
