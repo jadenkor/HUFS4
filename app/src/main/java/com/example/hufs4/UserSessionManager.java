@@ -16,14 +16,7 @@ public class UserSessionManager {
     private static final String PREF_NAME = "LOGIN";
     private static final String LOGIN = "IS_LOGIN";
     public  static final String ID = "ID";
-    public  static final String HUFS_NOTICE = "HUFS_NOTICE";
-    public  static final String BACHELOR_NOTICE = "BACHELOR_NOTICE";
-    public  static final String SCHOLARSHIP_NOTICE = "SCHOLARSHIP_NOTICE";
-    public  static final String E_NOTICE = "E_NOTICE";
-    public  static final String E_ASSIGNMENT = "E_ASSIGNMENT";
-    public  static final String E_LECTURENOTE = "E_LECTURENOTE";
-    public  static final String E_ASSIGNMENT2 = "E_ASSIGNMENT2";
-    public  static final String E_CYBERCLASS = "E_CYBERCLASS";
+    public  static final String ALARM = "ALARM";
     public  static final String CYCLE = "CYCLE";
 
 
@@ -33,9 +26,11 @@ public class UserSessionManager {
         editor = sharedPreferences.edit();
     }
 
-    public  void createSession(String id){
+    public  void createSession(String id, String alarm, String cycle){
         editor.putBoolean(LOGIN, true);
         editor.putString(ID, id);
+        editor.putString(ALARM, alarm);
+        editor.putString(CYCLE, cycle);
         editor.apply();
     }
 
@@ -55,8 +50,14 @@ public class UserSessionManager {
 
         HashMap<String, String> user = new HashMap<>();
         user.put(ID, sharedPreferences.getString(ID, null));
+        user.put(ALARM, sharedPreferences.getString(ALARM, null));
+        user.put(CYCLE, sharedPreferences.getString(CYCLE, null));
 
         return user;
+    }
+    public void changeValue(String key,String value){
+        editor.putString(key, value);
+        editor.commit();
     }
 
     public void logout(){

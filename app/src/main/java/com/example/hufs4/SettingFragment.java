@@ -1,6 +1,5 @@
 package com.example.hufs4;
 
-import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -108,6 +107,8 @@ public class SettingFragment extends Fragment {
 
     UserSessionManager userSessionManager;
     private String userID;
+    private String alarm;
+    private String cycle;
 
 
 
@@ -116,7 +117,6 @@ public class SettingFragment extends Fragment {
         super.onActivityCreated(b);
 
         onoffSwitch = (Switch) getView().findViewById(R.id.onoffSwitch);
-        onoffSwitch.setChecked(false);
 
         cycleSpinner = (Spinner) getView().findViewById(R.id.cycleSpinner);
 
@@ -144,10 +144,30 @@ public class SettingFragment extends Fragment {
         final TextView falseMessage = (TextView) getView().findViewById(R.id.falseMessage);
 
         userSessionManager = new UserSessionManager(this.getActivity());
-        HashMap<String, String> user = userSessionManager.getUserDetail();
+        final HashMap<String, String> user = userSessionManager.getUserDetail();
         userID = user.get(userSessionManager.ID);
-
-
+        alarm = user.get(userSessionManager.ALARM);
+        cycle = user.get(userSessionManager.CYCLE);
+        Log.d("GGG아디",userID);
+        Log.d("GGG확인",alarm);
+        if(alarm.equals("off")){
+            onoffSwitch.setChecked(false);
+            entireLayout.setVisibility(View.INVISIBLE);
+            falseMessage.setText("알림 기능을 켜면 알림을 설정할 수 있습니다.");
+        }
+        else onoffSwitch.setChecked(true);
+        Log.d("GGG주기","OK");
+        if(cycle.equals("15분")) {
+            cycleSpinner.setSelection(0);
+            Log.d("GGG주기2", "OK");
+        }
+        else if(cycle.equals("30분")) cycleSpinner.setSelection(1);
+        else if(cycle.equals("1시간")) cycleSpinner.setSelection(2);
+        else if(cycle.equals("2시간")) cycleSpinner.setSelection(3);
+        else if(cycle.equals("4시간")) cycleSpinner.setSelection(4);
+        else if(cycle.equals("8시간")) cycleSpinner.setSelection(5);
+        else if(cycle.equals("12시간")) cycleSpinner.setSelection(6);
+        else cycleSpinner.setSelection(7);
 
 
         onoffSwitch.setOnClickListener(new View.OnClickListener(){
@@ -156,6 +176,13 @@ public class SettingFragment extends Fragment {
             public void onClick(View v) {
 
                 if(onoffSwitch.isChecked()){
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
+//                    dialog = builder.setMessage("알림 기능이 활성화되었습니다.")
+//                            .setPositiveButton("확인", null)
+//                            .create();
+//                    dialog.show();
+                    userSessionManager.changeValue("ALARM","on");
+                    Log.d("GGG알람",userSessionManager.ALARM);
                     Animation animation = new AlphaAnimation(0, 1);
                     animation.setDuration(500);
                     entireLayout.setVisibility(View.VISIBLE);
@@ -184,6 +211,13 @@ public class SettingFragment extends Fragment {
 
                 }
                 else{
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
+//                    dialog = builder.setMessage("알림 기능이 비활성화되었습니다.")
+//                            .setPositiveButton("확인", null)
+//                            .create();
+//                    dialog.show();
+                    userSessionManager.changeValue("ALARM", "off");
+                    Log.d("GGG알람",userSessionManager.ALARM);
                     Animation animation = new AlphaAnimation(1, 0);
                     animation.setDuration(500);
                     entireLayout.setVisibility(View.INVISIBLE);
@@ -199,6 +233,8 @@ public class SettingFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
+                userSessionManager.changeValue("CYCLE", (String) cycleSpinner.getSelectedItem());
 
                 new BackgroundTask().execute();
 
@@ -246,7 +282,6 @@ public class SettingFragment extends Fragment {
     }
 
     class GetSettingTask extends AsyncTask<Void, Void, String> {
-        ProgressDialog progressDialog;
 
         String target;
         String status_hufsNotice;
@@ -418,7 +453,7 @@ public class SettingFragment extends Fragment {
 
         @Override
         public  void onPostExecute(String result){
-            AlertDialog dialog;
+
             AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
             dialog = builder.setMessage("설정이 저장되었습니다.")
                     .setPositiveButton("확인", null)

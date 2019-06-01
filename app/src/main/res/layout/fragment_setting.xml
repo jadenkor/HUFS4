@@ -73,6 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorLightBlue"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarSize="5dp"
             android:fillViewport="true">
 
             <LinearLayout
@@ -93,6 +95,7 @@
                     android:id="@+id/hufsLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:background="#ffffff"
                     android:orientation="vertical"
                     android:paddingRight="10dp">
@@ -130,7 +133,7 @@
                     android:id="@+id/eclassLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_margin="5dp"
                     android:background="#ffffff"
                     android:orientation="vertical"
                     android:paddingRight="10dp">
@@ -179,6 +182,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:background="#ffffff"
                     android:orientation="vertical"
                     android:paddingRight="10dp">
@@ -221,13 +225,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ffffff"
+            android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="새 글 확인 주기"
                 android:textColor="#000000"

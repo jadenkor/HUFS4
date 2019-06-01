@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -106,6 +108,9 @@ public class SearchFragment extends Fragment {
     private CourseListAdapter adapter;
     private List<Course> courseList;
 
+    private TextView detailText;
+    private LinearLayout detailLayout;
+
 
 //    private CourseListAdapter adapter;
 //    private List<Course> courseList;
@@ -131,6 +136,25 @@ public class SearchFragment extends Fragment {
         searchText = (EditText) getView().findViewById(R.id.searchText);
         areaSpinner = (Spinner) getView().findViewById(R.id.areaSpinner);
         placeSpinner = (Spinner) getView().findViewById(R.id.placeSpinner);
+
+        detailText = (TextView) getView().findViewById(R.id.detailText);
+        detailLayout = (LinearLayout) getView().findViewById(R.id.detailLayout);
+        detailText.setText("추가 검색 옵션 펼치기");
+        detailLayout.setVisibility(View.GONE);
+        detailText.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(detailText.getText().equals("추가 검색 옵션 펼치기")) {
+                    detailText.setText("추가 검색 옵션 접기");
+                    detailLayout.setVisibility(View.VISIBLE);
+                }
+                else{
+                    detailText.setText("추가 검색 옵션 펼치기");
+                    detailLayout.setVisibility(View.GONE);
+                }
+            }
+        });
 
 
         campusGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -210,13 +234,13 @@ public class SearchFragment extends Fragment {
                 else if(courseCampus.equals("글로벌")){
                     if(courseType.equals("전공/부전공")) {
                         isMajor="1";
-                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, R.layout.spinnerlayout);
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
                         areaSpinner.setEnabled(true);
                     }
                     else if(courseType.equals("실용외국어/교양과목")) {
                         isMajor="0";
-                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, R.layout.spinnerlayout);
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
                         areaSpinner.setEnabled(false);
                     }
@@ -235,13 +259,13 @@ public class SearchFragment extends Fragment {
                 if(courseCampus.equals("서울")){
                     if(courseType.equals("전공/부전공")) {
                         isMajor="1";
-                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorSeoul, R.layout.spinnerlayout);
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorSeoul, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
                         areaSpinner.setEnabled(true);
                     }
                     else {
                         isMajor="0";
-                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalSeoul, R.layout.spinnerlayout);
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalSeoul, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
                         areaSpinner.setEnabled(false);
                     }
@@ -250,14 +274,14 @@ public class SearchFragment extends Fragment {
                     if(courseType.equals("전공/부전공")) {
                         isMajor="1";
                         Log.d("전공","전공");
-                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, R.layout.spinnerlayout);
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
                         areaSpinner.setEnabled(true);
                     }
                     else {
                         isMajor="0";
                         Log.d("교양","교양");
-                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, R.layout.spinnerlayout);
+                        selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
                         areaSpinner.setEnabled(false);
                     }

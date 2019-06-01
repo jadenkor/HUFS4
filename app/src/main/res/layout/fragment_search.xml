@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SearchFragment"
+    android:background="@color/colorLightBlue"
     android:id="@+id/contents">
 
     <LinearLayout
@@ -15,6 +16,8 @@
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
         android:paddingRight="10dp">
+
+
 
         <TextView
             android:layout_width="100dp"
@@ -60,11 +63,17 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_centerInParent="true"
+        android:background="@color/colorLightBlue"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
         android:paddingRight="10dp">
 
@@ -97,6 +106,12 @@
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"></Spinner>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_centerInParent="true"
+        android:background="@color/colorLightBlue"/>
 
     <RadioGroup
         android:id="@+id/courseGroup"
@@ -132,6 +147,12 @@
 
     </RadioGroup>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_centerInParent="true"
+        android:background="@color/colorLightBlue"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -144,9 +165,8 @@
             android:id="@+id/selectSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"></Spinner>
+            android:layout_gravity="right"
+            android:layout_marginLeft="10dp"></Spinner>
 
     </LinearLayout>
 
@@ -154,87 +174,106 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/colorPrimaryDark">
+        android:background="#ffffff">
 
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/colorLightBlue">
+            <TextView
+                android:id="@+id/detailText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:gravity="center"
+                android:text="추가 검색 옵션 접기"
+                android:textSize="15dp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
 
             <LinearLayout
+                android:id="@+id/detailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:layout_margin="5dp"
+                android:background="@color/colorPrimary">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginLeft="3dp"
-                    android:text="세부 필터링"
-                    android:background="#ffffff"
-                    android:textSize="18dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/filterSpinner"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"></Spinner>
-
-                <EditText
-                    android:id="@+id/searchText"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    android:ems="10"
-                    android:hint="검색"
-                    android:inputType="text"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="12sp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="필터 옵션"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#ffffff"/>
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    <Spinner
+                        android:id="@+id/filterSpinner"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"></Spinner>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/searchText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"
+                        android:ems="10"
+                        android:hint="입력"
+                        android:inputType="text"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#ffffff"
+                        android:textStyle="bold"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="개설영역"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#ffffff"/>
+                    android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/areaSpinner"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"></Spinner>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="개설영역"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#ffffff"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="건물"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#ffffff"/>
+                    <Spinner
+                        android:id="@+id/areaSpinner"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"></Spinner>
 
-                <Spinner
-                    android:id="@+id/placeSpinner"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"></Spinner>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="건물"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#ffffff"/>
+
+                    <Spinner
+                        android:id="@+id/placeSpinner"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"></Spinner>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -243,21 +282,20 @@
     </LinearLayout>
 
 
-
     <Button
         android:id="@+id/searchButton"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:background="@color/colorAccent"
-        android:text="검색"/>
+        android:text="검색"
+        android:textSize="15dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:background="#ffffff">
 
         <ListView

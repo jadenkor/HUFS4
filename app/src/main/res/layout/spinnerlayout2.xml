@@ -3,9 +3,9 @@
     android:id="@+id/spinnerTarget"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:textSize="16dp"
-    android:background="@color/colorPrimary"
-    android:textColor="@color/colorLightBlue"
+    android:textSize="18dp"
+    android:background="#ffffff"
+    android:textColor="@color/colorPrimary"
     android:gravity="center">
 
 </TextView>
