@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // RequestQueue에 현재 Task를 추가해준다.
                                 queue.add(stringRequest);
 
-                                userSessionManager.createSession(userID,"off", "15분");
+                                userSessionManager.createSession(userID,"off", "15");
                                 Log.d("SSSsession", String.valueOf(userSessionManager.getUserDetail()));
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

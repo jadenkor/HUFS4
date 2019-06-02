@@ -375,16 +375,6 @@ public class SearchFragment extends Fragment {
                         + "&DetailFilter=" + URLEncoder.encode(detailFilter, "UTF-8")
                         + "&Grade=" + URLEncoder.encode(grade, "UTF-8")
                         + "&isMajor=" + URLEncoder.encode(isMajor, "UTF-8");
-                String target2 = "http://106.10.42.35/CourseList.php?Gubun=" + selectSpinner.getSelectedItem().toString()
-                        + "&FilterOption=" + filterOption
-                        + "&DetailFilter=" + detailFilter
-                        + "&Grade=" + grade
-                        + "&isMajor=" + isMajor;
-                Log.d("" +
-                        "courseType", courseType.substring(0,2));
-                Log.d("target2", target2);
-                Log.d("SSStarget", target.toString());
-
 
             } catch (Exception e) {
                 e.printStackTrace();

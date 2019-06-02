@@ -1,8 +1,10 @@
 package com.example.hufs4;
 
+import android.arch.lifecycle.Observer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -37,7 +39,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -104,26 +114,25 @@ public class SettingFragment extends Fragment {
 
     private AlertDialog dialog;
 
-
-    UserSessionManager userSessionManager;
+    UserSessionManager userSessionManager = null;
     private String userID;
     private String alarm;
     private String cycle;
 
-
+    /* WORK MANAGER PART - Declare Variables */
+    private TextView wmStatus;
+    PeriodicWorkRequest periodicWorkRequest = null;
 
     @Override
     public void onActivityCreated(Bundle b){
         super.onActivityCreated(b);
-
         onoffSwitch = (Switch) getView().findViewById(R.id.onoffSwitch);
-
         cycleSpinner = (Spinner) getView().findViewById(R.id.cycleSpinner);
-
         cycleAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.parsing_cycle, android.R.layout.simple_spinner_dropdown_item);
         cycleSpinner.setAdapter(cycleAdapter);
 
-
+        // WorkManager Status TextView
+        wmStatus = (TextView) getView().findViewById(R.id.tvWMStatus);
 
         // 학교 홈페이지 공지 체크박스 : 공지, 학사공지, 장학공지
         hufsNotice = (CheckBox) getView().findViewById(R.id.hufsNotice);
@@ -145,9 +154,17 @@ public class SettingFragment extends Fragment {
 
         userSessionManager = new UserSessionManager(this.getActivity());
         final HashMap<String, String> user = userSessionManager.getUserDetail();
+
         userID = user.get(userSessionManager.ID);
         alarm = user.get(userSessionManager.ALARM);
         cycle = user.get(userSessionManager.CYCLE);
+
+        /* WORK MANAGER PART - Initialize After getting cycle value */
+        periodicWorkRequest = new PeriodicWorkRequest.Builder(MyWorker.class, Long.parseLong(userSessionManager.getCurrentCycle()), TimeUnit.MINUTES)
+                .addTag("periodic_work")
+                .setConstraints(new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+                .build();
+
         Log.d("GGG아디",userID);
         Log.d("GGG확인",alarm);
         if(alarm.equals("off")){
@@ -157,25 +174,35 @@ public class SettingFragment extends Fragment {
         }
         else onoffSwitch.setChecked(true);
         Log.d("GGG주기","OK");
-        if(cycle.equals("15분")) {
+        if(cycle.equals("15")) {
             cycleSpinner.setSelection(0);
             Log.d("GGG주기2", "OK");
         }
-        else if(cycle.equals("30분")) cycleSpinner.setSelection(1);
-        else if(cycle.equals("1시간")) cycleSpinner.setSelection(2);
-        else if(cycle.equals("2시간")) cycleSpinner.setSelection(3);
-        else if(cycle.equals("4시간")) cycleSpinner.setSelection(4);
-        else if(cycle.equals("8시간")) cycleSpinner.setSelection(5);
-        else if(cycle.equals("12시간")) cycleSpinner.setSelection(6);
-        else cycleSpinner.setSelection(7);
+        else if(cycle.equals("30")) cycleSpinner.setSelection(1);   // 30분
+        else if(cycle.equals("60")) cycleSpinner.setSelection(2);   // 1시간
+        else if(cycle.equals("120")) cycleSpinner.setSelection(3);  // 2시간
+        else if(cycle.equals("240")) cycleSpinner.setSelection(4);  // 4시간
+        else if(cycle.equals("480")) cycleSpinner.setSelection(5);  // 8시간
+        else if(cycle.equals("720")) cycleSpinner.setSelection(6);  // 12시간
+        else cycleSpinner.setSelection(7);                          // 24시간
 
+        /* WORK MANAGER PART - Observer */
+        WorkManager.getInstance().getWorkInfosForUniqueWorkLiveData("pw_unique")
+                .observe(SettingFragment.this.getActivity(), new Observer<List<WorkInfo>>() {
+                    @Override
+                    public void onChanged(@Nullable List<WorkInfo> workInfos) {
+                        if(workInfos.size() > 0){
+                            wmStatus.setText("Cycle: " + userSessionManager.getCurrentCycle() + " / Status: " + workInfos.get(0).getState().name());
+                        }
+                    }
+                });
 
         onoffSwitch.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
-
                 if(onoffSwitch.isChecked()){
+                    // 설정을 저장하지 않고 알림을 off 했다가 다시 on을 하는 경우 새로 갱신되지 않고 남아 있는 문제 해결
+                    new GetSettingTask().execute();
 //                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
 //                    dialog = builder.setMessage("알림 기능이 활성화되었습니다.")
 //                            .setPositiveButton("확인", null)
@@ -201,7 +228,6 @@ public class SettingFragment extends Fragment {
                                     // Display the first 500 characters of the response string.
                                 }
                             }, new Response.ErrorListener() {
-
                         @Override
                         public void onErrorResponse(VolleyError error) {
                         }
@@ -209,6 +235,8 @@ public class SettingFragment extends Fragment {
                     // RequestQueue에 현재 Task를 추가해준다.
                     queue.add(stringRequest);
 
+                    /* WORK MANAGER PART - Start */
+                    WorkManager.getInstance().enqueueUniquePeriodicWork("pw_unique", ExistingPeriodicWorkPolicy.REPLACE, periodicWorkRequest);
                 }
                 else{
 //                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
@@ -223,6 +251,9 @@ public class SettingFragment extends Fragment {
                     entireLayout.setVisibility(View.INVISIBLE);
                     entireLayout.setAnimation(animation);
                     falseMessage.setText("알림 기능을 켜면 알림을 설정할 수 있습니다.");
+
+                    /* WORK MANAGER PART - Stop */
+                    WorkManager.getInstance().cancelUniqueWork("pw_unique");
                 }
             }
         });
@@ -233,16 +264,35 @@ public class SettingFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
-                userSessionManager.changeValue("CYCLE", (String) cycleSpinner.getSelectedItem());
-
+                switch ((String) cycleSpinner.getSelectedItem()) {
+                    case "15분":
+                        userSessionManager.changeValue("CYCLE", "15");
+                        break;
+                    case "30분":
+                        userSessionManager.changeValue("CYCLE", "30");
+                        break;
+                    case "1시간":
+                        userSessionManager.changeValue("CYCLE", "60");
+                        break;
+                    case "2시간":
+                        userSessionManager.changeValue("CYCLE", "120");
+                        break;
+                    case "4시간":
+                        userSessionManager.changeValue("CYCLE", "240");
+                        break;
+                    case "8시간":
+                        userSessionManager.changeValue("CYCLE", "480");
+                        break;
+                    case "12시간":
+                        userSessionManager.changeValue("CYCLE", "720");
+                        break;
+                    case "24시간":
+                        userSessionManager.changeValue("CYCLE", "1440");
+                        break;
+                }
                 new BackgroundTask().execute();
-
             }
         });
-
-
-
     }
 
 
@@ -349,7 +399,6 @@ public class SettingFragment extends Fragment {
                 status_eAssignment2 = jsonObject.getString("eAssignment2");
                 status_eCyberclass = jsonObject.getString("eCyberclass");
 
-
                 if(status_hufsNotice.equals("1")) hufsNotice.setChecked(true);
                 if(status_bachelorNotice.equals("1")) bachelorNotice.setChecked(true);
                 if(status_scholarshipNotice.equals("1")) scholarshipNotice.setChecked(true);
@@ -358,14 +407,10 @@ public class SettingFragment extends Fragment {
                 if(status_eLecturenote.equals("1")) eLecturenote.setChecked(true);
                 if(status_eAssignment2.equals("1")) eAssignment2.setChecked(true);
                 if(status_eCyberclass.equals("1")) eCyberclass.setChecked(true);
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-
-
     }
 
     class BackgroundTask extends AsyncTask<Void, Void, String> {
@@ -420,8 +465,6 @@ public class SettingFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
 
         @Override
@@ -439,12 +482,10 @@ public class SettingFragment extends Fragment {
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
-
                 return stringBuilder.toString().trim();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -453,6 +494,12 @@ public class SettingFragment extends Fragment {
 
         @Override
         public  void onPostExecute(String result){
+            /* WORK MANAGER PART - Set New Interval Value and Restart After Updating Setting*/
+            periodicWorkRequest = new PeriodicWorkRequest.Builder(MyWorker.class, Long.parseLong(userSessionManager.getCurrentCycle()), TimeUnit.MINUTES)
+                    .addTag("periodic_work")
+                    .setConstraints(new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+                    .build();
+            WorkManager.getInstance().enqueueUniquePeriodicWork("pw_unique", ExistingPeriodicWorkPolicy.REPLACE, periodicWorkRequest);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
             dialog = builder.setMessage("설정이 저장되었습니다.")

@@ -52,7 +52,7 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
         period[9][1] = (CheckBox) findViewById(R.id.Tue10CheckBox);
 
         period[0][2] = (CheckBox) findViewById(R.id.Wed1CheckBox);
-        period[1][2] = (CheckBox) findViewById(R.id.Wed2CheckBox);
+        period[1][2] =  (CheckBox) findViewById(R.id.Wed2CheckBox);
         period[2][2] = (CheckBox) findViewById(R.id.Wed3CheckBox);
         period[3][2] = (CheckBox) findViewById(R.id.Wed4CheckBox);
         period[4][2] = (CheckBox) findViewById(R.id.Wed5CheckBox);

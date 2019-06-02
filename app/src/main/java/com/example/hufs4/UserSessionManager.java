@@ -55,6 +55,15 @@ public class UserSessionManager {
 
         return user;
     }
+
+    public String getCurrentCycle(){
+        return sharedPreferences.getString(CYCLE, null);
+    }
+
+    public String getCurrentID(){
+        return sharedPreferences.getString(ID, null);
+    }
+
     public void changeValue(String key,String value){
         editor.putString(key, value);
         editor.commit();

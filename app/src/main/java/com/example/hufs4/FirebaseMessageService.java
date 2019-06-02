@@ -1,49 +1,97 @@
 package com.example.hufs4;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
 
-public class FirebaseMessageService extends  com.google.firebase.messaging.FirebaseMessagingService {
+import java.util.concurrent.atomic.AtomicInteger;
 
+public class FirebaseMessageService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     private static final String TAG = "FirebaseMsgService";
 
-    private String msg, title;
+    private String msg, title, url;
+
+    private final static AtomicInteger c = new AtomicInteger(0);
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.e(TAG, "onMessageReceived");
 
-        title = remoteMessage.getNotification().getTitle();
-        msg = remoteMessage.getNotification().getBody();
+        if(remoteMessage.getData().isEmpty() == false){
+            title = remoteMessage.getData().get("title");
+            msg = remoteMessage.getData().get("body");
+            url = remoteMessage.getData().get("url");
 
+            Log.e(TAG, title);
+            Log.e(TAG, msg);
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+            if(url.isEmpty()){
+                sendNotification(title, msg);
+            }
+            else{
+                sendNotification4Official(title, msg, url);
+            }
+        }
+    }
 
-        PendingIntent contentintent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+    public void sendNotification(String title, String message) {
+        Log.e(TAG, "sendNotification");
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
+        //If on Oreo then notification required a notification channel.
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default", "Default", NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(channel);
+        }
 
-        //푸쉬알림이 떴을때 안드로이드 기본아이콘
-        //push알림 떴을 때
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher)
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "default")
                 .setContentTitle(title)
-                .setContentText(msg)
-                .setAutoCancel(true)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setVibrate(new long[]{1,1000});
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0))
+                .setAutoCancel(true);
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(getID(), notification.build());
+    }
 
-        notificationManager.notify(0,mBuilder.build());
+    public void sendNotification4Official(String title, String message, String url) {
+        Log.e(TAG, "sendNotification4Official");
+        Log.e(TAG, url);
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
-        mBuilder.setContentIntent(contentintent);
+        // Set Pending Intent for URL
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent mPendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        //If on Oreo then notification required a notification channel.
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default", "Default", NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, "default")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setContentIntent(mPendingIntent)
+                .setAutoCancel(true);
+
+        notificationManager.notify(getID(), notification.build());
+    }
+
+    public static int getID() {
+        return c.incrementAndGet();
     }
 }
