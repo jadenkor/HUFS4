@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#eeeeee"
-    android:layout_width="300dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:layout_margin="5dp"
         android:gravity="center">
 
         <TableRow
@@ -87,6 +88,15 @@
                 android:gravity="center"
                 android:text="금"
                 android:textColor="#ffffff" />
+            <TextView
+                android:id="@+id/Saturday"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:text="토"
+                android:textColor="#ffffff" />
 
         </TableRow>
 
@@ -134,6 +144,12 @@
 
             <CheckBox
                 android:id="@+id/Fri1CheckBox"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/Sat1CheckBox"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -188,6 +204,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/Sat2CheckBox"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
         </TableRow>
 
         <TableRow
@@ -234,6 +256,12 @@
 
             <CheckBox
                 android:id="@+id/Fri3CheckBox"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/Sat3CheckBox"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -288,6 +316,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/Sat4CheckBox"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
         </TableRow>
 
         <TableRow
@@ -334,6 +368,12 @@
 
             <CheckBox
                 android:id="@+id/Fri5CheckBox"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/Sat5CheckBox"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -388,6 +428,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/Sat6CheckBox"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
         </TableRow>
 
         <TableRow
@@ -434,6 +480,12 @@
 
             <CheckBox
                 android:id="@+id/Fri7CheckBox"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/Sat7CheckBox"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -488,6 +540,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/Sat8CheckBox"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
         </TableRow>
 
         <TableRow
@@ -538,6 +596,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/Sat9CheckBox"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
         </TableRow>
 
         <TableRow
@@ -584,6 +648,12 @@
 
             <CheckBox
                 android:id="@+id/Fri10CheckBox"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/Sat10CheckBox"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

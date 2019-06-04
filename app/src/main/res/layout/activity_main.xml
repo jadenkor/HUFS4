@@ -20,7 +20,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
-            android:text="맞춤 강의 추천"
+            android:text="키워드 기반 추천"
             android:textColor="#ffffff"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -47,7 +47,7 @@
             android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
-            android:text="알림 설정"
+            android:text="알림 설정 | 계정"
             android:textColor="#ffffff"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -60,55 +60,81 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
             android:orientation="vertical"
             android:id="@+id/index">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/colorPrimary"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:background="#ffffff"
                 android:orientation="vertical">
 
                 <ImageButton
                     android:layout_width="180dp"
                     android:layout_height="180dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="40dp"
                     android:src="@drawable/logo" />
 
                 <TextView
-                    android:id="@+id/userID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:text="컴퓨터공학과"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:text="201401483 백형기"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:text="이름"
-                    android:textColor="#ffffff"
-                    android:textSize="25dp"
+                    android:text="201402081 유재준"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="201402783 임예찬"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="80dp"
+                    android:text="2019-1학기 캡스톤설계 졸업 프로젝트입니다."
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-            <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="로그아웃"/>
-
-            <ListView
-                android:id="@+id/noticeListView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:divider="#ffffff"
-                android:dividerHeight="10dp"></ListView>
 
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+        </RelativeLayout>
 
     </FrameLayout>
 </LinearLayout>

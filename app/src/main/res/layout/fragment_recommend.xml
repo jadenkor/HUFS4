@@ -16,27 +16,60 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:text="사용자의 종합정보시스템의 수강 이력을 기반으로 강의를 추천합니다."
+            android:text="2019학년도 1학기 기준"
+            android:textColor="#f7ffd3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+
+            android:layout_marginRight="10dp"
+            android:text="관심 분야 키워드와 일치하는 강의를 추천해드립니다."
             android:textColor="#ffffff"
             android:textStyle="bold" />
+
+
+
+        <com.example.hufs4.HashTagAutoCompleteTextView
+            android:id="@+id/keywordSearchText"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:textColor="#ffffff"
+            android:textColorHint="#e0e0e0"
+            android:inputType="text"
+            android:hint="검색어를 입력하세요."
+            android:completionThreshold="1"
+            android:completionHint="원하는 키워드를 탭하세요"/>
+
+        <Button
+            android:id="@+id/keywordSearchButton"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:background="@color/colorAccent"
+            android:text="검색"
+            android:textSize="15dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:orientation="vertical"
         android:background="#ffffff">
 
         <ListView
-            android:id="@+id/courseListView"
+            android:id="@+id/keywordCourseListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="#ffffff"
+            android:padding="5dp"
             android:dividerHeight="10dp"></ListView>
     </LinearLayout>
 

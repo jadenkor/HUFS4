@@ -7,6 +7,35 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context=".SearchFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightBlue"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/userText"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:text="안녕하세요!"
+            android:textSize="18dp"
+            android:textColor="#000000" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="right"
+            android:textSize="12dp"
+            android:text="[로그아웃] 및 [회원탈퇴] 버튼은 맨 아래에 위치해 있습니다."
+            android:textColor="#000000" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,222 +76,222 @@
             android:layout_marginLeft="10dp"
             android:text="on"
             android:textColor="#ffffff" />
-
-        <TextView
-            android:id="@+id/tvWMStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:textColor="#ffffff" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/falseMessage"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_gravity="center"
+        android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="알림을 원하는 항목을 체크해주세요"
-        android:textColor="#ffffff"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:id="@+id/entireLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ScrollView
-            android:id="@+id/scrollView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorLightBlue"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbarSize="5dp"
-            android:fillViewport="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="새 글"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/hufsLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="#ffffff"
-                    android:orientation="vertical"
-                    android:paddingRight="10dp">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="8dp"
-                        android:text="학교 홈페이지"
-                        android:textColor="#000000"
-                        android:textStyle="bold" />
-
-                    <CheckBox
-                        android:id="@+id/hufsNotice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="학교 공지 게시판" />
-
-                    <CheckBox
-                        android:id="@+id/bachelorNotice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="학사 공지 게시판" />
-
-                    <CheckBox
-                        android:id="@+id/scholarshipNotice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="장학 공지 게시판" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/eclassLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="#ffffff"
-                    android:orientation="vertical"
-                    android:paddingRight="10dp">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="8dp"
-                        android:text="E-CLASS"
-                        android:textColor="#000000"
-                        android:textStyle="bold" />
-
-                    <CheckBox
-                        android:id="@+id/eNotice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="공지사항" />
-
-                    <CheckBox
-                        android:id="@+id/eAssignment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="과제" />
-
-                    <CheckBox
-                        android:id="@+id/eLecturenote"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="강의자료" />
-
-
-                </LinearLayout>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="마감 기한 (하루 전 알림)"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="#ffffff"
-                    android:orientation="vertical"
-                    android:paddingRight="10dp">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="8dp"
-                        android:text="E-CLASS"
-                        android:textColor="#000000"
-                        android:textStyle="bold" />
-
-                    <CheckBox
-                        android:id="@+id/eAssignment2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="과제" />
-
-                    <CheckBox
-                        android:id="@+id/eCyberclass"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="사이버 강의" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="사용자가 설정한 주기마다 새 글이 있는지 확인합니다."
-            android:textColor="#ffffff"
-            android:textStyle="bold" />
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarSize="5dp"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-
+            android:orientation="vertical">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:id="@+id/falseMessage"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
                 android:gravity="center"
-                android:text="새 글 확인 주기"
-                android:textColor="#000000"
+                android:text="알림을 원하는 항목을 체크해주세요"
+                android:textColor="#ffffff"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/cycleSpinner"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/entireLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"></Spinner>
+                android:orientation="vertical">
 
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorLightBlue"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="새 글 알림"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/hufsLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="#ffffff"
+                        android:orientation="vertical"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="8dp"
+                            android:text="학교 홈페이지"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/hufsNotice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="학교 공지 게시판" />
+
+                        <CheckBox
+                            android:id="@+id/bachelorNotice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="학사 공지 게시판" />
+
+                        <CheckBox
+                            android:id="@+id/scholarshipNotice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="장학 공지 게시판" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/eclassLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="20dp"
+                        android:background="#ffffff"
+                        android:orientation="vertical"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="8dp"
+                            android:text="E-CLASS"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/eNotice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="공지사항" />
+
+                        <CheckBox
+                            android:id="@+id/eAssignment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="과제" />
+
+                        <CheckBox
+                            android:id="@+id/eLecturenote"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="강의자료" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="사용자가 설정한 주기마다 새 글이 있는지 확인합니다."
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/colorLightBlue"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="새 글 확인 주기"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/cycleSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"></Spinner>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/saveButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/colorAccent"
+                    android:text="설정 저장" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="bottom">
+                    <Button
+                        android:id="@+id/btnLogout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_gravity="right"
+                        android:layout_margin="5dp"
+                        android:background="#DCEBFF"
+                        android:text="로그아웃"
+                        android:textStyle="bold"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/btnDelete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_gravity="right"
+                        android:layout_margin="5dp"
+                        android:background="#FF9999"
+                        android:text="회원탈퇴"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
         </LinearLayout>
+    </ScrollView>
 
 
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:background="@color/colorAccent"
-            android:text="설정 저장" />
 
-    </LinearLayout>
+
 
 
 </LinearLayout>

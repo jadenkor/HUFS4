@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private AlertDialog dialog;
 
     UserSessionManager userSessionManager;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,10 +1,9 @@
 package com.example.hufs4;
 
-import android.arch.lifecycle.Observer;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -39,14 +38,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 /**
@@ -100,6 +97,7 @@ public class SettingFragment extends Fragment {
         }
     }
 
+    private TextView userText;
     private Switch onoffSwitch;
     private CheckBox hufsNotice;
     private CheckBox bachelorNotice;
@@ -118,21 +116,23 @@ public class SettingFragment extends Fragment {
     private String userID;
     private String alarm;
     private String cycle;
+    private Button btnLogout;
+    private Button btnDelete;
 
     /* WORK MANAGER PART - Declare Variables */
-    private TextView wmStatus;
     PeriodicWorkRequest periodicWorkRequest = null;
 
     @Override
     public void onActivityCreated(Bundle b){
         super.onActivityCreated(b);
+
+
+
+
         onoffSwitch = (Switch) getView().findViewById(R.id.onoffSwitch);
         cycleSpinner = (Spinner) getView().findViewById(R.id.cycleSpinner);
         cycleAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.parsing_cycle, android.R.layout.simple_spinner_dropdown_item);
         cycleSpinner.setAdapter(cycleAdapter);
-
-        // WorkManager Status TextView
-        wmStatus = (TextView) getView().findViewById(R.id.tvWMStatus);
 
         // 학교 홈페이지 공지 체크박스 : 공지, 학사공지, 장학공지
         hufsNotice = (CheckBox) getView().findViewById(R.id.hufsNotice);
@@ -144,10 +144,6 @@ public class SettingFragment extends Fragment {
         eAssignment = (CheckBox) getView().findViewById(R.id.eAssignment);
         eLecturenote = (CheckBox) getView().findViewById(R.id.eLecturenote);
 
-        // 마감기한 체크박스 : 과제, 사이버강의
-        eAssignment2 = (CheckBox) getView().findViewById(R.id.eAssignment2);
-        eCyberclass = (CheckBox) getView().findViewById(R.id.eCyberclass);
-
         final LinearLayout entireLayout = (LinearLayout) getView().findViewById(R.id.entireLayout);
 
         final TextView falseMessage = (TextView) getView().findViewById(R.id.falseMessage);
@@ -158,6 +154,10 @@ public class SettingFragment extends Fragment {
         userID = user.get(userSessionManager.ID);
         alarm = user.get(userSessionManager.ALARM);
         cycle = user.get(userSessionManager.CYCLE);
+
+        userText = (TextView) getView().findViewById(R.id.userText);
+        userText.setText("<" + userID + ">님 안녕하세요!");
+
 
         /* WORK MANAGER PART - Initialize After getting cycle value */
         periodicWorkRequest = new PeriodicWorkRequest.Builder(MyWorker.class, Long.parseLong(userSessionManager.getCurrentCycle()), TimeUnit.MINUTES)
@@ -186,16 +186,7 @@ public class SettingFragment extends Fragment {
         else if(cycle.equals("720")) cycleSpinner.setSelection(6);  // 12시간
         else cycleSpinner.setSelection(7);                          // 24시간
 
-        /* WORK MANAGER PART - Observer */
-        WorkManager.getInstance().getWorkInfosForUniqueWorkLiveData("pw_unique")
-                .observe(SettingFragment.this.getActivity(), new Observer<List<WorkInfo>>() {
-                    @Override
-                    public void onChanged(@Nullable List<WorkInfo> workInfos) {
-                        if(workInfos.size() > 0){
-                            wmStatus.setText("Cycle: " + userSessionManager.getCurrentCycle() + " / Status: " + workInfos.get(0).getState().name());
-                        }
-                    }
-                });
+        final Button saveButton = (Button) getView().findViewById(R.id.saveButton);
 
         onoffSwitch.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -213,6 +204,7 @@ public class SettingFragment extends Fragment {
                     Animation animation = new AlphaAnimation(0, 1);
                     animation.setDuration(500);
                     entireLayout.setVisibility(View.VISIBLE);
+                    saveButton.setVisibility(View.VISIBLE);
                     entireLayout.setAnimation(animation);
                     falseMessage.setText("알림을 원하는 항목을 체크해주세요");
 
@@ -249,6 +241,7 @@ public class SettingFragment extends Fragment {
                     Animation animation = new AlphaAnimation(1, 0);
                     animation.setDuration(500);
                     entireLayout.setVisibility(View.INVISIBLE);
+                    saveButton.setVisibility(View.INVISIBLE);
                     entireLayout.setAnimation(animation);
                     falseMessage.setText("알림 기능을 켜면 알림을 설정할 수 있습니다.");
 
@@ -260,7 +253,7 @@ public class SettingFragment extends Fragment {
 
         new GetSettingTask().execute();
 
-        final Button saveButton = (Button) getView().findViewById(R.id.saveButton);
+
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -291,6 +284,35 @@ public class SettingFragment extends Fragment {
                         break;
                 }
                 new BackgroundTask().execute();
+            }
+        });
+        btnLogout = getView().findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userSessionManager.logout();
+                /* WORK MANAGER PART - Stop */
+                WorkManager.getInstance().cancelUniqueWork("pw_unique");
+            }
+        });
+
+        btnDelete = getView().findViewById(R.id.btnDelete);
+        btnDelete.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
+                dialog = builder.setMessage("정말로 회원탈퇴하시겠습니까?")
+                        .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new BackgroundTask2().execute();
+                            }
+                        })
+                        .setNegativeButton("아니요", null)
+                        .create();
+                dialog.show();
+
+
             }
         });
     }
@@ -413,6 +435,58 @@ public class SettingFragment extends Fragment {
         }
     }
 
+    class BackgroundTask2 extends AsyncTask<Void, Void, String>{
+        String target;
+
+        @Override
+        protected void onPreExecute(){
+            try {
+                target = "http://106.10.42.35/UserLeave.php?"
+                        + "userID=" + URLEncoder.encode(userID,"UTF-8");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(target);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onProgressUpdate(Void... values) { super.onProgressUpdate(); }
+
+        @Override
+        public  void onPostExecute(String result){
+            userSessionManager.logout();
+            /* WORK MANAGER PART - Stop */
+            WorkManager.getInstance().cancelUniqueWork("pw_unique");
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
+            dialog = builder.setMessage("회원탈퇴 처리되었습니다.")
+                    .setPositiveButton("확인", null)
+                    .create();
+            dialog.show();
+        }
+    }
+
     class BackgroundTask extends AsyncTask<Void, Void, String> {
         String target;
         String status_hufsNotice;
@@ -421,8 +495,6 @@ public class SettingFragment extends Fragment {
         String status_eNotice;
         String status_eAssignment;
         String status_eLecturenote ;
-        String status_eAssignment2;
-        String status_eCyberclass;
 
         @Override
         protected  void onPreExecute() {
@@ -445,12 +517,6 @@ public class SettingFragment extends Fragment {
             if(eLecturenote.isChecked()) status_eLecturenote="1";
             else status_eLecturenote="0";
 
-            if(eAssignment2.isChecked()) status_eAssignment2="1";
-            else status_eAssignment2="0";
-
-            if(eCyberclass.isChecked()) status_eCyberclass="1";
-            else status_eCyberclass="0";
-
             try {
                 target = "http://106.10.42.35/UserSetting.php?"
                         + "userID=" + URLEncoder.encode(userID,"UTF-8")
@@ -459,9 +525,7 @@ public class SettingFragment extends Fragment {
                         + "&scholarshipNotice=" + URLEncoder.encode(status_scholarshipNotice, "UTF-8")
                         + "&eNotice=" + URLEncoder.encode(status_eNotice, "UTF-8")
                         + "&eAssignment=" + URLEncoder.encode(status_eAssignment, "UTF-8")
-                        + "&eLecturenote=" + URLEncoder.encode(status_eLecturenote, "UTF-8")
-                        + "&eAssignment2=" + URLEncoder.encode(status_eAssignment2, "UTF-8")
-                        + "&eCyberclass=" + URLEncoder.encode(status_eCyberclass, "UTF-8");
+                        + "&eLecturenote=" + URLEncoder.encode(status_eLecturenote, "UTF-8");
             } catch (Exception e) {
                 e.printStackTrace();
             }

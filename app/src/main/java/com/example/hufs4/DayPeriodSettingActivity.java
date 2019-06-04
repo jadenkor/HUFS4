@@ -15,7 +15,7 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
 
     String table;
     String newTable="";
-    CheckBox[][] period = new CheckBox[10][5];
+    CheckBox[][] period = new CheckBox[10][6];
     //선택한 요일/교시를 저장하기 위한 변수
 
     UserSessionManager userSessionManager = null;
@@ -90,8 +90,19 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
         period[7][4] = (CheckBox) findViewById(R.id.Fri8CheckBox);
         period[8][4] = (CheckBox) findViewById(R.id.Fri9CheckBox);
         period[9][4] = (CheckBox) findViewById(R.id.Fri10CheckBox);
-//        월0000000000화0000000000수0000000000목0000000000금0000000000
-        for(int i=0; i<5; i++){
+
+        period[0][5] = (CheckBox) findViewById(R.id.Sat1CheckBox);
+        period[1][5] = (CheckBox) findViewById(R.id.Sat2CheckBox);
+        period[2][5] = (CheckBox) findViewById(R.id.Sat3CheckBox);
+        period[3][5] = (CheckBox) findViewById(R.id.Sat4CheckBox);
+        period[4][5] = (CheckBox) findViewById(R.id.Sat5CheckBox);
+        period[5][5] = (CheckBox) findViewById(R.id.Sat6CheckBox);
+        period[6][5] = (CheckBox) findViewById(R.id.Sat7CheckBox);
+        period[7][5] = (CheckBox) findViewById(R.id.Sat8CheckBox);
+        period[8][5] = (CheckBox) findViewById(R.id.Sat9CheckBox);
+        period[9][5] = (CheckBox) findViewById(R.id.Sat10CheckBox);
+
+        for(int i=0; i<6; i++){
             for(int j=0; j<10; j++){
                 Log.d("ㅍㅍㅍ", String.valueOf((i*10)+j+i));
                 if(table.charAt((i*10)+j+i+1)=='1'){
@@ -106,12 +117,13 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
         dnpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i=0; i<5; i++){
+                for(int i=0; i<6; i++){
                     if(i==0) newTable+="월";
                     else if(i==1) newTable+="화";
                     else if(i==2) newTable+="수";
                     else if(i==3) newTable+="목";
                     else if(i==4) newTable+="금";
+                    else if(i==5) newTable+="토";
                     for(int j=0; j<10; j++){
                         if(period[j][i].isChecked()) newTable+="1";
                         else newTable+="0";
@@ -121,10 +133,8 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
 
                 finish();
 
-
             }
         });
-
     }
 
 

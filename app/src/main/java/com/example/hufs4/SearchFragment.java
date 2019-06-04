@@ -141,7 +141,7 @@ public class SearchFragment extends Fragment {
         filterSpinner = (Spinner) getView().findViewById(R.id.filterSpinner);
         searchText = (EditText) getView().findViewById(R.id.searchText);
         userSessionManager = new UserSessionManager(this.getActivity());
-        userSessionManager.changeValue("TABLE", "월0000000000화0000000000수0000000000목0000000000금0000000000");
+        userSessionManager.changeValue("TABLE", "월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000");
 
         filterAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.filter, R.layout.spinnerlayout);
 
@@ -315,17 +315,18 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 Log.d("ㅋㅋㅋ", "들어갔니?");
                 String table = userSessionManager.getCurrentTable();
-                if(table.equals("월0000000000화0000000000수0000000000목0000000000금0000000000")){
+                if(table.equals("월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000")){
                     searchWord = "전체";
                 }
                 else {
                     searchWord="";
-                    for (int i = 0; i < 5; i++) {
+                    for (int i = 0; i < 6; i++) {
                         if (i==0) searchWord += "월";
                         else if(i==1) searchWord += "화";
                         else if(i==2) searchWord += "수";
                         else if(i==3) searchWord += "목";
                         else if(i==4) searchWord += "금";
+                        else if(i==5) searchWord += "토";
                         for (int j = 0; j < 10; j++) {
                             if (table.charAt((i * 10) + j + i + 1) == '1') {
                                 searchWord += (j+1);
@@ -389,8 +390,8 @@ public class SearchFragment extends Fragment {
         protected void onPreExecute() {
             final HashMap<String, String> user = userSessionManager.getUserDetail();
             userTable = user.get(userSessionManager.TABLE);
-            if(userTable.equals("월0000000000화0000000000수0000000000목0000000000금0000000000")){
-                userTable = "월1111111111화1111111111수1111111111목1111111111금1111111111";
+            if(userTable.equals("월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000")){
+                userTable = "월1111111111화1111111111수1111111111목1111111111금1111111111토1111111111";
             }
             try {
                 if(gradeSpinner.getSelectedItem().toString().equals("1학년")) grade="1";
@@ -491,7 +492,7 @@ public class SearchFragment extends Fragment {
                     int idx = Schedule.indexOf(") (");
                     Schedule = Schedule.substring(0, idx+1);
 
-                    table="월0000000000화0000000000수0000000000목0000000000금0000000000";
+                    table="월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
                     StringBuilder builder = new StringBuilder(table);
                     int begin = 0;
 
@@ -577,11 +578,26 @@ public class SearchFragment extends Fragment {
                                 }
                             }
                         }
+                        else if(Schedule.substring(i,i+1).equals("토")){
+                            begin=55;
+                            for(int j=i+1; j<Schedule.indexOf('(',i); j++){
+                                if(Schedule.substring(j,j+2).equals("10")){
+                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+2)), '1' );
+                                    j++;
+                                }
+                                else if(Schedule.substring(j,j+1).equals("1") ||Schedule.substring(j,j+1).equals("2")  ||
+                                        Schedule.substring(j,j+1).equals("3")  || Schedule.substring(j,j+1).equals("4")  ||
+                                        Schedule.substring(j,j+1).equals("5")  || Schedule.substring(j,j+1).equals("6")  ||
+                                        Schedule.substring(j,j+1).equals("7")  || Schedule.substring(j,j+1).equals("8")  ||
+                                        Schedule.substring(j,j+1).equals("9")){
+                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+1)), '1' );
+                                }
+                            }
+                        }
                     }
                     Log.d("ㅋㅋㅋ테이블2", String.valueOf(builder));
 
                     table = String.valueOf(builder);
-                    String check = "0000000000000000000000000000000000000000000000000000000";
                     String isIncluded = "YES";
                     Log.d("ㅋㅋㅋ유저테이블", userTable);
                     for(int i=0; i<55; i++){
