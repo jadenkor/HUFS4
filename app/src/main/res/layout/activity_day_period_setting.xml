@@ -18,6 +18,17 @@
         android:text="필터링 하고자 하는 시간대를 선택한 후에\n확인 버튼을 눌러주세요."
         android:textColor="@color/colorPrimary"
         android:textSize="15sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:text="요일을 클릭하면 해당 요일의 전체 교시를 체크(해제)할 수 있습니다."
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp" />
 
     <TableLayout
         android:layout_width="wrap_content"

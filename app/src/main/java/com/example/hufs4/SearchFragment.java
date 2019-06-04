@@ -152,8 +152,6 @@ public class SearchFragment extends Fragment {
 
                     Intent intent = new Intent(SearchFragment.this.getActivity(), DayPeriodSettingActivity.class);
                     SearchFragment.this.startActivity(intent);
-                    searchText.setFocusable(false);
-                    searchText.setClickable(false);
                     searchText.setHint("");
                     searchText.setText("");
 
@@ -311,8 +309,6 @@ public class SearchFragment extends Fragment {
                     Intent intent = new Intent(SearchFragment.this.getActivity(), DayPeriodSettingActivity.class);
                     SearchFragment.this.startActivity(intent);
                     searchText.setText("");
-                    searchText.setFocusable(false);
-                    searchText.setClickable(false);
                 }
 
             }
@@ -343,8 +339,9 @@ public class SearchFragment extends Fragment {
                         searchWord += " ";
                     }
                 }
-                searchText.setText(searchWord);
-                searchText.setFocusable(false);
+                if(filterSpinner.getSelectedItem().equals("요일,교시")){
+                    searchText.setText(searchWord);
+                }
                 new BackgroundTask().execute();
             }
         });

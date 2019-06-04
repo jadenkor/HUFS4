@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -66,10 +65,6 @@ public class CourseListAdapter extends BaseAdapter {
         credit.setText(courseList.get(i).getCredit() + "학점");
 
         String scheduleStr = courseList.get(i).getSchedule();
-//        Log.d("SSS스케쥴1", scheduleStr);
-//        int idx = scheduleStr.indexOf(") (");
-//        scheduleStr = scheduleStr.substring(0, idx+1);
-        Log.d("ㅋㅋㅋ스케줄2", scheduleStr);
         schedule.setText(scheduleStr);
 
         String instructorName = courseList.get(i).getInstructor();
@@ -77,11 +72,14 @@ public class CourseListAdapter extends BaseAdapter {
             instructorName = instructorName.substring(0,20)+"...";
         }
         instructor.setText("담당교수 : "+instructorName);
+
         String sn = courseList.get(i).getSugang_num();
         String ln = courseList.get(i).getLimit_num();
         String sn_ln ="수강인원 : " + sn + " /" + ln;
         sugang_limit.setText(sn_ln);
+
         note.setText("비고 : "+courseList.get(i).getNote());
+
         if(courseList.get(i).getJunpil().equals("1")){
             junpil.setText("전필");
             junpil.setTextColor(Color.rgb(255, 0, 0));
@@ -117,9 +115,10 @@ public class CourseListAdapter extends BaseAdapter {
         else{
             team.setText("");
         }
-        v.setTag(courseList.get(i).getCode());
 
         final String code = courseList.get(i).getCode();
+        v.setTag(code);
+
         ImageButton syllabus = (ImageButton) v.findViewById(R.id.syllabus);
         syllabus.setOnClickListener(new View.OnClickListener() {
             @Override
