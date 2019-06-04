@@ -152,10 +152,21 @@ public class SearchFragment extends Fragment {
 
                     Intent intent = new Intent(SearchFragment.this.getActivity(), DayPeriodSettingActivity.class);
                     SearchFragment.this.startActivity(intent);
-                    searchText.setText("");
                     searchText.setFocusable(false);
                     searchText.setClickable(false);
+                    searchText.setHint("");
+                    searchText.setText("");
 
+                }
+                else if(filterSpinner.getSelectedItem().equals("교수명") || filterSpinner.getSelectedItem().equals("강의명")){
+                    userSessionManager.changeValue("TABLE", "월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000");
+                    searchText.setHint("입력");
+                    searchText.setText("");
+                }
+                else{
+                    userSessionManager.changeValue("TABLE", "월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000");
+                    searchText.setText("");
+                    searchText.setHint("");
                 }
 
             }
@@ -184,13 +195,7 @@ public class SearchFragment extends Fragment {
                 gradeAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.grade, R.layout.spinnerlayout);
                 gradeSpinner.setAdapter(gradeAdapter);
 
-                filterAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.filter, R.layout.spinnerlayout);
-                filterSpinner.setAdapter(filterAdapter);
 
-
-
-
-                Log.d("없음", filterSpinner.getSelectedItem().toString());
 
 //                if(filterSpinner.getSelectedItem().toString().equals("없음")){
 //                    searchText.setClickable(false);
@@ -249,6 +254,7 @@ public class SearchFragment extends Fragment {
                     }
                 }
 
+
             }
 
         });
@@ -285,6 +291,8 @@ public class SearchFragment extends Fragment {
                         selectSpinner.setAdapter(selectAdapter);
                     }
                 }
+                filterAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.filter, R.layout.spinnerlayout);
+                filterSpinner.setAdapter(filterAdapter);
 
             }
 
@@ -595,12 +603,12 @@ public class SearchFragment extends Fragment {
                             }
                         }
                     }
-                    Log.d("ㅋㅋㅋ테이블2", String.valueOf(builder));
 
                     table = String.valueOf(builder);
                     String isIncluded = "YES";
+                    Log.d("ㅋㅋㅋ테이블", table);
                     Log.d("ㅋㅋㅋ유저테이블", userTable);
-                    for(int i=0; i<55; i++){
+                    for(int i=0; i<66; i++){
                         if(table.charAt(i)=='1' && userTable.charAt(i)=='0'){
                             isIncluded = "NO";
                             break;
@@ -623,9 +631,7 @@ public class SearchFragment extends Fragment {
                     Foreign = object.getString("Foreign");
                     Team = object.getString("Team");
                     Course course = new Course(Code, Grade, Title, Instructor, Credit, Time, Schedule, Sugang_num, Limit_num, Note, Junpil, Cyber, Muke, Foreign, Team);
-//                    if(isIncluded.equals("YES")) {
-//                        courseList.add(course);
-//                    }
+
                     courseList.add(course);
 
                     count++;

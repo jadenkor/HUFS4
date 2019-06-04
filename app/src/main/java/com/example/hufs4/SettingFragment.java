@@ -126,9 +126,6 @@ public class SettingFragment extends Fragment {
     public void onActivityCreated(Bundle b){
         super.onActivityCreated(b);
 
-
-
-
         onoffSwitch = (Switch) getView().findViewById(R.id.onoffSwitch);
         cycleSpinner = (Spinner) getView().findViewById(R.id.cycleSpinner);
         cycleAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.parsing_cycle, android.R.layout.simple_spinner_dropdown_item);

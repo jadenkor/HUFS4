@@ -28,7 +28,7 @@
             android:layout_marginLeft="10dp"
 
             android:layout_marginRight="10dp"
-            android:text="관심 분야 키워드와 일치하는 강의를 추천해드립니다."
+            android:text="관심 분야 키워드와 일치하는 [교양] 강의를 추천해드립니다."
             android:textColor="#ffffff"
             android:textStyle="bold" />
 
