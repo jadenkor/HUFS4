@@ -64,12 +64,14 @@ public class CourseListAdapter extends BaseAdapter {
         }
         title.setText(courseList.get(i).getTitle());
         credit.setText(courseList.get(i).getCredit() + "학점");
+
         String scheduleStr = courseList.get(i).getSchedule();
-        Log.d("SSS스케쥴1", scheduleStr);
-        int idx = scheduleStr.indexOf(") (");
-        scheduleStr = scheduleStr.substring(0, idx+1);
-        Log.d("SSS스케쥴2", scheduleStr);
+//        Log.d("SSS스케쥴1", scheduleStr);
+//        int idx = scheduleStr.indexOf(") (");
+//        scheduleStr = scheduleStr.substring(0, idx+1);
+        Log.d("ㅋㅋㅋ스케줄2", scheduleStr);
         schedule.setText(scheduleStr);
+
         String instructorName = courseList.get(i).getInstructor();
         if(instructorName.length() > 20){
             instructorName = instructorName.substring(0,20)+"...";

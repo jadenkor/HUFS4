@@ -18,7 +18,7 @@ public class UserSessionManager {
     public  static final String ID = "ID";
     public  static final String ALARM = "ALARM";
     public  static final String CYCLE = "CYCLE";
-
+    public  static final String TABLE = "TABLE";
 
     public UserSessionManager(Context context) {
         this.context = context;
@@ -26,11 +26,13 @@ public class UserSessionManager {
         editor = sharedPreferences.edit();
     }
 
-    public  void createSession(String id, String alarm, String cycle){
+    public  void createSession(String id, String alarm, String cycle, String table){
         editor.putBoolean(LOGIN, true);
         editor.putString(ID, id);
         editor.putString(ALARM, alarm);
         editor.putString(CYCLE, cycle);
+        editor.putString(TABLE, table);
+
         editor.apply();
     }
 
@@ -52,12 +54,16 @@ public class UserSessionManager {
         user.put(ID, sharedPreferences.getString(ID, null));
         user.put(ALARM, sharedPreferences.getString(ALARM, null));
         user.put(CYCLE, sharedPreferences.getString(CYCLE, null));
+        user.put(TABLE, sharedPreferences.getString(TABLE, null));
 
         return user;
     }
 
     public String getCurrentCycle(){
         return sharedPreferences.getString(CYCLE, null);
+    }
+    public String getCurrentTable(){
+        return sharedPreferences.getString(TABLE, null);
     }
 
     public String getCurrentID(){
@@ -77,4 +83,5 @@ public class UserSessionManager {
         context.startActivity(i);
         ((MainActivity) context).finish();
     }
+
 }

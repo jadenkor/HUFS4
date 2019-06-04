@@ -593,7 +593,7 @@
     </TableLayout>
 
     <Button
-        android:id="@+id/filterButton"
+        android:id="@+id/dnpButton"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -602,7 +602,6 @@
         android:background="@color/colorPrimary"
         android:text="확인"
         android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:onClick="mOnClose"/>
+        android:textStyle="bold"/>
 
 </LinearLayout>

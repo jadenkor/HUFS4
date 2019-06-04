@@ -1,7 +1,6 @@
 package com.example.hufs4;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -10,10 +9,16 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import java.util.HashMap;
+
 public class DayPeriodSettingActivity extends AppCompatActivity {
 
+    String table;
+    String newTable="";
+    CheckBox[][] period = new CheckBox[10][5];
+    //선택한 요일/교시를 저장하기 위한 변수
 
-    String DnP="";
+    UserSessionManager userSessionManager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +27,11 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_day_period_setting);
 
-        CheckBox[][] period = new CheckBox[10][5];
-        //선택한 요일/교시를 저장하기 위한 변수
+        userSessionManager = new UserSessionManager(this);
+        final HashMap<String, String> user = userSessionManager.getUserDetail();
+        table = user.get(userSessionManager.TABLE);
 
-        Button confirmButton = (Button) findViewById(R.id.filterButton);
+
 
         //요일교시 체크박스
         period[0][0] = (CheckBox) findViewById(R.id.Mon1CheckBox);
@@ -84,37 +90,43 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
         period[7][4] = (CheckBox) findViewById(R.id.Fri8CheckBox);
         period[8][4] = (CheckBox) findViewById(R.id.Fri9CheckBox);
         period[9][4] = (CheckBox) findViewById(R.id.Fri10CheckBox);
+//        월0000000000화0000000000수0000000000목0000000000금0000000000
+        for(int i=0; i<5; i++){
+            for(int j=0; j<10; j++){
+                Log.d("ㅍㅍㅍ", String.valueOf((i*10)+j+i));
+                if(table.charAt((i*10)+j+i+1)=='1'){
 
-        for (int j=0; j<5; j++) {
-            if(j==0)    DnP += "월";
-            else if(j==1)   DnP += "화";
-            else if(j==2)   DnP += "수";
-            else if(j==3)   DnP += "목";
-            else if(j==4)   DnP += "금";
-            for (int i=0; i<10; i++) {
-                if(period[i][j].isChecked()){
-                    String n = Integer.toString(i);
-                    DnP += n;
+                    period[j][i].setChecked(true);
                 }
             }
-            DnP += ","; // 구분자 ','
         }
 
 
+        Button dnpButton = (Button) findViewById(R.id.dnpButton);
+        dnpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=0; i<5; i++){
+                    if(i==0) newTable+="월";
+                    else if(i==1) newTable+="화";
+                    else if(i==2) newTable+="수";
+                    else if(i==3) newTable+="목";
+                    else if(i==4) newTable+="금";
+                    for(int j=0; j<10; j++){
+                        if(period[j][i].isChecked()) newTable+="1";
+                        else newTable+="0";
+                    }
+                }
+                userSessionManager.changeValue("TABLE", newTable);
+
+                finish();
+
+
+            }
+        });
+
     }
 
-    //확인 버튼 클릭
-    public void mOnClose(View v){
-        //데이터 전달하기
-        Log.d("SSSDnP",DnP);
-        Fragment fragment = new SearchFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("key", DnP);
-        fragment.setArguments(bundle);
-
-        //팝업 닫기
-        finish();
-    }
 
     @Override
     public  boolean onTouchEvent(MotionEvent event){
