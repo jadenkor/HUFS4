@@ -191,11 +191,8 @@ public class SettingFragment extends Fragment {
                     entireLayout.setAnimation(animation);
                     falseMessage.setText("알림을 원하는 항목을 체크해주세요");
 
-                    // Request를 보낼 queue를 생성한다.
                     RequestQueue queue = Volley.newRequestQueue(SettingFragment.this.getActivity());
-                    // 대표적인 예로 androidhive의 테스트 url을 삽입했다. 이부분을 자신이 원하는 부분으로 바꾸면 될 터
                     String url = "http://106.10.42.35:3000/initCheck?id=" + userID;
-                    // StringRequest를 보낸다.
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                             new Response.Listener<String>() {
                                 @Override
@@ -207,7 +204,6 @@ public class SettingFragment extends Fragment {
                         public void onErrorResponse(VolleyError error) {
                         }
                     });
-                    // RequestQueue에 현재 Task를 추가해준다.
                     queue.add(stringRequest);
 
                     /* WORK MANAGER PART - Start */

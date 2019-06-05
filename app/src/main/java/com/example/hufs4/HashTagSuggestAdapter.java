@@ -43,11 +43,9 @@ public class HashTagSuggestAdapter extends ArrayAdapter<String> {
 
     @Override
     public Filter getFilter() {
-
         if (filter == null) {
             filter = new HashTagFilter();
         }
-
         return filter;
     }
 
@@ -63,7 +61,7 @@ public class HashTagSuggestAdapter extends ArrayAdapter<String> {
             return  resultValue.toString() + " #";
         }
 
-        //TextView를 통해 입력받은 text를 파싱하여 자동완성 추천 문구목록을 만들어 리턴하고 자동완성 popup을 띄워줌
+        // TextView를 통해 입력받은 text를 파싱하여 자동완성 추천 문구목록을 만들어 리턴하고 자동완성 popup을 띄워준다.
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
@@ -93,10 +91,8 @@ public class HashTagSuggestAdapter extends ArrayAdapter<String> {
                     }
                 }
             }
-
             filterResults.values = suggests;
             filterResults.count = suggests.size();
-
             return filterResults;
         }
 

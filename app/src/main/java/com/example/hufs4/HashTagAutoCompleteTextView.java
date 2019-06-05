@@ -3,7 +3,6 @@ package com.example.hufs4;
 import android.content.Context;
 import android.text.Editable;
 import android.util.AttributeSet;
-import android.util.Log;
 
 public class HashTagAutoCompleteTextView extends android.support.v7.widget.AppCompatAutoCompleteTextView {
     public HashTagAutoCompleteTextView(Context context) {
@@ -19,10 +18,9 @@ public class HashTagAutoCompleteTextView extends android.support.v7.widget.AppCo
     }
 
 
-    //팝업창의 나열된 문구를 선택하면 호출
+    // 팝업창의 나열된 문구를 선택하면 호출
     @Override
     protected void replaceText(CharSequence text) {
-        Log.d("test","sdasd");
         clearComposingText();
 
         HashTagSuggestAdapter adapter = (HashTagSuggestAdapter) getAdapter();

@@ -6,15 +6,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -99,7 +96,6 @@ public class RecommendFragment extends Fragment {
         hashTagAutoCompleteTextView.setText("#");
 
         keywordAdapter = new HashTagSuggestAdapter(getActivity(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.keywords_array_hash));
-//        HashTagSuggestAdapter adapter = new HashTagSuggestAdapter(getActivity(), android.R.layout.simple_dropdown_item_1line, KEYWORD);
 
         keywordAdapter.setCursorPositionListener(new HashTagSuggestAdapter.CursorPositionListener() {
             @Override
@@ -108,35 +104,25 @@ public class RecommendFragment extends Fragment {
             }
         });
         hashTagAutoCompleteTextView.setAdapter(keywordAdapter);
-        //클릭했을때 이벤트처리
-//        hashTagAutoCompleteTextView.setOnItemClickListener(autoCompleClickListener);
-
         // ListView SETUP
         keyCourseListView = (ListView) getView().findViewById(R.id.keywordCourseListView);
         keyCourseList = new ArrayList<Course>();
         courseAdapter = new CourseListAdapter(getContext().getApplicationContext(), keyCourseList);
         keyCourseListView.setAdapter(courseAdapter);
 
-//        keySearchText.setOnItemClickListener(mItemClickListener);
         keySearchButton = (Button) getView().findViewById(R.id.keywordSearchButton);
 
         keySearchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.d("버튼", "clicked!");
                 String tempKeyword = hashTagAutoCompleteTextView.getText().toString();
 
                 if(!tempKeyword.equals("")  && !tempKeyword.equals("#")){
-
                     tempKeyword = tempKeyword.replaceAll(" ", "").replaceAll("#", "_").substring(1);
-
                     if(tempKeyword.charAt(tempKeyword.length()-1) == '_'){
                         tempKeyword = tempKeyword.substring(0, tempKeyword.length()-1);
                     }
-//                    String toastMessage = tempKeyword + " is selected.";
-//                    Toast.makeText(getActivity().getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
                     new keyBackgroundTask(tempKeyword).execute();
-
                 }else{
                     Toast.makeText(getActivity().getApplicationContext(), "키워드를 한개 이상 입력해주세요!", Toast.LENGTH_SHORT).show();
                 }
@@ -144,15 +130,6 @@ public class RecommendFragment extends Fragment {
             }
         });
     }
-
-    //click Listener
-    AdapterView.OnItemClickListener autoCompleClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View clickedView, int position, long id) {
-            String toastMessage = ((TextView)clickedView).getText().toString() + " is selected. position is " + position + ", and id is " + id;
-            Toast.makeText(getActivity().getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
-        }
-    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -209,7 +186,6 @@ public class RecommendFragment extends Fragment {
             asyncDialog.show();
 
             try {
-                Log.d("버튼", "onPreExecute!");
                 target = "http://106.10.42.35/InputKeywords.php?keywords=" + URLEncoder.encode(searchKeyword, "UTF-8");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -220,7 +196,6 @@ public class RecommendFragment extends Fragment {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                Log.d("버튼", "doInBackground!");
                 URL url = new URL(target);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = httpURLConnection.getInputStream();
@@ -233,7 +208,6 @@ public class RecommendFragment extends Fragment {
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
-
                 return stringBuilder.toString().trim();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -247,12 +221,10 @@ public class RecommendFragment extends Fragment {
         @Override
         public void onPostExecute(String result){
             try{
-                Log.d("버튼", "onPostExecute!");
                 keyCourseList.clear();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response" );
                 int count = 0;
-                Log.d("버튼", "onPostExecute2!");
                 String Code; //학수번호
                 String Grade; //학년
                 String Title; //교과목명
@@ -289,8 +261,7 @@ public class RecommendFragment extends Fragment {
                     keyCourseList.add(course);
                     count++;
                 }
-                Log.d("버튼", "count: " + count);
-                if(count == 0){
+                 if(count == 0){
                     AlertDialog dialog;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RecommendFragment.this.getActivity());
                     dialog = builder.setMessage("해당 키워드와 일치하는 강의가 없습니다.")
