@@ -13,7 +13,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="#ffffff"
             android:orientation="vertical">
 
@@ -22,7 +23,7 @@
                 android:layout_width="175dp"
                 android:layout_height="175dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="90dp"
+                android:layout_marginTop="40dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/logo" />
 
@@ -31,11 +32,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:text="한국외국어대학교"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                tools:textColor="@color/colorPrimary" />
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/eclassText"
@@ -45,20 +45,25 @@
                 android:text="HUFSIST"
                 android:textColor="@color/colorPrimary"
                 android:textSize="23sp" />
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="#ffffff"
             android:orientation="vertical">
+
+
 
             <EditText
                 android:id="@+id/idText"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="30dp"
                 android:background="@color/colorAccent"
                 android:drawableStart="@drawable/ic_person_black_24dp"
                 android:drawableLeft="@drawable/ic_person_black_24dp"
