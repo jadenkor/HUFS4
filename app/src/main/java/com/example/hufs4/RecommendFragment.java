@@ -1,5 +1,6 @@
 package com.example.hufs4;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -192,6 +193,10 @@ public class RecommendFragment extends Fragment {
         String target;
         String searchKeyword;
 
+        ProgressDialog asyncDialog = new ProgressDialog(
+                RecommendFragment.this.getActivity());
+
+
         public keyBackgroundTask(String keyword){
             super();
             searchKeyword = keyword;
@@ -199,6 +204,10 @@ public class RecommendFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중입니다..");
+            asyncDialog.show();
+
             try {
                 Log.d("버튼", "onPreExecute!");
                 target = "http://106.10.42.35/InputKeywords.php?keywords=" + URLEncoder.encode(searchKeyword, "UTF-8");
@@ -293,6 +302,7 @@ public class RecommendFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            asyncDialog.dismiss();
         }
     }
 }

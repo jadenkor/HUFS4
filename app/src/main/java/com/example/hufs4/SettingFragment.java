@@ -105,8 +105,6 @@ public class SettingFragment extends Fragment {
     private CheckBox eNotice;
     private CheckBox eAssignment;
     private CheckBox eLecturenote;
-    private CheckBox eAssignment2;
-    private CheckBox eCyberclass;
     private ArrayAdapter cycleAdapter;
     private Spinner cycleSpinner;
 
@@ -162,19 +160,13 @@ public class SettingFragment extends Fragment {
                 .setConstraints(new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
                 .build();
 
-        Log.d("GGG아디",userID);
-        Log.d("GGG확인",alarm);
         if(alarm.equals("off")){
             onoffSwitch.setChecked(false);
             entireLayout.setVisibility(View.INVISIBLE);
             falseMessage.setText("알림 기능을 켜면 알림을 설정할 수 있습니다.");
         }
         else onoffSwitch.setChecked(true);
-        Log.d("GGG주기","OK");
-        if(cycle.equals("15")) {
-            cycleSpinner.setSelection(0);
-            Log.d("GGG주기2", "OK");
-        }
+        if(cycle.equals("15"))      cycleSpinner.setSelection(0);
         else if(cycle.equals("30")) cycleSpinner.setSelection(1);   // 30분
         else if(cycle.equals("60")) cycleSpinner.setSelection(2);   // 1시간
         else if(cycle.equals("120")) cycleSpinner.setSelection(3);  // 2시간
@@ -189,15 +181,9 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(onoffSwitch.isChecked()){
-                    // 설정을 저장하지 않고 알림을 off 했다가 다시 on을 하는 경우 새로 갱신되지 않고 남아 있는 문제 해결
+
                     new GetSettingTask().execute();
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
-//                    dialog = builder.setMessage("알림 기능이 활성화되었습니다.")
-//                            .setPositiveButton("확인", null)
-//                            .create();
-//                    dialog.show();
                     userSessionManager.changeValue("ALARM","on");
-                    Log.d("GGG알람",userSessionManager.ALARM);
                     Animation animation = new AlphaAnimation(0, 1);
                     animation.setDuration(500);
                     entireLayout.setVisibility(View.VISIBLE);
@@ -228,13 +214,7 @@ public class SettingFragment extends Fragment {
                     WorkManager.getInstance().enqueueUniquePeriodicWork("pw_unique", ExistingPeriodicWorkPolicy.REPLACE, periodicWorkRequest);
                 }
                 else{
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
-//                    dialog = builder.setMessage("알림 기능이 비활성화되었습니다.")
-//                            .setPositiveButton("확인", null)
-//                            .create();
-//                    dialog.show();
                     userSessionManager.changeValue("ALARM", "off");
-                    Log.d("GGG알람",userSessionManager.ALARM);
                     Animation animation = new AlphaAnimation(1, 0);
                     animation.setDuration(500);
                     entireLayout.setVisibility(View.INVISIBLE);
@@ -280,7 +260,7 @@ public class SettingFragment extends Fragment {
                         userSessionManager.changeValue("CYCLE", "1440");
                         break;
                 }
-                new BackgroundTask().execute();
+                new SettingSaveTask().execute();
             }
         });
         btnLogout = getView().findViewById(R.id.btnLogout);
@@ -302,7 +282,7 @@ public class SettingFragment extends Fragment {
                         .setPositiveButton("예", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                new BackgroundTask2().execute();
+                                new UserDeleteTask().execute();
                             }
                         })
                         .setNegativeButton("아니요", null)
@@ -359,8 +339,6 @@ public class SettingFragment extends Fragment {
         String status_eNotice;
         String status_eAssignment;
         String status_eLecturenote ;
-        String status_eAssignment2;
-        String status_eCyberclass;
 
         @Override
         protected void onPreExecute() {
@@ -415,8 +393,6 @@ public class SettingFragment extends Fragment {
                 status_eNotice = jsonObject.getString("eNotice");
                 status_eAssignment = jsonObject.getString("eAssignment");
                 status_eLecturenote = jsonObject.getString("eLecturenote");
-                status_eAssignment2 = jsonObject.getString("eAssignment2");
-                status_eCyberclass = jsonObject.getString("eCyberclass");
 
                 if(status_hufsNotice.equals("1")) hufsNotice.setChecked(true);
                 if(status_bachelorNotice.equals("1")) bachelorNotice.setChecked(true);
@@ -424,15 +400,13 @@ public class SettingFragment extends Fragment {
                 if(status_eNotice.equals("1")) eNotice.setChecked(true);
                 if(status_eAssignment.equals("1")) eAssignment.setChecked(true);
                 if(status_eLecturenote.equals("1")) eLecturenote.setChecked(true);
-                if(status_eAssignment2.equals("1")) eAssignment2.setChecked(true);
-                if(status_eCyberclass.equals("1")) eCyberclass.setChecked(true);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    class BackgroundTask2 extends AsyncTask<Void, Void, String>{
+    class UserDeleteTask extends AsyncTask<Void, Void, String>{
         String target;
 
         @Override
@@ -484,7 +458,7 @@ public class SettingFragment extends Fragment {
         }
     }
 
-    class BackgroundTask extends AsyncTask<Void, Void, String> {
+    class SettingSaveTask extends AsyncTask<Void, Void, String> {
         String target;
         String status_hufsNotice;
         String status_bachelorNotice;

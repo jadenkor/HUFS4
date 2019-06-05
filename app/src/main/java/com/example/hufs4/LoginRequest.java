@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginRequest extends StringRequest {
+
     final static private String URL = "http://106.10.42.35/UserLogin.php";
     private Map<String, String> parameters;
+
     public LoginRequest(String userID, String userPassword, Response.Listener<String> listener){
         super(Method.POST, URL, listener, null); // 해당 요청을 post 방식으로 숨겨서 보내주기
 

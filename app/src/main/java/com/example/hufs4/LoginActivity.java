@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,9 +25,8 @@ import java.security.NoSuchAlgorithmException;
 public class LoginActivity extends AppCompatActivity {
 
     private AlertDialog dialog;
-
     UserSessionManager userSessionManager;
-    private String userName;
+    String PRIMARYTABLE = "월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
 
         TextView registerButton = (TextView) findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -63,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     MessageDigest md = MessageDigest.getInstance("SHA-512");
                     byte[] digest = md.digest(userPassword.getBytes());
                     StringBuilder sb = new StringBuilder();
-                    for (int i=0; i<digest.length; i++){
+                    for (int i = 0; i < digest.length; i++) {
                         sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
                     }
                     userPassword = String.valueOf(sb);
@@ -75,16 +72,15 @@ public class LoginActivity extends AppCompatActivity {
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try{
+                        try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-                            if(success) {
+                            if (success) {
 
                                 // Request를 보낼 queue를 생성한다.
                                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                                 // 대표적인 예로 androidhive의 테스트 url을 삽입했다. 이부분을 자신이 원하는 부분으로 바꾸면 될 터
-                                String url = "http://106.10.42.35:3000/updateToken?id=" + userID + "&token=" + FirebaseInstanceId.getInstance().getToken();;
-//                                Log.d("TokenURL", url);
+                                String url = "http://106.10.42.35:3000/updateToken?id=" + userID + "&token=" + FirebaseInstanceId.getInstance().getToken();
                                 // StringRequest를 보낸다.
                                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                                         new Response.Listener<String>() {
@@ -100,8 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // RequestQueue에 현재 Task를 추가해준다.
                                 queue.add(stringRequest);
 
-                                userSessionManager.createSession(userID,"off", "15", "월0000000000화0000000000수0000000000목0000000000금0000000000");
-                                Log.d("SSSsession", String.valueOf(userSessionManager.getUserDetail()));
+                                userSessionManager.createSession(userID, "off", "15", PRIMARYTABLE);
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 dialog = builder.setMessage("로그인에 성공했습니다.")
@@ -111,15 +106,14 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 LoginActivity.this.startActivity(intent);
                                 finish();
-                            }
-                            else {
+                            } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 dialog = builder.setMessage("학번 또는 비밀번호를 확인해주세요.")
                                         .setNegativeButton("다시 시도", null)
                                         .create();
                                 dialog.show();
                             }
-                        } catch(Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -135,8 +129,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(dialog != null)
-        {
+        if (dialog != null) {
             dialog.dismiss();
             dialog = null;
         }

@@ -57,10 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText idText = (EditText) findViewById(R.id.idText);
         final EditText passwordText = (EditText) findViewById(R.id.passwordText);
         final EditText passwordText2 = (EditText) findViewById(R.id.passwordText2);
-
         final CheckBox confirmCheckBox = (CheckBox) findViewById(R.id.confirmCheckBox);
-
-
         final Button validateButton = (Button) findViewById(R.id.validateButton);
 
         validateButton.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
                     dialog.show();
                     return;
                 }
+
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -101,7 +99,6 @@ public class RegisterActivity extends AppCompatActivity {
                                         .setNegativeButton("확인", null)
                                         .create();
                                 dialog.show();
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -173,7 +170,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button registerButton = (Button) findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
                 if(verified==false){
@@ -195,13 +191,10 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         try {
-                            Log.d("PPP","ok");
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
@@ -265,7 +258,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private class doit extends AsyncTask<Void, Void, Void> {
 
-        Elements words;
+        Elements eclassName;
         @Override
         protected Void doInBackground(Void... voids) {
 
@@ -303,11 +296,11 @@ public class RegisterActivity extends AppCompatActivity {
                         .connect("http://eclass2.hufs.ac.kr:8181/ilos/main/main_form.acl")
                         .cookies(loginCookie)
                         .get();
-                words = doc.select("strong[class=site-font-color]");
+                eclassName = doc.select("strong[class=site-font-color]");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            name = words.text();
+            name = eclassName.text();
             return null;
         }
         @Override

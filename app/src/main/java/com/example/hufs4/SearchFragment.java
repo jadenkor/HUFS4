@@ -1,5 +1,6 @@
 package com.example.hufs4;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -110,9 +111,6 @@ public class SearchFragment extends Fragment {
     private TextView detailText;
     private LinearLayout detailLayout;
 
-
-//    private CourseListAdapter adapter;
-//    private List<Course> courseList;
     private EditText searchText;
 
     private String isMajor; // 전공:1 , 교양:0
@@ -120,19 +118,15 @@ public class SearchFragment extends Fragment {
     UserSessionManager userSessionManager = null;
     private String userTable;
     private String searchWord;
+    String PRIMARYTABLE="월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
 
 
     @Override
     public void onActivityCreated(Bundle b){
         super.onActivityCreated(b);
 
-
-
         final RadioGroup campusGroup = (RadioGroup) getView().findViewById(R.id.campusGroup);
         final RadioGroup courseGroup = (RadioGroup) getView().findViewById(R.id.courseGroup);
-
-
-
 
         yearSpinner = (Spinner) getView().findViewById(R.id.yearSpinner);
         termSpinner = (Spinner) getView().findViewById(R.id.termSpinner);
@@ -141,32 +135,40 @@ public class SearchFragment extends Fragment {
         filterSpinner = (Spinner) getView().findViewById(R.id.filterSpinner);
         searchText = (EditText) getView().findViewById(R.id.searchText);
         userSessionManager = new UserSessionManager(this.getActivity());
-        userSessionManager.changeValue("TABLE", "월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000");
+        userSessionManager.changeValue("TABLE", PRIMARYTABLE);
 
         filterAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.filter, R.layout.spinnerlayout);
 
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(filterSpinner.getSelectedItem().equals("요일,교시")){
 
+                if(filterSpinner.getSelectedItem().equals("요일,교시")){
                     Intent intent = new Intent(SearchFragment.this.getActivity(), DayPeriodSettingActivity.class);
                     SearchFragment.this.startActivity(intent);
+
                     searchText.setHint("");
                     searchText.setText("");
-
+                    searchText.setEnabled(true);
+                    searchText.setFocusable(false);
+                    searchText.setFocusableInTouchMode(false);
                 }
                 else if(filterSpinner.getSelectedItem().equals("교수명") || filterSpinner.getSelectedItem().equals("강의명")){
-                    userSessionManager.changeValue("TABLE", "월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000");
+                    userSessionManager.changeValue("TABLE", PRIMARYTABLE);
                     searchText.setHint("입력");
                     searchText.setText("");
+                    searchText.setEnabled(true);
+                    searchText.setFocusable(true);
+                    searchText.setFocusableInTouchMode(true);
                 }
                 else{
-                    userSessionManager.changeValue("TABLE", "월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000");
+                    userSessionManager.changeValue("TABLE", PRIMARYTABLE);
                     searchText.setText("");
                     searchText.setHint("");
+                    searchText.setEnabled(false);
+                    searchText.setFocusable(false);
+                    searchText.setFocusableInTouchMode(false);
                 }
-
             }
 
             @Override
@@ -175,8 +177,6 @@ public class SearchFragment extends Fragment {
             }
 
         });
-
-
 
         campusGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -192,13 +192,6 @@ public class SearchFragment extends Fragment {
 
                 gradeAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.grade, R.layout.spinnerlayout);
                 gradeSpinner.setAdapter(gradeAdapter);
-
-
-
-//                if(filterSpinner.getSelectedItem().toString().equals("없음")){
-//                    searchText.setClickable(false);
-//                    searchText.setFocusable(false);
-//                }
 
 
                 /*
@@ -317,9 +310,8 @@ public class SearchFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.d("ㅋㅋㅋ", "들어갔니?");
                 String table = userSessionManager.getCurrentTable();
-                if(table.equals("월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000")){
+                if(table.equals(PRIMARYTABLE)){
                     searchWord = "전체";
                 }
                 else {
@@ -390,12 +382,20 @@ public class SearchFragment extends Fragment {
         String filterOption;
         String detailFilter;
 
+        ProgressDialog asyncDialog = new ProgressDialog(
+                SearchFragment.this.getActivity());
+
+
 
         @Override
         protected void onPreExecute() {
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중입니다..");
+            asyncDialog.show();
+
             final HashMap<String, String> user = userSessionManager.getUserDetail();
             userTable = user.get(userSessionManager.TABLE);
-            if(userTable.equals("월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000")){
+            if(userTable.equals(PRIMARYTABLE)){
                 userTable = "월1111111111화1111111111수1111111111목1111111111금1111111111토1111111111";
             }
             try {
@@ -415,15 +415,11 @@ public class SearchFragment extends Fragment {
                 }
                 else detailFilter = searchText.getText().toString();
 
-
-
                 target = "http://106.10.42.35/CourseList.php?Gubun=" + URLEncoder.encode(selectSpinner.getSelectedItem().toString(),"UTF-8")
                         + "&FilterOption=" + URLEncoder.encode(filterOption, "UTF-8")
                         + "&DetailFilter=" + URLEncoder.encode(detailFilter, "UTF-8")
                         + "&Grade=" + URLEncoder.encode(grade, "UTF-8")
                         + "&isMajor=" + URLEncoder.encode(isMajor, "UTF-8");
-                Log.d("VVVtarget", filterOption);
-                Log.d("VVVtarget2", detailFilter);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -460,8 +456,6 @@ public class SearchFragment extends Fragment {
         @Override
         public void onPostExecute(String result){
             try{
-                Log.d("ㅋㅋㅋ여긴", userTable );
-                Log.d("ㅋㅋㅋ여긴","지나가니?");
                 courseList.clear();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response" );
@@ -497,7 +491,7 @@ public class SearchFragment extends Fragment {
                     int idx = Schedule.indexOf(") (");
                     Schedule = Schedule.substring(0, idx+1);
 
-                    table="월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
+                    table = PRIMARYTABLE;
                     StringBuilder builder = new StringBuilder(table);
                     int begin = 0;
 
@@ -603,21 +597,16 @@ public class SearchFragment extends Fragment {
 
                     table = String.valueOf(builder);
                     String isIncluded = "YES";
-                    Log.d("ㅋㅋㅋ테이블", table);
-                    Log.d("ㅋㅋㅋ유저테이블", userTable);
                     for(int i=0; i<66; i++){
                         if(table.charAt(i)=='1' && userTable.charAt(i)=='0'){
                             isIncluded = "NO";
                             break;
                         }
                     }
-                    Log.d("ㅋㅋㅋ포함?", isIncluded);
                     if(isIncluded.equals("NO")){
                         count++;
                         continue;
                     }
-
-
 
                     Sugang_num = object.getString("Sugang_num");
                     Limit_num = object.getString("Limit_num");
@@ -646,6 +635,7 @@ public class SearchFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            asyncDialog.dismiss();
         }
     }
 }
