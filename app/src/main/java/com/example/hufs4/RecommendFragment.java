@@ -124,7 +124,7 @@ public class RecommendFragment extends Fragment {
                     }
                     new keyBackgroundTask(tempKeyword).execute();
                 }else{
-                    Toast.makeText(getActivity().getApplicationContext(), "키워드를 한개 이상 입력해주세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "키워드를 한 개 이상 입력해주세요!", Toast.LENGTH_SHORT).show();
                 }
 
             }

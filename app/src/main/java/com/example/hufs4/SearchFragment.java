@@ -120,6 +120,8 @@ public class SearchFragment extends Fragment {
     private String searchWord;
     String PRIMARYTABLE="월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
 
+    AlertDialog dialog;
+
 
     @Override
     public void onActivityCreated(Bundle b){
@@ -136,6 +138,11 @@ public class SearchFragment extends Fragment {
         searchText = (EditText) getView().findViewById(R.id.searchText);
         userSessionManager = new UserSessionManager(this.getActivity());
         userSessionManager.changeValue("TABLE", PRIMARYTABLE);
+        searchText.setText("");
+        searchText.setHint("");
+        searchText.setEnabled(false);
+        searchText.setFocusable(false);
+        searchText.setFocusableInTouchMode(false);
 
         filterAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.filter, R.layout.spinnerlayout);
 
@@ -331,10 +338,29 @@ public class SearchFragment extends Fragment {
                         searchWord += " ";
                     }
                 }
-                if(filterSpinner.getSelectedItem().equals("요일,교시")){
-                    searchText.setText(searchWord);
+//                if(filterSpinner.getSelectedItem().equals("요일,교시")){
+//                    searchText.setText(searchWord);
+//                }
+//                else{
+//
+//                }
+                if(courseCampus.equals("")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SearchFragment.this.getActivity());
+                    dialog = builder.setMessage("캠퍼스를 선택해주세요.")
+                            .setPositiveButton("확인", null)
+                            .create();
+                    dialog.show();
                 }
-                new BackgroundTask().execute();
+                else if(courseType.equals("")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SearchFragment.this.getActivity());
+                    dialog = builder.setMessage("전공 또는 교양 영역을 선택해주세요.")
+                            .setPositiveButton("확인", null)
+                            .create();
+                    dialog.show();
+                }
+                else{
+                    new BackgroundTask().execute();
+                }
             }
         });
 
@@ -390,7 +416,7 @@ public class SearchFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("로딩중입니다..");
+            asyncDialog.setMessage("강의를 검색중입니다. 잠시만 기다려주세요...");
             asyncDialog.show();
 
             final HashMap<String, String> user = userSessionManager.getUserDetail();
@@ -624,7 +650,7 @@ public class SearchFragment extends Fragment {
 
                 }
                 if(count == 0){
-                    AlertDialog dialog;
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(SearchFragment.this.getActivity());
                     dialog = builder.setMessage("조회된 강의가 없습니다.")
                             .setPositiveButton("확인", null)
