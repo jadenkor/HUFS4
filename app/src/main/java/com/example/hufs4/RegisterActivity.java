@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -55,8 +56,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         final EditText nameText = (EditText) findViewById(R.id.nameText);
         final EditText idText = (EditText) findViewById(R.id.idText);
+
         final EditText passwordText = (EditText) findViewById(R.id.passwordText);
         final EditText passwordText2 = (EditText) findViewById(R.id.passwordText2);
+        passwordText.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
+        passwordText.setTransformationMethod(new LoginActivity.CustomPasswordTransformationMethod());
+
+        passwordText2.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
+        passwordText2.setTransformationMethod(new LoginActivity.CustomPasswordTransformationMethod());
+
         final CheckBox confirmCheckBox = (CheckBox) findViewById(R.id.confirmCheckBox);
         final Button validateButton = (Button) findViewById(R.id.validateButton);
 

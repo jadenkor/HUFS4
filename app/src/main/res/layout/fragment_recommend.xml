@@ -37,7 +37,7 @@
             android:layout_marginLeft="10dp"
 
             android:layout_marginRight="10dp"
-            android:text="키워드는 최대 5개 까지 입력 가능합니다."
+            android:text="여러 개의 키워드를 입력할 수 있습니다."
             android:textColor="#ffffff"
             android:textStyle="bold" />
 
@@ -50,7 +50,6 @@
             android:gravity="center_vertical"
             android:textColor="#ffffff"
             android:textColorHint="#e0e0e0"
-            android:inputType="text"
             android:hint="검색어를 입력하세요."
             android:completionThreshold="1"
             android:completionHint="원하는 키워드를 탭하세요"/>

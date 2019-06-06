@@ -249,6 +249,8 @@ public class RecommendFragment extends Fragment {
                     Credit = object.getString("Credit");
                     Time = object.getString("Time");
                     Schedule = object.getString("Schedule");
+                    int idx = Schedule.indexOf(") (");
+                    Schedule = Schedule.substring(0, idx+1);
                     Sugang_num = object.getString("Sugang_num");
                     Limit_num = object.getString("Limit_num");
                     Note = object.getString("Note");

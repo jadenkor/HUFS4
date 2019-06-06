@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -31,6 +32,8 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
 //    Boolean allFriCheked=false;
 //    Boolean allSatCheked=false;
     Boolean allChecked = false;
+    String PRIMARYTABLE="월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
+    private String searchWord;
 
 
 
@@ -137,6 +140,8 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
                 SaveChecked();
                 finish();
 
+                Toast.makeText(getApplicationContext(), searchWord, Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -215,6 +220,36 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
             }
         }
         userSessionManager.changeValue("TABLE", newTable);
+
+        if(newTable.equals(PRIMARYTABLE)){
+            searchWord = "전체";
+        }
+        else {
+            searchWord="";
+            for (int i = 0; i < 6; i++) {
+                if (i==0) searchWord += "월 ";
+                else if(i==1) searchWord += "화 ";
+                else if(i==2) searchWord += "수 ";
+                else if(i==3) searchWord += "목 ";
+                else if(i==4) searchWord += "금 ";
+                else if(i==5) searchWord += "토 ";
+                for (int j = 0; j < 10; j++) {
+                    if (newTable.charAt((i * 10) + j + i + 1) == '1') {
+                        searchWord += (j+1);
+                    }
+                }
+                if (newTable.substring((i*10)+i+1,(i*10)+i+11).equals("0000000000")) {
+                    if(i==0) searchWord = searchWord.replace("월 ","");
+                    else if(i==1) searchWord = searchWord.replace("화 ","");
+                    else if(i==2) searchWord = searchWord.replace("수 ","");
+                    else if(i==3) searchWord = searchWord.replace("목 ","");
+                    else if(i==4) searchWord = searchWord.replace("금 ","");
+                    else if(i==5) searchWord = searchWord.replace("토 ","");
+                }
+                else searchWord+=" |";
+                searchWord += " ";
+            }
+        }
     }
 
     public void isAllChecked(int m){
@@ -236,4 +271,5 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
             }
         }
     }
+
 }

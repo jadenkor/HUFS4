@@ -324,26 +324,35 @@ public class SearchFragment extends Fragment {
                 else {
                     searchWord="";
                     for (int i = 0; i < 6; i++) {
-                        if (i==0) searchWord += "월";
-                        else if(i==1) searchWord += "화";
-                        else if(i==2) searchWord += "수";
-                        else if(i==3) searchWord += "목";
-                        else if(i==4) searchWord += "금";
-                        else if(i==5) searchWord += "토";
+                        if (i==0) searchWord += "월 ";
+                        else if(i==1) searchWord += "화 ";
+                        else if(i==2) searchWord += "수 ";
+                        else if(i==3) searchWord += "목 ";
+                        else if(i==4) searchWord += "금 ";
+                        else if(i==5) searchWord += "토 ";
                         for (int j = 0; j < 10; j++) {
                             if (table.charAt((i * 10) + j + i + 1) == '1') {
                                 searchWord += (j+1);
                             }
                         }
+                        if (table.substring((i*10)+i+1,(i*10)+i+11).equals("0000000000")) {
+                            if(i==0) searchWord = searchWord.replace("월 ","");
+                            else if(i==1) searchWord = searchWord.replace("화 ","");
+                            else if(i==2) searchWord = searchWord.replace("수 ","");
+                            else if(i==3) searchWord = searchWord.replace("목 ","");
+                            else if(i==4) searchWord = searchWord.replace("금 ","");
+                            else if(i==5) searchWord = searchWord.replace("토 ","");
+                        }
+                        else searchWord+=" |";
                         searchWord += " ";
                     }
                 }
-//                if(filterSpinner.getSelectedItem().equals("요일,교시")){
-//                    searchText.setText(searchWord);
-//                }
-//                else{
-//
-//                }
+                if(filterSpinner.getSelectedItem().equals("요일,교시")){
+                    searchText.setText(searchWord);
+                }
+                else{
+                    searchText.setText("");
+                }
                 if(courseCampus.equals("")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(SearchFragment.this.getActivity());
                     dialog = builder.setMessage("캠퍼스를 선택해주세요.")
