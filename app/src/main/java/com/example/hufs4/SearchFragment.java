@@ -15,12 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -108,16 +106,13 @@ public class SearchFragment extends Fragment {
     private CourseListAdapter adapter;
     private List<Course> courseList;
 
-    private TextView detailText;
-    private LinearLayout detailLayout;
-
     private EditText searchText;
 
     private String isMajor; // 전공:1 , 교양:0
 
     UserSessionManager userSessionManager = null;
-    private String userTable;
-    private String searchWord;
+    private String userTable="";
+    private String searchWord="";
     String PRIMARYTABLE="월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
 
     AlertDialog dialog;
@@ -317,6 +312,7 @@ public class SearchFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
                 String table = userSessionManager.getCurrentTable();
                 if(table.equals(PRIMARYTABLE)){
                     searchWord = "전체";
@@ -347,12 +343,7 @@ public class SearchFragment extends Fragment {
                         searchWord += " ";
                     }
                 }
-                if(filterSpinner.getSelectedItem().equals("요일,교시")){
-                    searchText.setText(searchWord);
-                }
-                else{
-                    searchText.setText("");
-                }
+
                 if(courseCampus.equals("")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(SearchFragment.this.getActivity());
                     dialog = builder.setMessage("캠퍼스를 선택해주세요.")
@@ -368,6 +359,12 @@ public class SearchFragment extends Fragment {
                     dialog.show();
                 }
                 else{
+                    if(filterSpinner.getSelectedItem().equals("요일,교시")){
+                        searchText.setText(searchWord);
+                    }
+                    else{
+                        searchText.setText("");
+                    }
                     new BackgroundTask().execute();
                 }
             }
