@@ -249,6 +249,7 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
                 else searchWord+=" |";
                 searchWord += " ";
             }
+            searchWord = searchWord.substring(0, searchWord.length()-3);
         }
     }
 

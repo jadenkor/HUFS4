@@ -342,6 +342,7 @@ public class SearchFragment extends Fragment {
                         else searchWord+=" |";
                         searchWord += " ";
                     }
+                    searchWord = searchWord.substring(0, searchWord.length()-3);
                 }
 
                 if(courseCampus.equals("")){
@@ -359,12 +360,7 @@ public class SearchFragment extends Fragment {
                     dialog.show();
                 }
                 else{
-                    if(filterSpinner.getSelectedItem().equals("요일,교시")){
-                        searchText.setText(searchWord);
-                    }
-                    else{
-                        searchText.setText("");
-                    }
+                    if(filterSpinner.getSelectedItem().equals("요일,교시")) searchText.setText(searchWord);
                     new BackgroundTask().execute();
                 }
             }
@@ -519,7 +515,6 @@ public class SearchFragment extends Fragment {
                     Credit = object.getString("Credit");
                     Time = object.getString("Time");
                     Schedule = object.getString("Schedule");
-                    Log.d("ㅋㅋㅋ스케줄", Schedule);
                     int idx = Schedule.indexOf(") (");
                     Schedule = Schedule.substring(0, idx+1);
 
