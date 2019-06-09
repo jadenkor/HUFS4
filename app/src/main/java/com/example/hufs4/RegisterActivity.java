@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validate = false;
     private boolean verified = false;
 
-    String name="";
+    String name = "";
     String sha512PW = null;
 
     static String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Whale/1.4.64.6 Safari/537.36";
@@ -59,10 +59,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         final EditText passwordText = (EditText) findViewById(R.id.passwordText);
         final EditText passwordText2 = (EditText) findViewById(R.id.passwordText2);
-        passwordText.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
+        passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordText.setTransformationMethod(new LoginActivity.CustomPasswordTransformationMethod());
 
-        passwordText2.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
+        passwordText2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordText2.setTransformationMethod(new LoginActivity.CustomPasswordTransformationMethod());
 
         final CheckBox confirmCheckBox = (CheckBox) findViewById(R.id.confirmCheckBox);
@@ -131,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 new doit().execute(); // 가입 요청자의 이름, 비밀번호를 통해 eclass 로그인 후에 이름 정보 파싱.
 
-                if(!validate){
+                if (!validate) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("먼저 중복 체크를 해주세요.")
                             .setNegativeButton("확인", null)
@@ -139,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
                     dialog.show();
                     return;
                 }
-                if(!userPassword.equals(userPassword2)){
+                if (!userPassword.equals(userPassword2)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("비밀번호가 일치하지 않습니다.")
                             .setNegativeButton("확인", null)
@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(userID.equals("") || userPassword.equals("") || userPassword2.equals("")){
+                if (userID.equals("") || userPassword.equals("") || userPassword2.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("빈 칸 없이 입력해주세요.")
                             .setNegativeButton("확인", null)
@@ -157,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(!confirmCheckBox.isChecked()){
+                if (!confirmCheckBox.isChecked()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("주의사항 확인 후에 체크해주세요!")
                             .setNegativeButton("확인", null)
@@ -177,10 +177,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         Button registerButton = (Button) findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(new View.OnClickListener(){
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(verified==false){
+                if (verified == false) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("외대생 인증 버튼을 먼저 클릭해주세요.")
                             .setNegativeButton("확인", null)
@@ -189,7 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(!userName.equals(name)){
+                if (!userName.equals(name)) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("이름, 학번 또는 비밀번호가 e-class 정보와 일치하지 않습니다.")
@@ -256,9 +256,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     @Override
-    protected  void onStop() {
+    protected void onStop() {
         super.onStop();
-        if(dialog != null){
+        if (dialog != null) {
             dialog.dismiss();
             dialog = null;
         }
@@ -267,6 +267,7 @@ public class RegisterActivity extends AppCompatActivity {
     private class doit extends AsyncTask<Void, Void, Void> {
 
         Elements eclassName;
+
         @Override
         protected Void doInBackground(Void... voids) {
 
@@ -274,7 +275,7 @@ public class RegisterActivity extends AppCompatActivity {
                 MessageDigest md = MessageDigest.getInstance("SHA-512");
                 byte[] digest = md.digest(userPassword.getBytes());
                 StringBuilder sb = new StringBuilder();
-                for (int i=0; i<digest.length; i++){
+                for (int i = 0; i < digest.length; i++) {
                     sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
                 }
                 sha512PW = String.valueOf(sb);
@@ -311,6 +312,7 @@ public class RegisterActivity extends AppCompatActivity {
             name = eclassName.text();
             return null;
         }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);

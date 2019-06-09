@@ -121,7 +121,7 @@ public class SettingFragment extends Fragment {
     PeriodicWorkRequest periodicWorkRequest = null;
 
     @Override
-    public void onActivityCreated(Bundle b){
+    public void onActivityCreated(Bundle b) {
         super.onActivityCreated(b);
 
         onoffSwitch = (Switch) getView().findViewById(R.id.onoffSwitch);
@@ -160,30 +160,29 @@ public class SettingFragment extends Fragment {
                 .setConstraints(new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
                 .build();
 
-        if(alarm.equals("off")){
+        if (alarm.equals("off")) {
             onoffSwitch.setChecked(false);
             entireLayout.setVisibility(View.INVISIBLE);
             falseMessage.setText("알림 기능을 켜면 알림을 설정할 수 있습니다.");
-        }
-        else onoffSwitch.setChecked(true);
-        if(cycle.equals("15"))      cycleSpinner.setSelection(0);
-        else if(cycle.equals("30")) cycleSpinner.setSelection(1);   // 30분
-        else if(cycle.equals("60")) cycleSpinner.setSelection(2);   // 1시간
-        else if(cycle.equals("120")) cycleSpinner.setSelection(3);  // 2시간
-        else if(cycle.equals("240")) cycleSpinner.setSelection(4);  // 4시간
-        else if(cycle.equals("480")) cycleSpinner.setSelection(5);  // 8시간
-        else if(cycle.equals("720")) cycleSpinner.setSelection(6);  // 12시간
+        } else onoffSwitch.setChecked(true);
+        if (cycle.equals("15")) cycleSpinner.setSelection(0);
+        else if (cycle.equals("30")) cycleSpinner.setSelection(1);   // 30분
+        else if (cycle.equals("60")) cycleSpinner.setSelection(2);   // 1시간
+        else if (cycle.equals("120")) cycleSpinner.setSelection(3);  // 2시간
+        else if (cycle.equals("240")) cycleSpinner.setSelection(4);  // 4시간
+        else if (cycle.equals("480")) cycleSpinner.setSelection(5);  // 8시간
+        else if (cycle.equals("720")) cycleSpinner.setSelection(6);  // 12시간
         else cycleSpinner.setSelection(7);                          // 24시간
 
         final Button saveButton = (Button) getView().findViewById(R.id.saveButton);
 
-        onoffSwitch.setOnClickListener(new View.OnClickListener(){
+        onoffSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onoffSwitch.isChecked()){
+                if (onoffSwitch.isChecked()) {
 
                     new GetSettingTask().execute();
-                    userSessionManager.changeValue("ALARM","on");
+                    userSessionManager.changeValue("ALARM", "on");
                     Animation animation = new AlphaAnimation(0, 1);
                     animation.setDuration(500);
                     entireLayout.setVisibility(View.VISIBLE);
@@ -208,8 +207,7 @@ public class SettingFragment extends Fragment {
 
                     /* WORK MANAGER PART - Start */
                     WorkManager.getInstance().enqueueUniquePeriodicWork("pw_unique", ExistingPeriodicWorkPolicy.REPLACE, periodicWorkRequest);
-                }
-                else{
+                } else {
                     userSessionManager.changeValue("ALARM", "off");
                     Animation animation = new AlphaAnimation(1, 0);
                     animation.setDuration(500);
@@ -227,7 +225,7 @@ public class SettingFragment extends Fragment {
         new GetSettingTask().execute();
 
 
-        saveButton.setOnClickListener(new View.OnClickListener(){
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch ((String) cycleSpinner.getSelectedItem()) {
@@ -270,7 +268,7 @@ public class SettingFragment extends Fragment {
         });
 
         btnDelete = getView().findViewById(R.id.btnDelete);
-        btnDelete.setOnClickListener(new View.OnClickListener(){
+        btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingFragment.this.getActivity());
@@ -334,16 +332,16 @@ public class SettingFragment extends Fragment {
         String status_scholarshipNotice;
         String status_eNotice;
         String status_eAssignment;
-        String status_eLecturenote ;
+        String status_eLecturenote;
 
         @Override
         protected void onPreExecute() {
-            try{
+            try {
                 target = "http://106.10.42.35/GetSetting.php?"
-                        +"userID=" + URLEncoder.encode(userID,"UTF-8");
-                Log.d("PPP",target);
+                        + "userID=" + URLEncoder.encode(userID, "UTF-8");
+                Log.d("PPP", target);
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -374,10 +372,12 @@ public class SettingFragment extends Fragment {
         }
 
         @Override
-        public void onProgressUpdate(Void... values) { super.onProgressUpdate(); }
+        public void onProgressUpdate(Void... values) {
+            super.onProgressUpdate();
+        }
 
         @Override
-        public  void onPostExecute(String result){
+        public void onPostExecute(String result) {
 
             try {
                 JSONObject object = new JSONObject(result);
@@ -390,26 +390,26 @@ public class SettingFragment extends Fragment {
                 status_eAssignment = jsonObject.getString("eAssignment");
                 status_eLecturenote = jsonObject.getString("eLecturenote");
 
-                if(status_hufsNotice.equals("1")) hufsNotice.setChecked(true);
-                if(status_bachelorNotice.equals("1")) bachelorNotice.setChecked(true);
-                if(status_scholarshipNotice.equals("1")) scholarshipNotice.setChecked(true);
-                if(status_eNotice.equals("1")) eNotice.setChecked(true);
-                if(status_eAssignment.equals("1")) eAssignment.setChecked(true);
-                if(status_eLecturenote.equals("1")) eLecturenote.setChecked(true);
+                if (status_hufsNotice.equals("1")) hufsNotice.setChecked(true);
+                if (status_bachelorNotice.equals("1")) bachelorNotice.setChecked(true);
+                if (status_scholarshipNotice.equals("1")) scholarshipNotice.setChecked(true);
+                if (status_eNotice.equals("1")) eNotice.setChecked(true);
+                if (status_eAssignment.equals("1")) eAssignment.setChecked(true);
+                if (status_eLecturenote.equals("1")) eLecturenote.setChecked(true);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    class UserDeleteTask extends AsyncTask<Void, Void, String>{
+    class UserDeleteTask extends AsyncTask<Void, Void, String> {
         String target;
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             try {
                 target = "http://106.10.42.35/UserLeave.php?"
-                        + "userID=" + URLEncoder.encode(userID,"UTF-8");
+                        + "userID=" + URLEncoder.encode(userID, "UTF-8");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -438,10 +438,12 @@ public class SettingFragment extends Fragment {
         }
 
         @Override
-        public void onProgressUpdate(Void... values) { super.onProgressUpdate(); }
+        public void onProgressUpdate(Void... values) {
+            super.onProgressUpdate();
+        }
 
         @Override
-        public  void onPostExecute(String result){
+        public void onPostExecute(String result) {
             userSessionManager.logout();
             /* WORK MANAGER PART - Stop */
             WorkManager.getInstance().cancelUniqueWork("pw_unique");
@@ -461,33 +463,33 @@ public class SettingFragment extends Fragment {
         String status_scholarshipNotice;
         String status_eNotice;
         String status_eAssignment;
-        String status_eLecturenote ;
+        String status_eLecturenote;
 
         @Override
-        protected  void onPreExecute() {
+        protected void onPreExecute() {
 
-            if(hufsNotice.isChecked()) status_hufsNotice="1";
-            else status_hufsNotice="0";
+            if (hufsNotice.isChecked()) status_hufsNotice = "1";
+            else status_hufsNotice = "0";
 
-            if(bachelorNotice.isChecked()) status_bachelorNotice="1";
-            else status_bachelorNotice="0";
+            if (bachelorNotice.isChecked()) status_bachelorNotice = "1";
+            else status_bachelorNotice = "0";
 
-            if(scholarshipNotice.isChecked()) status_scholarshipNotice="1";
-            else status_scholarshipNotice="0";
+            if (scholarshipNotice.isChecked()) status_scholarshipNotice = "1";
+            else status_scholarshipNotice = "0";
 
-            if(eNotice.isChecked()) status_eNotice="1";
-            else status_eNotice="0";
+            if (eNotice.isChecked()) status_eNotice = "1";
+            else status_eNotice = "0";
 
-            if(eAssignment.isChecked()) status_eAssignment="1";
-            else status_eAssignment="0";
+            if (eAssignment.isChecked()) status_eAssignment = "1";
+            else status_eAssignment = "0";
 
-            if(eLecturenote.isChecked()) status_eLecturenote="1";
-            else status_eLecturenote="0";
+            if (eLecturenote.isChecked()) status_eLecturenote = "1";
+            else status_eLecturenote = "0";
 
             try {
                 target = "http://106.10.42.35/UserSetting.php?"
-                        + "userID=" + URLEncoder.encode(userID,"UTF-8")
-                        + "&hufsNotice=" + URLEncoder.encode(status_hufsNotice,"UTF-8")
+                        + "userID=" + URLEncoder.encode(userID, "UTF-8")
+                        + "&hufsNotice=" + URLEncoder.encode(status_hufsNotice, "UTF-8")
                         + "&bachelorNotice=" + URLEncoder.encode(status_bachelorNotice, "UTF-8")
                         + "&scholarshipNotice=" + URLEncoder.encode(status_scholarshipNotice, "UTF-8")
                         + "&eNotice=" + URLEncoder.encode(status_eNotice, "UTF-8")
@@ -521,10 +523,12 @@ public class SettingFragment extends Fragment {
         }
 
         @Override
-        public void onProgressUpdate(Void... values) { super.onProgressUpdate(); }
+        public void onProgressUpdate(Void... values) {
+            super.onProgressUpdate();
+        }
 
         @Override
-        public  void onPostExecute(String result){
+        public void onPostExecute(String result) {
             /* WORK MANAGER PART - Set New Interval Value and Restart After Updating Setting*/
             periodicWorkRequest = new PeriodicWorkRequest.Builder(MyWorker.class, Long.parseLong(userSessionManager.getCurrentCycle()), TimeUnit.MINUTES)
                     .addTag("periodic_work")

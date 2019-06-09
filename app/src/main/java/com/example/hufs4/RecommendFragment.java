@@ -88,6 +88,7 @@ public class RecommendFragment extends Fragment {
     private Button keySearchButton;
 
     private HashTagAutoCompleteTextView hashTagAutoCompleteTextView;
+
     @Override
     public void onActivityCreated(Bundle b) {
         super.onActivityCreated(b);
@@ -112,18 +113,18 @@ public class RecommendFragment extends Fragment {
 
         keySearchButton = (Button) getView().findViewById(R.id.keywordSearchButton);
 
-        keySearchButton.setOnClickListener(new View.OnClickListener(){
+        keySearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String tempKeyword = hashTagAutoCompleteTextView.getText().toString();
 
-                if(!tempKeyword.equals("")  && !tempKeyword.equals("#")){
+                if (!tempKeyword.equals("") && !tempKeyword.equals("#")) {
                     tempKeyword = tempKeyword.replaceAll(" ", "").replaceAll("#", "_").substring(1);
-                    if(tempKeyword.charAt(tempKeyword.length()-1) == '_'){
-                        tempKeyword = tempKeyword.substring(0, tempKeyword.length()-1);
+                    if (tempKeyword.charAt(tempKeyword.length() - 1) == '_') {
+                        tempKeyword = tempKeyword.substring(0, tempKeyword.length() - 1);
                     }
                     new keyBackgroundTask(tempKeyword).execute();
-                }else{
+                } else {
                     Toast.makeText(getActivity().getApplicationContext(), "키워드를 한 개 이상 입력해주세요!", Toast.LENGTH_SHORT).show();
                 }
 
@@ -174,7 +175,7 @@ public class RecommendFragment extends Fragment {
                 RecommendFragment.this.getActivity());
 
 
-        public keyBackgroundTask(String keyword){
+        public keyBackgroundTask(String keyword) {
             super();
             searchKeyword = keyword;
         }
@@ -216,14 +217,16 @@ public class RecommendFragment extends Fragment {
         }
 
         @Override
-        public void onProgressUpdate(Void... values) { super.onProgressUpdate(); }
+        public void onProgressUpdate(Void... values) {
+            super.onProgressUpdate();
+        }
 
         @Override
-        public void onPostExecute(String result){
-            try{
+        public void onPostExecute(String result) {
+            try {
                 keyCourseList.clear();
                 JSONObject jsonObject = new JSONObject(result);
-                JSONArray jsonArray = jsonObject.getJSONArray("response" );
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
                 String Code; //학수번호
                 String Grade; //학년
@@ -240,7 +243,7 @@ public class RecommendFragment extends Fragment {
                 String Muke; //무크
                 String Foreign; //원어
                 String Team; //팀티칭
-                while(count < jsonArray.length()){
+                while (count < jsonArray.length()) {
                     JSONObject object = jsonArray.getJSONObject(count);
                     Code = object.getString("Code");
                     Grade = object.getString("Grade");
@@ -250,7 +253,7 @@ public class RecommendFragment extends Fragment {
                     Time = object.getString("Time");
                     Schedule = object.getString("Schedule");
                     int idx = Schedule.indexOf(") (");
-                    Schedule = Schedule.substring(0, idx+1);
+                    Schedule = Schedule.substring(0, idx + 1);
                     Sugang_num = object.getString("Sugang_num");
                     Limit_num = object.getString("Limit_num");
                     Note = object.getString("Note");
@@ -263,7 +266,7 @@ public class RecommendFragment extends Fragment {
                     keyCourseList.add(course);
                     count++;
                 }
-                 if(count == 0){
+                if (count == 0) {
                     AlertDialog dialog;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RecommendFragment.this.getActivity());
                     dialog = builder.setMessage("해당 키워드와 일치하는 강의가 없습니다.")

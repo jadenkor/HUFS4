@@ -15,10 +15,10 @@ public class UserSessionManager {
 
     private static final String PREF_NAME = "LOGIN";
     private static final String LOGIN = "IS_LOGIN";
-    public  static final String ID = "ID";
-    public  static final String ALARM = "ALARM";
-    public  static final String CYCLE = "CYCLE";
-    public  static final String TABLE = "TABLE";
+    public static final String ID = "ID";
+    public static final String ALARM = "ALARM";
+    public static final String CYCLE = "CYCLE";
+    public static final String TABLE = "TABLE";
 
     public UserSessionManager(Context context) {
         this.context = context;
@@ -26,7 +26,7 @@ public class UserSessionManager {
         editor = sharedPreferences.edit();
     }
 
-    public  void createSession(String id, String alarm, String cycle, String table){
+    public void createSession(String id, String alarm, String cycle, String table) {
         editor.putBoolean(LOGIN, true);
         editor.putString(ID, id);
         editor.putString(ALARM, alarm);
@@ -36,19 +36,19 @@ public class UserSessionManager {
         editor.apply();
     }
 
-    public boolean isLogin(){
-        return  sharedPreferences.getBoolean(LOGIN, false);
+    public boolean isLogin() {
+        return sharedPreferences.getBoolean(LOGIN, false);
     }
 
-    public void checkLogin(){
-        if (!this.isLogin()){
+    public void checkLogin() {
+        if (!this.isLogin()) {
             Intent i = new Intent(context, LoginActivity.class);
             context.startActivity(i);
             ((MainActivity) context).finish();
         }
     }
 
-    public HashMap<String, String> getUserDetail(){
+    public HashMap<String, String> getUserDetail() {
 
         HashMap<String, String> user = new HashMap<>();
         user.put(ID, sharedPreferences.getString(ID, null));
@@ -59,23 +59,24 @@ public class UserSessionManager {
         return user;
     }
 
-    public String getCurrentCycle(){
+    public String getCurrentCycle() {
         return sharedPreferences.getString(CYCLE, null);
     }
-    public String getCurrentTable(){
+
+    public String getCurrentTable() {
         return sharedPreferences.getString(TABLE, null);
     }
 
-    public String getCurrentID(){
+    public String getCurrentID() {
         return sharedPreferences.getString(ID, null);
     }
 
-    public void changeValue(String key,String value){
+    public void changeValue(String key, String value) {
         editor.putString(key, value);
         editor.commit();
     }
 
-    public void logout(){
+    public void logout() {
 
         editor.clear();
         editor.commit();

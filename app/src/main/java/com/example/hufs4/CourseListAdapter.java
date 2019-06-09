@@ -55,10 +55,9 @@ public class CourseListAdapter extends BaseAdapter {
         TextView team = (TextView) v.findViewById(R.id.team);
 
 
-        if(courseList.get(i).getGrade().equals("")){
+        if (courseList.get(i).getGrade().equals("")) {
             grade.setText("전학년");
-        }
-        else{
+        } else {
             grade.setText(courseList.get(i).getGrade() + "학년");
         }
         title.setText(courseList.get(i).getTitle());
@@ -68,51 +67,46 @@ public class CourseListAdapter extends BaseAdapter {
         schedule.setText(scheduleStr);
 
         String instructorName = courseList.get(i).getInstructor();
-        if(instructorName.length() > 20){
-            instructorName = instructorName.substring(0,20)+"...";
+        if (instructorName.length() > 20) {
+            instructorName = instructorName.substring(0, 20) + "...";
         }
-        instructor.setText("담당교수 : "+instructorName);
+        instructor.setText("담당교수 : " + instructorName);
 
         String sn = courseList.get(i).getSugang_num();
         String ln = courseList.get(i).getLimit_num();
-        String sn_ln ="수강인원 : " + sn + " /" + ln;
+        String sn_ln = "수강인원 : " + sn + " /" + ln;
         sugang_limit.setText(sn_ln);
 
-        note.setText("비고 : "+courseList.get(i).getNote());
+        note.setText("비고 : " + courseList.get(i).getNote());
 
-        if(courseList.get(i).getJunpil().equals("1")){
+        if (courseList.get(i).getJunpil().equals("1")) {
             junpil.setText("전필");
             junpil.setTextColor(Color.rgb(255, 0, 0));
-        }
-        else{
+        } else {
             junpil.setText("");
         }
-        if(courseList.get(i).getCyber().equals("1")){
+        if (courseList.get(i).getCyber().equals("1")) {
             cyber.setText("온라인");
             cyber.setTextColor(Color.rgb(0, 0, 255));
-        }
-        else{
+        } else {
             cyber.setText("");
         }
-        if(courseList.get(i).getMuke().equals("1")){
+        if (courseList.get(i).getMuke().equals("1")) {
             muke.setText("무크");
             muke.setTextColor(Color.rgb(255, 212, 0));
-        }
-        else{
+        } else {
             muke.setText("");
         }
-        if(courseList.get(i).getForeign().equals("1")){
+        if (courseList.get(i).getForeign().equals("1")) {
             foreign.setText("원어");
             foreign.setTextColor(Color.rgb(128, 0, 128));
-        }
-        else{
+        } else {
             foreign.setText("");
         }
-        if(courseList.get(i).getTeam().equals("1")){
+        if (courseList.get(i).getTeam().equals("1")) {
             team.setText("팀티칭");
             team.setTextColor(Color.rgb(0, 153, 0));
-        }
-        else{
+        } else {
             team.setText("");
         }
 
@@ -124,9 +118,9 @@ public class CourseListAdapter extends BaseAdapter {
             @Override
             public void onClick(android.view.View v) {
 
-                Uri uri = Uri.parse("https://wis.hufs.ac.kr/src08/jsp/lecture/syllabus.jsp?mode=print&ledg_year=2019&ledg_sessn=1&org_sect=A&lssn_cd="+code);
+                Uri uri = Uri.parse("https://wis.hufs.ac.kr/src08/jsp/lecture/syllabus.jsp?mode=print&ledg_year=2019&ledg_sessn=1&org_sect=A&lssn_cd=" + code);
 
-                Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 context.startActivity(intent);
             }
         });

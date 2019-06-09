@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class DayPeriodSettingActivity extends AppCompatActivity {
 
     String table;
-    String newTable="";
+    String newTable = "";
     //선택한 요일/교시를 저장하기 위한 변수
     CheckBox[][] period = new CheckBox[10][6];
 
@@ -25,16 +25,15 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
     TextView Thursday;
     TextView Friday;
     TextView Saturday;
-//    Boolean allMonCheked=false;
+    //    Boolean allMonCheked=false;
 //    Boolean allTueCheked=false;
 //    Boolean allWedCheked=false;
 //    Boolean allThuCheked=false;
 //    Boolean allFriCheked=false;
 //    Boolean allSatCheked=false;
     Boolean allChecked = false;
-    String PRIMARYTABLE="월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
+    String PRIMARYTABLE = "월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
     private String searchWord;
-
 
 
     UserSessionManager userSessionManager = null;
@@ -81,7 +80,7 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
         period[9][1] = (CheckBox) findViewById(R.id.Tue10CheckBox);
 
         period[0][2] = (CheckBox) findViewById(R.id.Wed1CheckBox);
-        period[1][2] =  (CheckBox) findViewById(R.id.Wed2CheckBox);
+        period[1][2] = (CheckBox) findViewById(R.id.Wed2CheckBox);
         period[2][2] = (CheckBox) findViewById(R.id.Wed3CheckBox);
         period[3][2] = (CheckBox) findViewById(R.id.Wed4CheckBox);
         period[4][2] = (CheckBox) findViewById(R.id.Wed5CheckBox);
@@ -124,9 +123,9 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
         period[8][5] = (CheckBox) findViewById(R.id.Sat9CheckBox);
         period[9][5] = (CheckBox) findViewById(R.id.Sat10CheckBox);
 
-        for(int i=0; i<6; i++){
-            for(int j=0; j<10; j++){
-                if(table.charAt((i*10)+j+i+1)=='1'){
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (table.charAt((i * 10) + j + i + 1) == '1') {
                     period[j][i].setChecked(true);
                 }
             }
@@ -145,42 +144,42 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
             }
         });
 
-        Monday.setOnClickListener(new View.OnClickListener(){
+        Monday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isAllChecked(0);
                 CheckAll(0);
             }
         });
-        Tuesday.setOnClickListener(new View.OnClickListener(){
+        Tuesday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isAllChecked(1);
                 CheckAll(1);
             }
         });
-        Wednesday.setOnClickListener(new View.OnClickListener(){
+        Wednesday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isAllChecked(2);
                 CheckAll(2);
             }
         });
-        Thursday.setOnClickListener(new View.OnClickListener(){
+        Thursday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isAllChecked(3);
                 CheckAll(3);
             }
         });
-        Friday.setOnClickListener(new View.OnClickListener(){
+        Friday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isAllChecked(4);
                 CheckAll(4);
             }
         });
-        Saturday.setOnClickListener(new View.OnClickListener(){
+        Saturday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isAllChecked(5);
@@ -191,9 +190,9 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
 
 
     @Override
-    public  boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         //바깥레이어 클릭시 안닫히게
-        if(event.getAction() == MotionEvent.ACTION_OUTSIDE){
+        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
             return false;
         }
         return true;
@@ -206,66 +205,64 @@ public class DayPeriodSettingActivity extends AppCompatActivity {
     }
 
     // 체크 한 것들을 1과 0으로 변환하여 sharedPreference에 저장.
-    public void SaveChecked(){
-        for(int i=0; i<6; i++){
-            if(i==0) newTable+="월";
-            else if(i==1) newTable+="화";
-            else if(i==2) newTable+="수";
-            else if(i==3) newTable+="목";
-            else if(i==4) newTable+="금";
-            else if(i==5) newTable+="토";
-            for(int j=0; j<10; j++){
-                if(period[j][i].isChecked()) newTable+="1";
-                else newTable+="0";
+    public void SaveChecked() {
+        for (int i = 0; i < 6; i++) {
+            if (i == 0) newTable += "월";
+            else if (i == 1) newTable += "화";
+            else if (i == 2) newTable += "수";
+            else if (i == 3) newTable += "목";
+            else if (i == 4) newTable += "금";
+            else if (i == 5) newTable += "토";
+            for (int j = 0; j < 10; j++) {
+                if (period[j][i].isChecked()) newTable += "1";
+                else newTable += "0";
             }
         }
         userSessionManager.changeValue("TABLE", newTable);
 
-        if(newTable.equals(PRIMARYTABLE)){
+        if (newTable.equals(PRIMARYTABLE)) {
             searchWord = "전체";
-        }
-        else {
-            searchWord="";
+        } else {
+            searchWord = "";
             for (int i = 0; i < 6; i++) {
-                if (i==0) searchWord += "월 ";
-                else if(i==1) searchWord += "화 ";
-                else if(i==2) searchWord += "수 ";
-                else if(i==3) searchWord += "목 ";
-                else if(i==4) searchWord += "금 ";
-                else if(i==5) searchWord += "토 ";
+                if (i == 0) searchWord += "월 ";
+                else if (i == 1) searchWord += "화 ";
+                else if (i == 2) searchWord += "수 ";
+                else if (i == 3) searchWord += "목 ";
+                else if (i == 4) searchWord += "금 ";
+                else if (i == 5) searchWord += "토 ";
                 for (int j = 0; j < 10; j++) {
                     if (newTable.charAt((i * 10) + j + i + 1) == '1') {
-                        searchWord += (j+1);
+                        searchWord += (j + 1);
                     }
                 }
-                if (newTable.substring((i*10)+i+1,(i*10)+i+11).equals("0000000000")) {
-                    if(i==0) searchWord = searchWord.replace("월 ","");
-                    else if(i==1) searchWord = searchWord.replace("화 ","");
-                    else if(i==2) searchWord = searchWord.replace("수 ","");
-                    else if(i==3) searchWord = searchWord.replace("목 ","");
-                    else if(i==4) searchWord = searchWord.replace("금 ","");
-                    else if(i==5) searchWord = searchWord.replace("토 ","");
-                }
-                else searchWord+=" |";
+                if (newTable.substring((i * 10) + i + 1, (i * 10) + i + 11).equals("0000000000")) {
+                    if (i == 0) searchWord = searchWord.replace("월 ", "");
+                    else if (i == 1) searchWord = searchWord.replace("화 ", "");
+                    else if (i == 2) searchWord = searchWord.replace("수 ", "");
+                    else if (i == 3) searchWord = searchWord.replace("목 ", "");
+                    else if (i == 4) searchWord = searchWord.replace("금 ", "");
+                    else if (i == 5) searchWord = searchWord.replace("토 ", "");
+                } else searchWord += " |";
                 searchWord += " ";
             }
-            searchWord = searchWord.substring(0, searchWord.length()-3);
+            searchWord = searchWord.substring(0, searchWord.length() - 3);
         }
     }
 
-    public void isAllChecked(int m){
-        for(int i=0; i<10; i++){
-            if(period[i][m].isChecked()) allChecked = true;
+    public void isAllChecked(int m) {
+        for (int i = 0; i < 10; i++) {
+            if (period[i][m].isChecked()) allChecked = true;
         }
     }
-    public void CheckAll(int m){
-        if(!allChecked) {
+
+    public void CheckAll(int m) {
+        if (!allChecked) {
             for (int i = 0; i < 10; i++) {
                 period[i][m].setChecked(true);
                 allChecked = true;
             }
-        }
-        else{
+        } else {
             for (int i = 0; i < 10; i++) {
                 period[i][m].setChecked(false);
                 allChecked = false;

@@ -34,15 +34,19 @@ public class LoginActivity extends AppCompatActivity {
 
         private class PasswordCharSequence implements CharSequence {
             private CharSequence mSource;
+
             public PasswordCharSequence(CharSequence source) {
                 mSource = source;
             }
+
             public char charAt(int index) {
                 return '*';
             }
+
             public int length() {
                 return mSource.length();
             }
+
             public CharSequence subSequence(int start, int end) {
                 return mSource.subSequence(start, end); // Return default
             }
@@ -71,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final EditText idText = (EditText) findViewById(R.id.idText);
         final EditText passwordText = (EditText) findViewById(R.id.passwordText);
-        passwordText.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
+        passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordText.setTransformationMethod(new CustomPasswordTransformationMethod());
 
         final Button loginButton = (Button) findViewById(R.id.loginButton);

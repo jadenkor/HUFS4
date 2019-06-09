@@ -98,8 +98,7 @@ public class SearchFragment extends Fragment {
     private Spinner filterSpinner;
 
 
-
-    private String courseCampus =""; //button 서울 or 글로벌
+    private String courseCampus = ""; //button 서울 or 글로벌
     private String courseType = ""; //button 전공/부전공 or 실용외국어/교양과목
 
     private ListView courseListView;
@@ -111,15 +110,15 @@ public class SearchFragment extends Fragment {
     private String isMajor; // 전공:1 , 교양:0
 
     UserSessionManager userSessionManager = null;
-    private String userTable="";
-    private String searchWord="";
-    String PRIMARYTABLE="월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
+    private String userTable = "";
+    private String searchWord = "";
+    String PRIMARYTABLE = "월0000000000화0000000000수0000000000목0000000000금0000000000토0000000000";
 
     AlertDialog dialog;
 
 
     @Override
-    public void onActivityCreated(Bundle b){
+    public void onActivityCreated(Bundle b) {
         super.onActivityCreated(b);
 
         final RadioGroup campusGroup = (RadioGroup) getView().findViewById(R.id.campusGroup);
@@ -145,7 +144,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(filterSpinner.getSelectedItem().equals("요일,교시")){
+                if (filterSpinner.getSelectedItem().equals("요일,교시")) {
                     Intent intent = new Intent(SearchFragment.this.getActivity(), DayPeriodSettingActivity.class);
                     SearchFragment.this.startActivity(intent);
 
@@ -154,16 +153,14 @@ public class SearchFragment extends Fragment {
                     searchText.setEnabled(true);
                     searchText.setFocusable(false);
                     searchText.setFocusableInTouchMode(false);
-                }
-                else if(filterSpinner.getSelectedItem().equals("교수명") || filterSpinner.getSelectedItem().equals("강의명")){
+                } else if (filterSpinner.getSelectedItem().equals("교수명") || filterSpinner.getSelectedItem().equals("강의명")) {
                     userSessionManager.changeValue("TABLE", PRIMARYTABLE);
                     searchText.setHint("입력");
                     searchText.setText("");
                     searchText.setEnabled(true);
                     searchText.setFocusable(true);
                     searchText.setFocusableInTouchMode(true);
-                }
-                else{
+                } else {
                     userSessionManager.changeValue("TABLE", PRIMARYTABLE);
                     searchText.setText("");
                     searchText.setHint("");
@@ -200,7 +197,7 @@ public class SearchFragment extends Fragment {
                  * 글로벌 캠퍼스의 정보만 제공하기 위한 처리.
                  *          + 아래   if(courseCampus.equals("서울")){ 주석 처리 해두었음
                  */
-                if(courseCampus.equals("서울")){
+                if (courseCampus.equals("서울")) {
                     AlertDialog dialog;
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     dialog = builder.setMessage("서울 캠퍼스는 아직 제공하지 않는 서비스입니다.")
@@ -211,15 +208,14 @@ public class SearchFragment extends Fragment {
                     courseCampus = "";
                     selectSpinner.setEnabled(false);
                     selectSpinner.setClickable(false);
-                }
-                else{
+                } else {
                     selectSpinner.setEnabled(true);
                     selectSpinner.setClickable(true);
                 }
                 /* --------------------------------------------------------------------------- */
 
 
-                if(courseCampus.equals("서울")){
+                if (courseCampus.equals("서울")) {
 
 //                    if(courseType.equals("전공/부전공")) {
 //                        isMajor="1";
@@ -233,15 +229,13 @@ public class SearchFragment extends Fragment {
 //                        selectSpinner.setAdapter(selectAdapter);
 //                    }
 
-                }
-                else if(courseCampus.equals("글로벌")){
-                    if(courseType.equals("전공/부전공")) {
-                        isMajor="1";
+                } else if (courseCampus.equals("글로벌")) {
+                    if (courseType.equals("전공/부전공")) {
+                        isMajor = "1";
                         selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
-                    }
-                    else if(courseType.equals("실용외국어/교양과목")) {
-                        isMajor="0";
+                    } else if (courseType.equals("실용외국어/교양과목")) {
+                        isMajor = "0";
                         selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
                     }
@@ -258,28 +252,25 @@ public class SearchFragment extends Fragment {
                 RadioButton typeButton = (RadioButton) getView().findViewById(i);
                 courseType = typeButton.getText().toString();
 
-                if(courseCampus.equals("서울")){
-                    if(courseType.equals("전공/부전공")) {
-                        isMajor="1";
+                if (courseCampus.equals("서울")) {
+                    if (courseType.equals("전공/부전공")) {
+                        isMajor = "1";
                         selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorSeoul, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
-                    }
-                    else {
-                        isMajor="0";
+                    } else {
+                        isMajor = "0";
                         selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalSeoul, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
                     }
-                }
-                else if(courseCampus.equals("글로벌")){
-                    if(courseType.equals("전공/부전공")) {
-                        isMajor="1";
-                        Log.d("전공","전공");
+                } else if (courseCampus.equals("글로벌")) {
+                    if (courseType.equals("전공/부전공")) {
+                        isMajor = "1";
+                        Log.d("전공", "전공");
                         selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.majorGlobal, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
-                    }
-                    else {
-                        isMajor="0";
-                        Log.d("교양","교양");
+                    } else {
+                        isMajor = "0";
+                        Log.d("교양", "교양");
                         selectAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.liberalGlobal, R.layout.spinnerlayout2);
                         selectSpinner.setAdapter(selectAdapter);
                     }
@@ -300,7 +291,7 @@ public class SearchFragment extends Fragment {
         searchText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(filterSpinner.getSelectedItem().equals("요일,교시")){
+                if (filterSpinner.getSelectedItem().equals("요일,교시")) {
                     Intent intent = new Intent(SearchFragment.this.getActivity(), DayPeriodSettingActivity.class);
                     SearchFragment.this.startActivity(intent);
                     searchText.setText("");
@@ -309,58 +300,55 @@ public class SearchFragment extends Fragment {
             }
         });
         Button searchButton = (Button) getView().findViewById(R.id.searchButton);
-        searchButton.setOnClickListener(new View.OnClickListener(){
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String table = userSessionManager.getCurrentTable();
-                if(table.equals(PRIMARYTABLE)){
+                if (table.equals(PRIMARYTABLE)) {
                     searchWord = "전체";
-                }
-                else {
-                    searchWord="";
+                } else {
+                    searchWord = "";
                     for (int i = 0; i < 6; i++) {
-                        if (i==0) searchWord += "월 ";
-                        else if(i==1) searchWord += "화 ";
-                        else if(i==2) searchWord += "수 ";
-                        else if(i==3) searchWord += "목 ";
-                        else if(i==4) searchWord += "금 ";
-                        else if(i==5) searchWord += "토 ";
+                        if (i == 0) searchWord += "월 ";
+                        else if (i == 1) searchWord += "화 ";
+                        else if (i == 2) searchWord += "수 ";
+                        else if (i == 3) searchWord += "목 ";
+                        else if (i == 4) searchWord += "금 ";
+                        else if (i == 5) searchWord += "토 ";
                         for (int j = 0; j < 10; j++) {
                             if (table.charAt((i * 10) + j + i + 1) == '1') {
-                                searchWord += (j+1);
+                                searchWord += (j + 1);
                             }
                         }
-                        if (table.substring((i*10)+i+1,(i*10)+i+11).equals("0000000000")) {
-                            if(i==0) searchWord = searchWord.replace("월 ","");
-                            else if(i==1) searchWord = searchWord.replace("화 ","");
-                            else if(i==2) searchWord = searchWord.replace("수 ","");
-                            else if(i==3) searchWord = searchWord.replace("목 ","");
-                            else if(i==4) searchWord = searchWord.replace("금 ","");
-                            else if(i==5) searchWord = searchWord.replace("토 ","");
-                        }
-                        else searchWord+=" |";
+                        if (table.substring((i * 10) + i + 1, (i * 10) + i + 11).equals("0000000000")) {
+                            if (i == 0) searchWord = searchWord.replace("월 ", "");
+                            else if (i == 1) searchWord = searchWord.replace("화 ", "");
+                            else if (i == 2) searchWord = searchWord.replace("수 ", "");
+                            else if (i == 3) searchWord = searchWord.replace("목 ", "");
+                            else if (i == 4) searchWord = searchWord.replace("금 ", "");
+                            else if (i == 5) searchWord = searchWord.replace("토 ", "");
+                        } else searchWord += " |";
                         searchWord += " ";
                     }
-                    searchWord = searchWord.substring(0, searchWord.length()-3);
+                    searchWord = searchWord.substring(0, searchWord.length() - 3);
                 }
 
-                if(courseCampus.equals("")){
+                if (courseCampus.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SearchFragment.this.getActivity());
                     dialog = builder.setMessage("캠퍼스를 선택해주세요.")
                             .setPositiveButton("확인", null)
                             .create();
                     dialog.show();
-                }
-                else if(courseType.equals("")) {
+                } else if (courseType.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SearchFragment.this.getActivity());
                     dialog = builder.setMessage("전공 또는 교양 영역을 선택해주세요.")
                             .setPositiveButton("확인", null)
                             .create();
                     dialog.show();
-                }
-                else{
-                    if(filterSpinner.getSelectedItem().equals("요일,교시")) searchText.setText(searchWord);
+                } else {
+                    if (filterSpinner.getSelectedItem().equals("요일,교시"))
+                        searchText.setText(searchWord);
                     new BackgroundTask().execute();
                 }
             }
@@ -414,7 +402,6 @@ public class SearchFragment extends Fragment {
                 SearchFragment.this.getActivity());
 
 
-
         @Override
         protected void onPreExecute() {
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -423,27 +410,25 @@ public class SearchFragment extends Fragment {
 
             final HashMap<String, String> user = userSessionManager.getUserDetail();
             userTable = user.get(userSessionManager.TABLE);
-            if(userTable.equals(PRIMARYTABLE)){
+            if (userTable.equals(PRIMARYTABLE)) {
                 userTable = "월1111111111화1111111111수1111111111목1111111111금1111111111토1111111111";
             }
             try {
-                if(gradeSpinner.getSelectedItem().toString().equals("1학년")) grade="1";
-                else if(gradeSpinner.getSelectedItem().toString().equals("2학년")) grade="2";
-                else if(gradeSpinner.getSelectedItem().toString().equals("3학년")) grade="3";
-                else if(gradeSpinner.getSelectedItem().toString().equals("4학년")) grade="4";
-                else grade="전학년";
+                if (gradeSpinner.getSelectedItem().toString().equals("1학년")) grade = "1";
+                else if (gradeSpinner.getSelectedItem().toString().equals("2학년")) grade = "2";
+                else if (gradeSpinner.getSelectedItem().toString().equals("3학년")) grade = "3";
+                else if (gradeSpinner.getSelectedItem().toString().equals("4학년")) grade = "4";
+                else grade = "전학년";
 
                 filterOption = filterSpinner.getSelectedItem().toString();
 
-                if(filterOption.equals("없음")){
-                    detailFilter="";
-                }
-                else if(filterOption.equals("요일,교시")){
-                    detailFilter="";
-                }
-                else detailFilter = searchText.getText().toString();
+                if (filterOption.equals("없음")) {
+                    detailFilter = "";
+                } else if (filterOption.equals("요일,교시")) {
+                    detailFilter = "";
+                } else detailFilter = searchText.getText().toString();
 
-                target = "http://106.10.42.35/CourseList.php?Gubun=" + URLEncoder.encode(selectSpinner.getSelectedItem().toString(),"UTF-8")
+                target = "http://106.10.42.35/CourseList.php?Gubun=" + URLEncoder.encode(selectSpinner.getSelectedItem().toString(), "UTF-8")
                         + "&FilterOption=" + URLEncoder.encode(filterOption, "UTF-8")
                         + "&DetailFilter=" + URLEncoder.encode(detailFilter, "UTF-8")
                         + "&Grade=" + URLEncoder.encode(grade, "UTF-8")
@@ -479,14 +464,16 @@ public class SearchFragment extends Fragment {
         }
 
         @Override
-        public void onProgressUpdate(Void... values) { super.onProgressUpdate(); }
+        public void onProgressUpdate(Void... values) {
+            super.onProgressUpdate();
+        }
 
         @Override
-        public void onPostExecute(String result){
-            try{
+        public void onPostExecute(String result) {
+            try {
                 courseList.clear();
                 JSONObject jsonObject = new JSONObject(result);
-                JSONArray jsonArray = jsonObject.getJSONArray("response" );
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
                 String Code; //학수번호
                 String Grade; //학년
@@ -505,7 +492,7 @@ public class SearchFragment extends Fragment {
                 String Team; //팀티칭
                 String table;
 
-                while(count < jsonArray.length()){
+                while (count < jsonArray.length()) {
 
                     JSONObject object = jsonArray.getJSONObject(count);
                     Code = object.getString("Code");
@@ -516,107 +503,96 @@ public class SearchFragment extends Fragment {
                     Time = object.getString("Time");
                     Schedule = object.getString("Schedule");
                     int idx = Schedule.indexOf(") (");
-                    Schedule = Schedule.substring(0, idx+1);
+                    Schedule = Schedule.substring(0, idx + 1);
 
                     table = PRIMARYTABLE;
                     StringBuilder builder = new StringBuilder(table);
                     int begin = 0;
 
-                    for(int i=0; i<Schedule.length(); i++){
+                    for (int i = 0; i < Schedule.length(); i++) {
 
-                        if(Schedule.substring(i,i+1).equals("월")){
+                        if (Schedule.substring(i, i + 1).equals("월")) {
                             begin = 0;
-                            for(int j=i+1; j<Schedule.indexOf('(',i); j++){
-                                if(Schedule.substring(j,j+2).equals("10")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+2)), '1' );
+                            for (int j = i + 1; j < Schedule.indexOf('(', i); j++) {
+                                if (Schedule.substring(j, j + 2).equals("10")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 2)), '1');
                                     j++;
-                                }
-                                else if(Schedule.substring(j,j+1).equals("1") ||Schedule.substring(j,j+1).equals("2")  ||
-                                        Schedule.substring(j,j+1).equals("3")  || Schedule.substring(j,j+1).equals("4")  ||
-                                        Schedule.substring(j,j+1).equals("5")  || Schedule.substring(j,j+1).equals("6")  ||
-                                        Schedule.substring(j,j+1).equals("7")  || Schedule.substring(j,j+1).equals("8")  ||
-                                        Schedule.substring(j,j+1).equals("9")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+1)), '1' );
+                                } else if (Schedule.substring(j, j + 1).equals("1") || Schedule.substring(j, j + 1).equals("2") ||
+                                        Schedule.substring(j, j + 1).equals("3") || Schedule.substring(j, j + 1).equals("4") ||
+                                        Schedule.substring(j, j + 1).equals("5") || Schedule.substring(j, j + 1).equals("6") ||
+                                        Schedule.substring(j, j + 1).equals("7") || Schedule.substring(j, j + 1).equals("8") ||
+                                        Schedule.substring(j, j + 1).equals("9")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 1)), '1');
                                 }
                             }
-                        }
-                        else if(Schedule.substring(i,i+1).equals("화")){
+                        } else if (Schedule.substring(i, i + 1).equals("화")) {
                             begin = 11;
-                            for(int j=i+1; j<Schedule.indexOf('(',i); j++){
-                                if(Schedule.substring(j,j+2).equals("10")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+2)), '1' );
+                            for (int j = i + 1; j < Schedule.indexOf('(', i); j++) {
+                                if (Schedule.substring(j, j + 2).equals("10")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 2)), '1');
                                     j++;
-                                }
-                                else if(Schedule.substring(j,j+1).equals("1") ||Schedule.substring(j,j+1).equals("2")  ||
-                                        Schedule.substring(j,j+1).equals("3")  || Schedule.substring(j,j+1).equals("4")  ||
-                                        Schedule.substring(j,j+1).equals("5")  || Schedule.substring(j,j+1).equals("6")  ||
-                                        Schedule.substring(j,j+1).equals("7")  || Schedule.substring(j,j+1).equals("8")  ||
-                                        Schedule.substring(j,j+1).equals("9")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+1)), '1' );
+                                } else if (Schedule.substring(j, j + 1).equals("1") || Schedule.substring(j, j + 1).equals("2") ||
+                                        Schedule.substring(j, j + 1).equals("3") || Schedule.substring(j, j + 1).equals("4") ||
+                                        Schedule.substring(j, j + 1).equals("5") || Schedule.substring(j, j + 1).equals("6") ||
+                                        Schedule.substring(j, j + 1).equals("7") || Schedule.substring(j, j + 1).equals("8") ||
+                                        Schedule.substring(j, j + 1).equals("9")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 1)), '1');
                                 }
                             }
-                        }
-                        else if(Schedule.substring(i,i+1).equals("수")){
-                            begin=22;
-                            for(int j=i+1; j<Schedule.indexOf('(',i); j++){
-                                if(Schedule.substring(j,j+2).equals("10")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+2)), '1' );
+                        } else if (Schedule.substring(i, i + 1).equals("수")) {
+                            begin = 22;
+                            for (int j = i + 1; j < Schedule.indexOf('(', i); j++) {
+                                if (Schedule.substring(j, j + 2).equals("10")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 2)), '1');
                                     j++;
-                                }
-                                else if(Schedule.substring(j,j+1).equals("1") ||Schedule.substring(j,j+1).equals("2")  ||
-                                        Schedule.substring(j,j+1).equals("3")  || Schedule.substring(j,j+1).equals("4")  ||
-                                        Schedule.substring(j,j+1).equals("5")  || Schedule.substring(j,j+1).equals("6")  ||
-                                        Schedule.substring(j,j+1).equals("7")  || Schedule.substring(j,j+1).equals("8")  ||
-                                        Schedule.substring(j,j+1).equals("9")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+1)), '1' );
+                                } else if (Schedule.substring(j, j + 1).equals("1") || Schedule.substring(j, j + 1).equals("2") ||
+                                        Schedule.substring(j, j + 1).equals("3") || Schedule.substring(j, j + 1).equals("4") ||
+                                        Schedule.substring(j, j + 1).equals("5") || Schedule.substring(j, j + 1).equals("6") ||
+                                        Schedule.substring(j, j + 1).equals("7") || Schedule.substring(j, j + 1).equals("8") ||
+                                        Schedule.substring(j, j + 1).equals("9")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 1)), '1');
                                 }
                             }
-                        }
-                        else if(Schedule.substring(i,i+1).equals("목")){
-                            begin=33;
-                            for(int j=i+1; j<Schedule.indexOf('(',i); j++){
-                                if(Schedule.substring(j,j+2).equals("10")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+2)), '1' );
+                        } else if (Schedule.substring(i, i + 1).equals("목")) {
+                            begin = 33;
+                            for (int j = i + 1; j < Schedule.indexOf('(', i); j++) {
+                                if (Schedule.substring(j, j + 2).equals("10")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 2)), '1');
                                     j++;
-                                }
-                                else if(Schedule.substring(j,j+1).equals("1") ||Schedule.substring(j,j+1).equals("2")  ||
-                                        Schedule.substring(j,j+1).equals("3")  || Schedule.substring(j,j+1).equals("4")  ||
-                                        Schedule.substring(j,j+1).equals("5")  || Schedule.substring(j,j+1).equals("6")  ||
-                                        Schedule.substring(j,j+1).equals("7")  || Schedule.substring(j,j+1).equals("8")  ||
-                                        Schedule.substring(j,j+1).equals("9")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+1)), '1' );
+                                } else if (Schedule.substring(j, j + 1).equals("1") || Schedule.substring(j, j + 1).equals("2") ||
+                                        Schedule.substring(j, j + 1).equals("3") || Schedule.substring(j, j + 1).equals("4") ||
+                                        Schedule.substring(j, j + 1).equals("5") || Schedule.substring(j, j + 1).equals("6") ||
+                                        Schedule.substring(j, j + 1).equals("7") || Schedule.substring(j, j + 1).equals("8") ||
+                                        Schedule.substring(j, j + 1).equals("9")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 1)), '1');
                                 }
                             }
-                        }
-                        else if(Schedule.substring(i,i+1).equals("금")){
-                            begin=44;
-                            for(int j=i+1; j<Schedule.indexOf('(',i); j++){
-                                if(Schedule.substring(j,j+2).equals("10")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+2)), '1' );
+                        } else if (Schedule.substring(i, i + 1).equals("금")) {
+                            begin = 44;
+                            for (int j = i + 1; j < Schedule.indexOf('(', i); j++) {
+                                if (Schedule.substring(j, j + 2).equals("10")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 2)), '1');
                                     j++;
-                                }
-                                else if(Schedule.substring(j,j+1).equals("1") ||Schedule.substring(j,j+1).equals("2")  ||
-                                        Schedule.substring(j,j+1).equals("3")  || Schedule.substring(j,j+1).equals("4")  ||
-                                        Schedule.substring(j,j+1).equals("5")  || Schedule.substring(j,j+1).equals("6")  ||
-                                        Schedule.substring(j,j+1).equals("7")  || Schedule.substring(j,j+1).equals("8")  ||
-                                        Schedule.substring(j,j+1).equals("9")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+1)), '1' );
+                                } else if (Schedule.substring(j, j + 1).equals("1") || Schedule.substring(j, j + 1).equals("2") ||
+                                        Schedule.substring(j, j + 1).equals("3") || Schedule.substring(j, j + 1).equals("4") ||
+                                        Schedule.substring(j, j + 1).equals("5") || Schedule.substring(j, j + 1).equals("6") ||
+                                        Schedule.substring(j, j + 1).equals("7") || Schedule.substring(j, j + 1).equals("8") ||
+                                        Schedule.substring(j, j + 1).equals("9")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 1)), '1');
                                 }
                             }
-                        }
-                        else if(Schedule.substring(i,i+1).equals("토")){
-                            begin=55;
-                            for(int j=i+1; j<Schedule.indexOf('(',i); j++){
-                                if(Schedule.substring(j,j+2).equals("10")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+2)), '1' );
+                        } else if (Schedule.substring(i, i + 1).equals("토")) {
+                            begin = 55;
+                            for (int j = i + 1; j < Schedule.indexOf('(', i); j++) {
+                                if (Schedule.substring(j, j + 2).equals("10")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 2)), '1');
                                     j++;
-                                }
-                                else if(Schedule.substring(j,j+1).equals("1") ||Schedule.substring(j,j+1).equals("2")  ||
-                                        Schedule.substring(j,j+1).equals("3")  || Schedule.substring(j,j+1).equals("4")  ||
-                                        Schedule.substring(j,j+1).equals("5")  || Schedule.substring(j,j+1).equals("6")  ||
-                                        Schedule.substring(j,j+1).equals("7")  || Schedule.substring(j,j+1).equals("8")  ||
-                                        Schedule.substring(j,j+1).equals("9")){
-                                    builder.setCharAt(begin+Integer.parseInt(Schedule.substring(j,j+1)), '1' );
+                                } else if (Schedule.substring(j, j + 1).equals("1") || Schedule.substring(j, j + 1).equals("2") ||
+                                        Schedule.substring(j, j + 1).equals("3") || Schedule.substring(j, j + 1).equals("4") ||
+                                        Schedule.substring(j, j + 1).equals("5") || Schedule.substring(j, j + 1).equals("6") ||
+                                        Schedule.substring(j, j + 1).equals("7") || Schedule.substring(j, j + 1).equals("8") ||
+                                        Schedule.substring(j, j + 1).equals("9")) {
+                                    builder.setCharAt(begin + Integer.parseInt(Schedule.substring(j, j + 1)), '1');
                                 }
                             }
                         }
@@ -624,13 +600,13 @@ public class SearchFragment extends Fragment {
 
                     table = String.valueOf(builder);
                     String isIncluded = "YES";
-                    for(int i=0; i<66; i++){
-                        if(table.charAt(i)=='1' && userTable.charAt(i)=='0'){
+                    for (int i = 0; i < 66; i++) {
+                        if (table.charAt(i) == '1' && userTable.charAt(i) == '0') {
                             isIncluded = "NO";
                             break;
                         }
                     }
-                    if(isIncluded.equals("NO")){
+                    if (isIncluded.equals("NO")) {
                         count++;
                         continue;
                     }
@@ -650,7 +626,7 @@ public class SearchFragment extends Fragment {
                     count++;
 
                 }
-                if(count == 0){
+                if (count == 0) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(SearchFragment.this.getActivity());
                     dialog = builder.setMessage("조회된 강의가 없습니다.")
